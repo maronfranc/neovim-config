@@ -24,5 +24,10 @@ require("lazy").setup("core.plugins", {
     enabled = false,
     notify = true, -- get a notification when changes are found
   },
+	-- performance = {
+	-- 	cache = {
+	-- 		enabled = true,
+	-- 	},
+	-- },
   debug = true,
 })
