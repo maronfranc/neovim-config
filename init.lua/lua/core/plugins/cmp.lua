@@ -35,24 +35,24 @@ local M = {
         end,
       },
       mapping = {
+        -- FIXME: not working maybe this issue. SEE: https://github.com/hrsh7th/nvim-cmp/issues/1074
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-u>"] = cmp.mapping.scroll_docs(4),
+        -- TODO: add completion in normal mode
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false,
-        }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
+        ["<TAB>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
+        ["<C-j>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            cmp.select_next_item()
+            cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
           else
             fallback()
           end
         end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function()
+        ["<C-k>"] = cmp.mapping(function()
           if cmp.visible() then
-            cmp.select_prev_item()
+            cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
           end
         end, { "i", "s" }),
       },
@@ -64,8 +64,7 @@ local M = {
         { name = "calc" },
         { name = "path" },
         { name = "rg", keyword_length = 5 },
-        -- { omni = true }, -- completion for vimtex - is this necessary?
-      },
+        },
     })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
