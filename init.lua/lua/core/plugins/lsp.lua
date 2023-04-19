@@ -12,14 +12,13 @@ local M = {
 		-- },
   },
   config = function()
-    -- require("core.plugins.lsp.lsp")
     local status, nvim_lsp = pcall(require, "lspconfig")
     if (not status) then return end
 
     local lsp_settings = require("core.plugins.lsp.settings")
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- -- enable autoclompletion via nvim-cmp
-    -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- enable autoclompletion via nvim-cmp
+    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
     local lsp_servers = {
       "bashls",

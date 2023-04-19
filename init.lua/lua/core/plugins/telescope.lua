@@ -181,10 +181,8 @@ local M = {
     telescope.load_extension("heading")
     telescope.load_extension("ui-select")
     telescope.load_extension("make")
-    -- if settings.enable_noice then
-    --   telescope.load_extension("noice")
-    -- end
     telescope.load_extension("fzf")
+    telescope.load_extension("noice")
   end,
 }
 
