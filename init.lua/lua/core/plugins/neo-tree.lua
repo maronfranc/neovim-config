@@ -1,11 +1,13 @@
+local icons = require("core.utils.icons")
+
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v2.x",
   cmd = "Neotree",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "kyazdani42/nvim-web-devicons", lazy = true },
-    { "MunifTanjim/nui.nvim", lazy = true },
+    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    "MunifTanjim/nui.nvim",
   },
   keys = {
     { "<leader>fe", "<cmd>Neotree reveal toggle<cr>", desc = "Toggle Filetree" },
@@ -60,15 +62,15 @@ local M = {
       show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
       -- of the top visible node when scrolled down.
       tab_labels = { -- falls back to source_name if nil
-        filesystem = "  Files ",
-        buffers = "  Buffers ",
-        git_status = "  Git ",
-        diagnostics = " 裂Diagnostics ",
+        filesystem = " Files ",
+        buffers = " Buffers ",
+        git_status = " Git ",
+        diagnostics = " iagnostics ",
       },
       content_layout = "start", -- only with `tabs_layout` = "equal", "focus"
-      --                start  : |/ 裡 bufname     \/...
-      --                end    : |/     裡 bufname \/...
-      --                center : |/   裡 bufname   \/...
+      --                start  : |/ bufname     \/...
+      --                end    : |/     bufname \/...
+      --                center : |/   bufname   \/...
       tabs_layout = "equal", -- start, end, center, equal, focus
       --             start  : |/  a  \/  b  \/  c  \            |
       --             end    : |            /  a  \/  b  \/  c  \|
@@ -113,14 +115,14 @@ local M = {
         highlight = "NeoTreeIndentMarker",
         -- expander config, needed for nesting files
         with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-        expander_collapsed = "",
-        expander_expanded = "",
+        expander_collapsed = icons.ui.Folder,
+        expander_expanded = icons.ui.FolderOpen,
         expander_highlight = "NeoTreeExpander",
       },
       icon = {
-        folder_closed = "",
-        folder_open = "",
-        folder_empty = "ﰊ",
+        folder_closed = icons.ui.FolderOpen,
+        folder_open = icons.ui.Folder,
+        folder_empty = icons.ui.NewFile,
         -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
         -- then these will never be used.
         default = "*",
@@ -137,17 +139,18 @@ local M = {
       },
       git_status = {
         symbols = {
+          -- NOTE: you can set any of these to an empty string to not show them
           -- Change type
-          added = "✚", -- NOTE: you can set any of these to an empty string to not show them
-          deleted = "✖",
-          modified = "",
-          renamed = "",
+          added = "A",
+          deleted = "D",
+          modified = "M",
+          renamed = "R",
           -- Status type
-          untracked = "",
-          ignored = "",
-          unstaged = "",
-          staged = "",
-          conflict = "",
+          untracked = "U",
+          ignored = "I",
+          unstaged = "U",
+          staged = "S",
+          conflict = "C",
         },
         align = "right",
       },
@@ -341,12 +344,14 @@ local M = {
       -- `fi init`
       -- will match: `./sources/filesystem/init.lua
       --find_command = "fd", -- this is determined automatically, you probably don't need to set it
-      --find_args = {  -- you can specify extra args to pass to the find command.
-      --  fd = {
-      --  "--exclude", ".git",
-      --  "--exclude",  "node_modules"
-      --  }
-      --},
+      find_args = { -- you can specify extra args to pass to the find command.
+        fd = {
+          "--exclude",
+          ".git",
+          "--exclude",
+          "node_modules",
+        },
+      },
       ---- or use a function instead of list of strings
       --find_args = function(cmd, path, search_term, args)
       --  if cmd ~= "fd" then

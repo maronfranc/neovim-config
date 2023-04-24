@@ -11,7 +11,7 @@ local M = {
   },
   config = function()
     require("nvim-treesitter.configs").setup({
-      ensure_installed = false,
+      -- ensure_installed = { "help", "javascript", "typescript", "c", "lua", "rust" },
       ignore_install = {}, -- List of parsers to ignore installing
       highlight = {
         enable = true, -- false will disable the whole extension
