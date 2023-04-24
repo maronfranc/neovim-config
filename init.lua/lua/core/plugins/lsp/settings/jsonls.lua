@@ -29,9 +29,9 @@ local opts = {
       url = "https://docs.renovatebot.com/renovate-schema",
     },
     {
-      description = "OpenApi config",
-      fileMatch = { "*api*.json" },
-      url = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json",
+      description = "NPM configuration file",
+      fileMatch = { "package.json" },
+      url = "https://json.schemastore.org/package.json",
     },
   },
 }
