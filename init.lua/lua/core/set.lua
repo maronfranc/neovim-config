@@ -1,3 +1,5 @@
+vim.opt.encoding = "utf-8"
+
 vim.opt.guicursor = ""
 
 vim.opt.nu = true
