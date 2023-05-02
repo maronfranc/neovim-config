@@ -31,3 +31,9 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
+
+-- Netrw folder tree style mode
+vim.g.netrw_liststyle = 3
+
+-- Rename variable and all occurences
+vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
