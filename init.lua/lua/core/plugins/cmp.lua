@@ -50,9 +50,11 @@ local M = {
             fallback()
           end
         end, { "i", "s" }),
-        ["<C-k>"] = cmp.mapping(function()
+        ["<C-k>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
+          else
+            fallback()
           end
         end, { "i", "s" }),
       },
