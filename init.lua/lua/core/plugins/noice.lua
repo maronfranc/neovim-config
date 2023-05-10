@@ -28,7 +28,7 @@ function M.config()
         search_up = { kind = "search", pattern = "^%?", icon = icons.ui.Search, lang = "regex" },
         filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
         lua = { pattern = "^:%s*lua%s+", icon = icons.ui.Moon, lang = "lua" },
-        help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+        help = { pattern = "^:%s*he?l?p?%s+", icon = "H" },
         input = {}, -- Used by input()
         -- lua = false, -- to disable a format, set to `false`
       },
