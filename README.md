@@ -26,3 +26,11 @@
   - https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/lsp/settings/rust.lua
 - https://github.com/s1n7ax/dotnvim.git
 - List: https://github.com/rockerBOO/awesome-neovim
+
+# Clean all plugins
+Folder that stores neovim packages. 
+TODO: Consider testing better if it is not breaking packages like mason.
+
+```
+rm -rf ~/.local/share/nvim
+```
