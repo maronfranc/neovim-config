@@ -1,3 +1,6 @@
+-- @see https://github.com/numToStr/Navigator.nvim
+-- Navigator.nvim provides set of functions and commands that allows you
+-- to seamlessly navigate between neovim and different terminal multiplexers.
 local M = {
   "numToStr/Navigator.nvim",
   config = function()
@@ -13,4 +16,3 @@ local M = {
 }
 
 return M
-

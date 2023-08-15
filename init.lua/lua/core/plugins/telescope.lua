@@ -1,3 +1,7 @@
+-- @see https://github.com/nvim-telescope/telescope.nvim
+-- telescope.nvim is a highly extendable fuzzy finder over lists. Built on the 
+-- latest awesome features from neovim core. Telescope is centered around modularity,
+-- allowing for easy customization.
 -- SEE: https://github.com/Allaman/nvim/blob/main/lua/core/plugins/telescope.lua
 local M = {
   "nvim-telescope/telescope.nvim",

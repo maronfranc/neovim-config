@@ -3,6 +3,8 @@ vim.g.mapleader = " "
 -- Toggle NetRW (Lexplore). Replace with `":Lex 30<Cr>"` to open in sidebar
 vim.keymap.set("n", "<leader>fo", vim.cmd.Ex)
 
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+
 -- move highlighted lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -28,7 +30,10 @@ vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<C-z>", "u")
 vim.keymap.set("n", "<C-e>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>a")
+vim.keymap.set("i", "<C-c>", "<ESC>")
+vim.keymap.set("n", "<C-q>", ":wq")
 
 -- quickfix
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -43,4 +48,3 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
-

@@ -1,3 +1,5 @@
+-- @see https://github.com/nvim-lualine/lualine.nvim
+-- A blazing fast and easy to configure Neovim statusline written in Lua.
 local M = {
   'nvim-lualine/lualine.nvim',
   depedencies = { 'nvim-tree/nvim-web-devicons', opt = true },

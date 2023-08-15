@@ -1,8 +1,12 @@
+-- @see https://github.com/nvim-neo-tree/neo-tree.nvim
+-- Neo-tree is a Neovim plugin to browse the file system and other tree like structures 
+-- in whatever style suits you, including sidebars, floating windows, netrw split style,
+-- or all of them at once.
 local icons = require("core.utils.icons")
 
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
-  branch = "v2.x",
+  branch = "v3.x",
   cmd = "Neotree",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -96,7 +100,7 @@ local M = {
       highlight_tab = "NeoTreeTabInactive",
       highlight_tab_active = "NeoTreeTabActive",
       highlight_background = "NeoTreeTabInactive",
-      highlight_separator = "NeoTreeTabSeparatorInactive",
+      sources = "NeoTreeTabSeparatorInactive",
       highlight_separator_active = "NeoTreeTabSeparatorActive",
     },
     default_component_configs = {

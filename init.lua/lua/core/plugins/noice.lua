@@ -1,3 +1,5 @@
+-- @see https://github.com/folke/noice.nvim
+-- Highly experimental plugin that completely replaces the UI for `messages`, `cmdline ` and the `popupmenu` 
 local icons = require("core.utils.icons")
 
 local M = {
