@@ -1,5 +1,6 @@
 -- @see https://github.com/akinsho/toggleterm.nvim
 -- A neovim plugin to persist and toggle multiple terminals during an editing session.
+-- Used in telescope
 local M = {
   "akinsho/nvim-toggleterm.lua",
   config = function()

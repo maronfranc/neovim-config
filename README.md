@@ -13,10 +13,6 @@
 ### Git plugins:
 - [diffview](https://github.com/sindrets/diffview.nvim): Single tabpage interface for easily cycling through diffs for all modified files for any git rev.
 
-## TODO
-- [] Fix settings.
-- [] Fix utils.
-
 ## Some repositories used as reference
 - ThePrimeagen 0 to LSP:
   - https://www.youtube.com/watch?v=w7i4amO_zaE
@@ -29,8 +25,6 @@
 
 # Clean all plugins
 Folder that stores neovim packages. 
-TODO: Consider testing better if it is not breaking packages like mason.
-
 ```
 rm -rf ~/.local/share/nvim
 ```

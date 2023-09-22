@@ -18,7 +18,7 @@ local M = {
 
     local lsp_settings = require("core.plugins.lsp.settings")
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- enable autoclompletion via nvim-cmp
+    -- enable autocompletion via nvim-cmp
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
     local lsp_servers = {

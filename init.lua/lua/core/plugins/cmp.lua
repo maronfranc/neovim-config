@@ -38,10 +38,11 @@ local M = {
         end,
       },
       mapping = {
-        -- FIXME: not working maybe this issue. SEE: https://github.com/hrsh7th/nvim-cmp/issues/1074
+        -- @fixme: not working maybe this issue.
+        -- @see: https://github.com/hrsh7th/nvim-cmp/issues/1074
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-u>"] = cmp.mapping.scroll_docs(4),
-        -- TODO: add completion in normal mode
+        -- @todo: add completion in normal mode
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
         ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
