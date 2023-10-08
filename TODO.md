@@ -11,3 +11,4 @@ Plugins to check out if is useful.
 - [] [stevearc/oil.nvim](https://github.com/stevearc/oil.nvim): File explorer.
 - [] [nvim-ls alternatives](https://github.com/craftzdog/dotfiles-public/issues/132).
   - [] `nvim-lint` and `formatter.nvim`.
+- [] [vim floatterm](https://github.com/voldikss/vim-floaterm)
