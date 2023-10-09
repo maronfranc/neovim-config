@@ -1,9 +1,9 @@
 -- https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
 local opts = {
   cmd = { "lua-language-server" },
-  format = {
-    enable = false, -- let null-ls handle the formatting
-  },
+  -- format = {
+  --   enable = false, -- let null-ls handle the formatting
+  -- },
   filetypes = { "lua" },
   runtime = {
     version = "LuaJIT",
@@ -11,10 +11,10 @@ local opts = {
   },
   completion = { enable = true, callSnippet = "Replace" },
   diagnostics = {
-    -- enable = true,
-    -- globals = { "vim", "describe" },
+    enable = true,
     globals = {
       "vim",
+      "describe",
       "nnoremap",
       "vnoremap",
       "inoremap",

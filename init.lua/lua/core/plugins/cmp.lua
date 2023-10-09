@@ -25,9 +25,9 @@ local M = {
           menu = {
             buffer = "BUF",
             rg = "RG",
-            nvim_lsp = "LSP",
+            nvim_lsp = "NVIM_LSP",
             path = "PATH",
-            luasnip = "SNIP",
+            luasnip = "LUASNIP",
             calc = "CALC",
           },
         }),
@@ -71,8 +71,11 @@ local M = {
         { name = "path" },
         { name = "rg", keyword_length = 5 },
         },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
     })
-
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline("/", {
       mapping = cmp.mapping.preset.cmdline(),
@@ -80,7 +83,6 @@ local M = {
         { name = "buffer" },
       },
     })
-
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),

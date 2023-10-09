@@ -25,8 +25,6 @@ local M = {
       "tflint",
       "yamllint",
       "ruff",
-      -- DAP
-      "debugpy",
     }
     -- ensure tools (except LSPs) are installed
     local mr = require("mason-registry")
@@ -36,8 +34,6 @@ local M = {
         p:install()
       end
     end
-
-
     -- LSPs that should be installed by Mason-lspconfig
     lsp_servers = {
       "bashls",

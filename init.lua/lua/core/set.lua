@@ -7,16 +7,15 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-
 vim.opt.smartindent = true
-
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
+-- disable search highlight
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
@@ -31,7 +30,12 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 -- Netrw folder tree style mode
-vim.g.netrw_liststyle = 3
+-- vim.g.netrw_liststyle = 3
+-- Neo-tree
+-- vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
 
 -- Rename variable and all occurences
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })

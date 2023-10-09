@@ -3,54 +3,38 @@
 -- It uses Neovim's virtual text feature and no conceal
 local M = {
   "lukas-reineke/indent-blankline.nvim",
-  event = "BufReadPre",
-  opts = {
-    indentLine_enabled = 1,
-    char = "▏",
-    filetype_exclude = {
-      "startify",
-      "dashboard",
-      "dotooagenda",
-      "log",
-      "fugitive",
-      "gitcommit",
-      "packer",
-      "vimwiki",
-      "markdown",
-      "json",
-      "txt",
-      "vista",
-      "help",
-      "todoist",
-      "NvimTree",
-      "neo-tree",
-      "peekaboo",
-      "git",
-      "TelescopePrompt",
-      "undotree",
-      "flutterToolsOutline",
-      "", -- for all buffers without a file type
-    },
-    buftype_exclude = { "terminal", "nofile" },
-    show_trailing_blankline_indent = false,
-    show_first_indent_level = true,
-    show_current_context = true,
-    char_list = { "|", "¦", "┆", "┊" },
-    space_char = " ",
-    context_patterns = {
-      "class",
-      "function",
-      "method",
-      "block",
-      "list_literal",
-      "selector",
-      "^if",
-      "^table",
-      "if_statement",
-      "while",
-      "for",
-    },
-  },
+  -- event = "BufReadPre",
+  main = "ibl",
+  branch = "v3",
+  init = function()
+    local highlight = {
+      "RainbowRed",
+      "RainbowYellow",
+      "RainbowBlue",
+      "RainbowOrange",
+      "RainbowGreen",
+      "RainbowViolet",
+      "RainbowCyan",
+    }
+    local hooks = require "ibl.hooks"
+    -- create the highlight groups in the highlight setup hook, so they are reset
+    -- every time the colorscheme changes
+    hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+      vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+      vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+      vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+      vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+      vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+      vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+      vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+    end)
+    
+    vim.g.rainbow_delimiters = { highlight = highlight }
+    require("ibl").setup { scope = { highlight = highlight } }
+    
+    hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+  end,
+  opts = {}
 }
 
 return M

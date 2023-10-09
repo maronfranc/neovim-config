@@ -245,10 +245,10 @@ local M = {
         ["s"] = "open_vsplit",
         -- ["s"] = "vsplit_with_window_picker",
         ["t"] = "open_tabnew",
-        --["P"] = "toggle_preview",
+        ["P"] = "toggle_preview",
         ["C"] = "close_node",
         ["z"] = "close_all_nodes",
-        --["Z"] = "expand_all_nodes",
+        ["Z"] = "expand_all_nodes",
         ["R"] = "refresh",
         ["a"] = {
           "add",
@@ -322,8 +322,8 @@ local M = {
         visible = false, -- when true, they will just be displayed differently than normal items
         force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
         show_hidden_count = true, -- when true, the number of hidden items in each folder will be shown as the last entry
-        hide_dotfiles = true,
-        hide_gitignored = true,
+        hide_dotfiles = false,
+        hide_gitignored = false,
         hide_hidden = true, -- only works on Windows for hidden files/directories
         hide_by_name = {
           ".DS_Store",
@@ -381,7 +381,7 @@ local M = {
       search_limit = 50, -- max number of search results when using filters
       follow_current_file = false, -- This will find and focus the file in the active buffer every time
       -- the current file is changed while the tree is open.
-      hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
+      -- hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
       -- "open_current",-- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
       -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
       use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes

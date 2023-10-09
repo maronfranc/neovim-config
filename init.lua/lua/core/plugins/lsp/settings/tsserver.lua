@@ -8,7 +8,6 @@ local on_attach = function(client, bufnr)
     })
   end
 end
-
 -- TypeScript
 -- Don't forget to install typescript language server itself:
 -- npm i -g typescript-language-server

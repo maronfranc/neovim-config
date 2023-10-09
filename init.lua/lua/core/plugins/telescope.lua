@@ -3,6 +3,19 @@
 -- latest awesome features from neovim core. Telescope is centered around modularity,
 -- allowing for easy customization.
 -- SEE: https://github.com/Allaman/nvim/blob/main/lua/core/plugins/telescope.lua
+
+local path_exists = function(path)
+  return vim.loop.fs_stat(path)
+end
+local project_files = function()
+  local path = vim.loop.cwd() .. "/.git"
+  if path_exists(path) then
+    return "Telescope git_files"
+  else
+    return "Telescope find_files"
+  end
+end
+
 local M = {
   "nvim-telescope/telescope.nvim",
   cmd = "Telescope",
@@ -19,7 +32,6 @@ local M = {
   keys = {
     -- { "<leader>bb", "<cmd>Telescope buffers<cr>", desc = "Bufferlist" },
     -- { "<leader>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
-
     -- Search stuff
     { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
     { "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Strings" },
@@ -45,7 +57,7 @@ local M = {
     -- files
     { "<leader>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
     { "<leader>fz", "<cmd>Telescope zoxide list<cr>", desc = "Zoxide" },
-    { "<leader>ff", "<cmd>" .. require("core.utils.functions").project_files() .. "<cr>", desc = "Open file" },
+    { "<leader>ff", "<cmd>" .. project_files() .. "<cr>", desc = "Open file" },
     { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
     -- misc
     { "<leader>mm", "<cmd>Telescope make<cr>", desc = "Run make" },
@@ -61,7 +73,7 @@ local M = {
     local actions = require("telescope.actions")
     local action_layout = require("telescope.actions.layout")
     local fb_actions = require("telescope").extensions.file_browser.actions
-    local icons = require("core.utils.icons")
+    -- local icons = require("core.utils.icons")
 
     local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
     -- if settings.telescope_grep_hidden then
@@ -126,11 +138,11 @@ local M = {
             -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
             ["<esc>"] = actions.close,
             ["<C-j>"] = actions.move_selection_next,
+            ["<C-k>"] = actions.move_selection_previous,
             ["<PageUp>"] = actions.results_scrolling_up,
             ["<PageDown>"] = actions.results_scrolling_down,
             ["<C-u>"] = actions.preview_scrolling_up,
             ["<C-d>"] = actions.preview_scrolling_down,
-            ["<C-k>"] = actions.move_selection_previous,
             ["<C-q>"] = actions.send_selected_to_qflist,
             ["<C-l>"] = actions.send_to_qflist,
             ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
@@ -145,10 +157,10 @@ local M = {
             ["<c-x>"] = actions.delete_buffer,
           },
         },
-        prompt_prefix = table.concat({ icons.arrows.ChevronRight, " " }),
-        selection_caret = icons.arrows.CurvedArrowRight,
+        -- prompt_prefix = table.concat({ icons.arrows.ChevronRight, " " }),
+        -- selection_caret = icons.arrows.CurvedArrowRight,
         entry_prefix = "  ",
-        multi_icon = icons.arrows.Diamond,
+        -- multi_icon = icons.arrows.Diamond,
         initial_mode = "insert",
         scroll_strategy = "cycle",
         selection_strategy = "reset",
@@ -186,7 +198,7 @@ local M = {
     telescope.load_extension("ui-select")
     telescope.load_extension("make")
     telescope.load_extension("fzf")
-    telescope.load_extension("noice")
+    -- telescope.load_extension("noice")
   end,
 }
 

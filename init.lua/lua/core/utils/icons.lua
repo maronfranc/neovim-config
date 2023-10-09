@@ -40,7 +40,7 @@ return {
     RunningMan = "🏃",
     Search = "🔍",
     SignIn = "👤",
-    Table = " ",
+    Table = "📄 ",
     Telescope = "🔭",
     Trash = "🚮",
     Yoga = "🧘",
