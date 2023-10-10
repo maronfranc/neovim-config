@@ -17,14 +17,7 @@ local M = {
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    local selectOption = cmp.mapping(
-      cmp.mapping.confirm({
-        select = true,
-        behavior = cmp.ConfirmBehavior.Replace 
-      }),
-      { 'i', 'c' }
-    )
-
+    local selectOption = 
     cmp.setup({
       complete = { completeopt="menu,menuone,noinsert,noselect" },
       preselect = require('cmp').PreselectMode.None,
@@ -54,8 +47,17 @@ local M = {
         -- @todo: add completion in normal mode
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = selectOption,
-        ["<TAB>"] = selectOption,
+        ["<CR>"] = cmp.mapping(
+          cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
+          { 'i', 'c' }
+        ),
+        ["<TAB>"] = cmp.mapping(
+          cmp.mapping.confirm({
+            select = true,
+            behavior = cmp.ConfirmBehavior.Replace,
+          }),
+          { 'i', 'c' }
+        ),
         -- ["<TAB>"] =  cmp.mapping(function(fallback)
         --     if cmp.visible() and cmp.get_active_entry() then
         --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace })
