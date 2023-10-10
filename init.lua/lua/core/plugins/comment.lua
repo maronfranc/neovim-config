@@ -10,16 +10,16 @@ local M = {
       sticky = true,
       toggler = {
           -- Line-comment toggle keymap
-          line = "11",
+          line = "cs",
           -- Block-comment toggle keymap
-          block = "22",
+          block = "cb",
       },
       -- LHS of operator-pending mappings in NORMAL and VISUAL mode
       opleader = {
           -- Line-comment keymap
-          line = '11',
+          line = 'cs',
           -- Block-comment keymap
-          block = '22',
+          block = 'cb',
       },
     })
   end,
