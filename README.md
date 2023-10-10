@@ -28,3 +28,9 @@ Folder that stores neovim packages.
 ```
 rm -rf ~/.local/share/nvim
 ```
+
+# Dev Icons
+Download an icon package and unzip inside `~/.fonts` folder.
+```sh
+fc-cache -v -f
+```
