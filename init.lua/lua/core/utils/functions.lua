@@ -16,4 +16,13 @@ M.get_python_path = function(workspace)
   -- Fallback to system Python.
   return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
+
+M.format_on_save = function (bufnr)
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = vim.api.nvim_create_augroup("Format", { clear = true }),
+    buffer = bufnr,
+    callback = function() vim.lsp.buf.format() end
+  })
+end
+
 return M

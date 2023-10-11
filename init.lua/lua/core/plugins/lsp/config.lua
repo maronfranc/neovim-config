@@ -36,9 +36,9 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>fd', vim.lsp.buf.formatting, bufopts)
 end
 
+-- Default configuration for all servers
 for _, lsp in ipairs(lsp_servers) do
   if not lsp.setup.settings then lsp.setup.settings = {} end
-  -- Default configuration for all servers
   lsp.setup.capabilities = capabilities
   lsp.setup.flags = { debounce_text_changes = 150 }
   if not lsp.setup.on_attach then lsp.setup.on_attach = on_attach end

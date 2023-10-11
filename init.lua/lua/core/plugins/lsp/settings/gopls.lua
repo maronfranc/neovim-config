@@ -20,6 +20,12 @@ M.setup = {
     staticcheck = true,
     usePlaceholders = true,
   },
+  on_attach = function(client, bufnr)
+    local utils = require("core.utils.functions")
+    if client.server_capabilities.documentFormattingProvider then
+      utils.format_on_save(bufnr)
+    end
+  end,
   root_dir = function(fname)
     -- root_pattern "go.work" | "go.mod" | ".git"
     -- see: https://github.com/neovim/nvim-lspconfig/issues/804

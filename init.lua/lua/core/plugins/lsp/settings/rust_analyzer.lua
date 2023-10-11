@@ -5,6 +5,12 @@ M.serverName = "rust_analyzer"
 M.setup = {
   -- cmd = {"rust-analyzer"},
   filetypes = { "rust" },
+  on_attach = function(client, bufnr)
+    local utils = require("core.utils.functions")
+    if client.server_capabilities.documentFormattingProvider then
+      utils.format_on_save(bufnr)
+    end
+  end,
   root_dir = util.root_pattern("Cargo.toml", "rust-project.json"),
   settings = {
     ['rust-analyzer'] = {
