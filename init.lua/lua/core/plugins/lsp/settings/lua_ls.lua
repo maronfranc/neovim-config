@@ -1,9 +1,9 @@
 -- https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
-local opts = {
+local M = {}
+M.serverName = "lua_ls"
+M.setup = {
   cmd = { "lua-language-server" },
-  -- format = {
-  --   enable = false, -- let null-ls handle the formatting
-  -- },
+  telemetry = { enable = false },
   filetypes = { "lua" },
   runtime = {
     version = "LuaJIT",
@@ -32,7 +32,8 @@ local opts = {
     maxPreload = 2000,
     preloadFileSize = 1000,
   },
-  telemetry = { enable = false },
+  -- format = {
+  --   enable = false, -- let null-ls handle the formatting
+  -- },
 }
-
-return opts
+return M

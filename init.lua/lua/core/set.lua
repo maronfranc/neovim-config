@@ -15,11 +15,10 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
--- disable search highlight
-vim.opt.hlsearch = false
+vim.opt.hlsearch = false -- disable search highlight
 vim.opt.incsearch = true
 
-vim.opt.termguicolors = true
+vim.opt.termguicolors = true -- set termguicolors to enable highlight groups
 
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
@@ -34,8 +33,6 @@ vim.opt.colorcolumn = "80"
 -- Neo-tree
 -- vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
 
--- Rename variable and all occurences
-vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+vim.opt.cursorline = true -- Highlight current cursorline
+

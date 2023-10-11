@@ -1,39 +1,44 @@
-local opts = {
-  format = { enabled = false },
-  schemas = {
-    {
-      description = "ESLint config",
-      fileMatch = { ".eslintrc.json", ".eslintrc" },
-      url = "http://json.schemastore.org/eslintrc",
-    },
-    {
-      description = "Package config",
-      fileMatch = { "package.json" },
-      url = "https://json.schemastore.org/package",
-    },
-    {
-      description = "Packer config",
-      fileMatch = { "packer.json" },
-      url = "https://json.schemastore.org/packer",
-    },
-    {
-      description = "Renovate config",
-      fileMatch = {
-        "renovate.json",
-        "renovate.json5",
-        ".github/renovate.json",
-        ".github/renovate.json5",
-        ".renovaterc",
-        ".renovaterc.json",
-      },
-      url = "https://docs.renovatebot.com/renovate-schema",
-    },
-    {
-      description = "NPM configuration file",
-      fileMatch = { "package.json" },
-      url = "https://json.schemastore.org/package.json",
+-- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/jsonls.lua
+local util = require 'lspconfig.util'
+
+local M = {}
+M.serverName = "jsonls"
+M.setup = {
+  cmd = { 'vscode-json-language-server', '--stdio' },
+  filetypes = { 'json', 'jsonc' },
+  init_options = {
+    provideFormatter = true,
+  },
+  root_dir = util.find_git_ancestor,
+  single_file_support = true,
+  docs = {
+  -- this language server config is in VSCode built-in package.json
+  description = [[
+https://github.com/hrsh7th/vscode-langservers-extracted
+
+vscode-json-language-server, a language server for JSON and JSON schema
+
+`vscode-json-language-server` can be installed via `npm`:
+```sh
+npm i -g vscode-langservers-extracted
+```
+
+Neovim does not currently include built-in snippets. `vscode-json-language-server` only provides completions when snippet support is enabled. To enable completion, install a snippet plugin and add the following override to your language client capabilities during setup.
+
+```lua
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.jsonls.setup {
+capabilities = capabilities,
+}
+```
+]],
+    default_config = {
+      root_dir = [[util.find_git_ancestor]],
     },
   },
 }
+return M
 
-return opts

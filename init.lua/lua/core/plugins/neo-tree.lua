@@ -124,9 +124,9 @@ local M = {
         expander_highlight = "NeoTreeExpander",
       },
       icon = {
-        folder_closed = icons.ui.FolderOpen,
-        folder_open = icons.ui.Folder,
-        folder_empty = icons.ui.NewFile,
+        folder_closed = icons.ui.Folder,
+        folder_open = icons.ui.FolderOpen,
+        folder_empty = icons.ui.FolderOpen,
         -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
         -- then these will never be used.
         default = "*",

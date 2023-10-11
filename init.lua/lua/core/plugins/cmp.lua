@@ -3,6 +3,7 @@
 -- @see https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-codicons-to-the-menu
 -- A completion engine plugin for neovim written in Lua. Completion sources are installed
 -- from external repositories and "sourced"
+
 local M = {
   "hrsh7th/nvim-cmp",
   dependencies = {
@@ -27,7 +28,7 @@ local M = {
           vim_item.menu = ({
             buffer = "[ ]",
             nvim_lsp = "[ ]",
-            -- luasnip = "[󱉥 ]",
+            luasnip = "[󱉥 ]",
             -- copilot = "[ ]",
           })[entry.source.name]
           vim_item.abbr = string.gsub(vim_item.abbr, "%(.+%)", "")
@@ -35,9 +36,7 @@ local M = {
         end
       },
       snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+        expand = function(args) luasnip.lsp_expand(args.body) end,
       },
       mapping = {
         -- @fixme: not working maybe this issue.
@@ -58,15 +57,6 @@ local M = {
           }),
           { 'i', 'c' }
         ),
-        -- ["<TAB>"] =  cmp.mapping(function(fallback)
-        --     if cmp.visible() and cmp.get_active_entry() then
-        --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace })
-        --     elseif luasnip.expand_or_locally_jumpable() then
-        --       luasnip.expand_or_jump()
-        --     else
-        --       fallback()
-        --     end
-        --   end, { "i", "s" }),
         ["<C-j>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
@@ -77,16 +67,24 @@ local M = {
             cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
           else fallback() end
         end, { "i", "s" }),
+        -- ["<TAB>"] =  cmp.mapping(function(fallback)
+        --     if cmp.visible() and cmp.get_active_entry() then
+        --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace })
+        --     elseif luasnip.expand_or_locally_jumpable() then
+        --       luasnip.expand_or_jump()
+        --     else
+        --       fallback()
+        --     end
+        --   end, { "i", "s" }),
       },
       sources = {
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "buffer", keyword_length = 5 },
-        { name = "luasnip" },
-        { name = "calc" },
-        { name = "path" },
-        { name = "rg", keyword_length = 5 },
-        { name = "devicons" },
+          { name = "nvim_lsp" },
+          { name = "nvim_lsp_signature_help" },
+          { name = "buffer", keyword_length = 5 },
+          { name = "luasnip" },
+          { name = "calc" },
+          { name = "path" },
+          { name = "rg", keyword_length = 5 },
         },
       window = {
         completion = cmp.config.window.bordered(),
