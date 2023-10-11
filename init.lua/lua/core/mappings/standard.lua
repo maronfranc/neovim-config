@@ -33,7 +33,8 @@ vim.keymap.set("n", "<C-e>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>a")
 vim.keymap.set("i", "<C-c>", "<ESC>")
-vim.keymap.set("n", "<C-q>", ":wqa")
+vim.keymap.set("n", "<C-w>", ":wqa")
+vim.keymap.set("n", "<C-q>", ":q!")
 
 -- quickfix
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")

@@ -3,9 +3,6 @@ vim.opt.encoding = "utf-8"
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = true
@@ -19,8 +16,9 @@ vim.opt.hlsearch = false -- disable search highlight
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true -- set termguicolors to enable highlight groups
+vim.opt.cursorline = true -- Highlight current cursorline
 
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 8 -- minimal distance to bottom/top
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
@@ -34,5 +32,4 @@ vim.opt.colorcolumn = "80"
 -- vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.cursorline = true -- Highlight current cursorline
-
+CC_tab_size(2)

@@ -3,7 +3,7 @@ local util = require 'lspconfig/util'
 local M = {}
 M.serverName = "rust_analyzer"
 M.setup = {
-  -- cmd = {"rust-analyzer"},
+  cmd = {"rust-analyzer"},
   filetypes = { "rust" },
   on_attach = function(client, bufnr)
     local utils = require("core.utils.functions")
@@ -18,13 +18,10 @@ M.setup = {
         importEnforceGranularity = true,
         importPrefix = "crate"
       },
-      cargo = {
-        allFeatures = true,
-        -- buildScripts = { enable = true },
-      },
+      cargo = { allFeatures = true },
       checkOnSave = {
-        -- default: `cargo check`
-        command = "clippy"
+        command = "clippy", -- `rustup component add clippy`
+        default = "cargo check",
       },
       inlayHints = {
         bindingModeHints = {

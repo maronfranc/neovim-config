@@ -8,7 +8,7 @@ M.serverName = "gopls"
 M.setup = {
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-    gopls = {
+  gopls = {
     analyses = {
       nilness = true,
       unusedparams = true,
@@ -26,8 +26,8 @@ M.setup = {
       utils.format_on_save(bufnr)
     end
   end,
+  -- root_pattern "go.work" | "go.mod" | ".git"
   root_dir = function(fname)
-    -- root_pattern "go.work" | "go.mod" | ".git"
     -- see: https://github.com/neovim/nvim-lspconfig/issues/804
     if not mod_cache then
       local result = async.run_command 'go env GOMODCACHE'
