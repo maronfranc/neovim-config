@@ -21,11 +21,7 @@ local M = {
     -- Only sources listed here will be loaded.
     -- You can also add an external source by adding it's name to this list.
     -- The name used here must be the same name you would use in a require() call.
-    sources = {
-      "filesystem",
-      "buffers",
-      "git_status",
-    },
+    sources = { "filesystem", "buffers", "git_status" },
     add_blank_line_at_top = false, -- Add a blank line at the top of the tree.
     close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
     -- popup_border_style is for input and confirmation dialogs.
@@ -184,15 +180,8 @@ local M = {
         {
           "container",
           content = {
-            {
-              "name",
-              zindex = 10,
-            },
-            -- {
-            --   "symlink_target",
-            --   zindex = 10,
-            --   highlight = "NeoTreeSymbolicLinkTarget",
-            -- },
+            { "name", zindex = 10 },
+            -- { "symlink_target", zindex = 10, highlight = "NeoTreeSymbolicLinkTarget" },
             { "clipboard", zindex = 10 },
             { "bufnr", zindex = 10 },
             { "modified", zindex = 20, align = "right" },
@@ -205,12 +194,7 @@ local M = {
         { "indent", with_markers = false },
         { "name", highlight = "NeoTreeMessage" },
       },
-      terminal = {
-        { "indent" },
-        { "icon" },
-        { "name" },
-        { "bufnr" },
-      },
+      terminal = { { "indent" }, { "icon" }, { "name" }, { "bufnr" } },
     },
     nesting_rules = {},
     window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
@@ -219,20 +203,14 @@ local M = {
       width = 40, -- applies to left and right positions
       height = 15, -- applies to top and bottom positions
       popup = { -- settings that apply to float position only
-        size = {
-          height = "80%",
-          width = "50%",
-        },
+        size = { height = "80%", width = "50%" },
         position = "50%", -- 50% means center it
         -- you can also specify border here, if you want a different setting from
         -- the global popup_border_style.
       },
       -- Mappings for tree window. See `:h neo-tree-mappings` for a list of built-in commands.
       -- You can also create your own commands by providing a function instead of a string.
-      mapping_options = {
-        noremap = true,
-        nowait = true,
-      },
+      mapping_options = { noremap = true, nowait = true },
       mappings = {
         ["<space>"] = {
           "toggle_node",
@@ -325,17 +303,13 @@ local M = {
         hide_dotfiles = false,
         hide_gitignored = false,
         hide_hidden = true, -- only works on Windows for hidden files/directories
-        hide_by_name = {
-          ".DS_Store",
-          "thumbs.db",
-          --"node_modules",
-        },
+        hide_by_name = { ".DS_Store", "thumbs.db", "node_modules" },
         hide_by_pattern = { -- uses glob style patterns
           --"*.meta",
           --"*/src/*/tsconfig.json"
         },
         always_show = { -- remains visible even if other settings would normally hide it
-          --".gitignored",
+          ".gitignored",
         },
         never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
           --".DS_Store",
@@ -349,12 +323,7 @@ local M = {
       -- will match: `./sources/filesystem/init.lua
       --find_command = "fd", -- this is determined automatically, you probably don't need to set it
       find_args = { -- you can specify extra args to pass to the find command.
-        fd = {
-          "--exclude",
-          ".git",
-          "--exclude",
-          "node_modules",
-        },
+        fd = { "--exclude", ".git", "--exclude", "node_modules" },
       },
       ---- or use a function instead of list of strings
       --find_args = function(cmd, path, search_term, args)
@@ -380,10 +349,9 @@ local M = {
       group_empty_dirs = false, -- when true, empty folders will be grouped together
       search_limit = 50, -- max number of search results when using filters
       follow_current_file = false, -- This will find and focus the file in the active buffer every time
-      -- the current file is changed while the tree is open.
-      -- hijack_netrw_behavior = "disabled", -- netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
-      -- "open_current",-- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
-      -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+      -- "disabled", netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
+      -- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
+      hijack_netrw_behavior  = "open_default", -- "open_current",
       use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
       -- instead of relying on nvim autocmd events.
     },
