@@ -25,4 +25,13 @@ M.format_on_save = function (bufnr)
   })
 end
 
+M.map = function (tbl, f)
+  local t = {}
+  for k,v in pairs(tbl) do
+    t[k] = f(v)
+  end
+  return t
+end
+
+-- M.print_table = function(t) print(table.concat(t, '\n')) end
 return M
