@@ -16,12 +16,8 @@ local M = {
       diff_binaries = false, -- Show diffs for binaries
       enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
       git_cmd = { "git" }, -- The git executable followed by default args.
-      use_icons = true, -- Requires nvim-web-devicons
+      use_icons = false, -- Requires nvim-web-devicons
       watch_index = true, -- Update views and index buffers when the git index changes.
-      icons = { -- Only applies when use_icons is true.
-        folder_closed = icons.ui.Folder,
-        folder_open = icons.ui.FolderOpen,
-      },
       signs = {
         fold_closed = icons.ui.Folder,
         fold_open = icons.ui.FolderOpen,
@@ -67,12 +63,8 @@ local M = {
       file_history_panel = {
         log_options = { -- See ':h diffview-config-log_options'
           git = {
-            single_file = {
-              diff_merges = "combined",
-            },
-            multi_file = {
-              diff_merges = "first-parent",
-            },
+            single_file = { diff_merges = "combined" },
+            multi_file = { diff_merges = "first-parent" },
           },
         },
         win_config = { -- See ':h diffview-config-win_config'

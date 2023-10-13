@@ -1,9 +1,9 @@
 vim.g.mapleader = " "
 
 -- Toggle NetRW (Lexplore). Replace with `":Lex 30<Cr>"` to open in sidebar
-vim.keymap.set("n", "<leader>fo", vim.cmd.Ex)
+-- vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>fo", vim.lsp.buf.format)
 
 -- move highlighted lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -52,3 +52,4 @@ end)
 
 -- Rename variable and all occurences
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+
