@@ -10,22 +10,7 @@ local M = {
   -- Credit: glepnir
   local lualine = require('lualine')
   local icons = require('core.utils.icons')
-
-  -- Color table for highlights
-  -- stylua: ignore
-  local colors = {
-    bg       = '#202328',
-    fg       = '#bbc2cf',
-    yellow   = '#ECBE7B',
-    cyan     = '#008080',
-    darkblue = '#081633',
-    green    = '#98be65',
-    orange   = '#FF8800',
-    violet   = '#a9a1e1',
-    magenta  = '#c678dd',
-    blue     = '#51afef',
-    red      = '#ec5f67',
-  }
+  local colors = require("core.utils.colors")
 
   local conditions = {
     buffer_not_empty = function()
@@ -87,9 +72,7 @@ local M = {
   end
 
   ins_left {
-    function()
-      return '▊'
-    end,
+    function() return '▊' end,
     color = { fg = colors.blue }, -- Sets highlighting of component
     padding = { left = 0, right = 1 }, -- We don't need space before this
   }

@@ -17,7 +17,7 @@ M.get_python_path = function(workspace)
   return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
 
-M.format_on_save = function (bufnr)
+M.format_on_save = function(bufnr)
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("Format", { clear = true }),
     buffer = bufnr,
@@ -25,13 +25,25 @@ M.format_on_save = function (bufnr)
   })
 end
 
-M.map = function (tbl, f)
+M.map = function(tbl, f)
   local t = {}
-  for k,v in pairs(tbl) do
+  for k, v in pairs(tbl) do
     t[k] = f(v)
   end
   return t
 end
 
 -- M.print_table = function(t) print(table.concat(t, '\n')) end
+-- M.path_exists = function(path)
+--   return vim.loop.fs_stat(path)
+-- end
+-- M.project_files = function()
+--   local path = vim.loop.cwd() .. "/.git"
+--   if path_exists(path) then
+--     return "Telescope git_files"
+--   else
+--     return "Telescope find_files"
+--   end
+-- end
+
 return M

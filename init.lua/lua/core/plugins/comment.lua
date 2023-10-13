@@ -4,22 +4,16 @@ local M = {
   lazy = false,
   config = function()
     require("Comment").setup({
-      ---Add a space b/w comment and the line
-      padding = true,
-      ---Whether the cursor should stay at its position
-      sticky = true,
+      padding = true, ---Add a space b/w comment and the line
+      sticky = true, -- Whether the cursor should stay at its position
       toggler = {
-          -- Line-comment toggle keymap
-          line = "cs",
-          -- Block-comment toggle keymap
-          block = "cb",
+          line = "cs", -- Line-comment toggle keymap
+          block = "cb", -- Block-comment toggle keymap
       },
       -- LHS of operator-pending mappings in NORMAL and VISUAL mode
       opleader = {
-          -- Line-comment keymap
-          line = 'cs',
-          -- Block-comment keymap
-          block = 'cb',
+          line = 'cs', -- Line-comment keymap
+          block = 'cb', -- Block-comment keymap
       },
     })
   end,

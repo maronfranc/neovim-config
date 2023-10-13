@@ -13,9 +13,6 @@ local M = {
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
   },
-  keys = {
-    { "<leader>fe", "<cmd>Neotree reveal toggle<cr>", desc = "Toggle Filetree" },
-  },
   opts = {
     -- If a user has a sources list it will replace this one.
     -- Only sources listed here will be loaded.
@@ -200,7 +197,7 @@ local M = {
     window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
       -- possible options. These can also be functions that return these options.
       position = "left", -- left, right, top, bottom, float, current
-      width = 40, -- applies to left and right positions
+      width = 30, -- applies to left and right positions
       height = 15, -- applies to top and bottom positions
       popup = { -- settings that apply to float position only
         size = { height = "80%", width = "50%" },
@@ -254,8 +251,9 @@ local M = {
         -- Override delete to use trash instead of rm
         delete = function(state)
           local path = state.tree:get_node().path
-          vim.fn.system({ "trash", vim.fn.fnameescape(path) })
-          require("neo-tree.sources.manager").refresh(state.name)
+          print("TODO: implement delete prompt confirmation: ", path)
+          -- vim.fn.system({ "trash", vim.fn.fnameescape(path) })
+          -- require("neo-tree.sources.manager").refresh(state.name)
         end,
         system_open = function(state)
           local node = state.tree:get_node()
@@ -276,7 +274,7 @@ local M = {
           --["/"] = "filter_as_you_type", -- this was the default until v1.28
           ["f"] = "filter_on_submit",
           ["<C-x>"] = "clear_filter",
-          ["<bs>"] = "navigate_up",
+          -- ["<bs>"] = "navigate_up",
           ["."] = "set_root",
           ["[g"] = "prev_git_modified",
           ["]g"] = "next_git_modified",
@@ -312,6 +310,7 @@ local M = {
           ".gitignored",
         },
         never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
+          ".git",
           --".DS_Store",
           --"thumbs.db"
         },
@@ -362,7 +361,7 @@ local M = {
       group_empty_dirs = true, -- when true, empty directories will be grouped together
       window = {
         mappings = {
-          ["<bs>"] = "navigate_up",
+          -- ["<bs>"] = "navigate_up",
           ["."] = "set_root",
           ["bd"] = "buffer_delete",
         },
@@ -377,7 +376,7 @@ local M = {
           ["gr"] = "git_revert_file",
           ["gc"] = "git_commit",
           ["gp"] = "git_push",
-          ["gg"] = "git_commit_and_push",
+          -- ["gg"] = "git_commit_and_push",
         },
       },
     },

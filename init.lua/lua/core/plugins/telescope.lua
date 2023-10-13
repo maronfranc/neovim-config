@@ -4,18 +4,6 @@
 -- allowing for easy customization.
 -- SEE: https://github.com/Allaman/nvim/blob/main/lua/core/plugins/telescope.lua
 
-local path_exists = function(path)
-  return vim.loop.fs_stat(path)
-end
-local project_files = function()
-  local path = vim.loop.cwd() .. "/.git"
-  if path_exists(path) then
-    return "Telescope git_files"
-  else
-    return "Telescope find_files"
-  end
-end
-
 local M = {
   "nvim-telescope/telescope.nvim",
   cmd = "Telescope",
@@ -114,9 +102,7 @@ local M = {
         },
       },
       pickers = {
-        find_files = {
-          hidden = false,
-        },
+        find_files = { hidden = false },
         buffers = {
           ignore_current_buffer = true,
           sort_lastused = true,
