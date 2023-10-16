@@ -8,23 +8,23 @@ vim.keymap.set("n", "<leader>fo", vim.lsp.buf.format)
 -- move highlighted lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
 -- common navigation
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
+vim.keymap.set("n", "x", [["_x]]) -- "x" skip yank
+
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- delete word and paste keeping word in the buffer
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- asbjornHaland
--- `xclip` or similar required
+-- Copy to clipboard. `xclip` or similar required
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
-
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "Q", "<nop>")
 
@@ -52,4 +52,3 @@ end)
 
 -- Rename variable and all occurences
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
-

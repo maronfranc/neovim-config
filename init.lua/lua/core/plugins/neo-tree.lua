@@ -21,10 +21,6 @@ local M = {
     sources = { "filesystem", "buffers", "git_status" },
     add_blank_line_at_top = false, -- Add a blank line at the top of the tree.
     close_if_last_window = true,   -- Close Neo-tree if it is the last window left in the tab
-    -- popup_border_style is for input and confirmation dialogs.
-    -- Configurtaion of floating window is done in the individual source sections.
-    -- "NC" is a special style that works well with NormalNC set
-    close_floats_on_escape_key = true,
     default_source = "filesystem",
     enable_diagnostics = true,
     enable_git_status = true,
@@ -63,7 +59,7 @@ local M = {
         filesystem = " Files ",
         buffers = " Buffers ",
         git_status = " Git ",
-        diagnostics = " iagnostics ",
+        diagnostics = " diagnostics ",
       },
       content_layout = "start", -- only with `tabs_layout` = "equal", "focus"
       --                start  : |/ bufname     \/...
@@ -91,10 +87,10 @@ local M = {
       show_separator_on_edge = false,
       --                       true  : |/    a    \/    b    \/    c    \|
       --                       false : |     a    \/    b    \/    c     |
+      sources = "NeoTreeTabSeparatorInactive",
       highlight_tab = "NeoTreeTabInactive",
       highlight_tab_active = "NeoTreeTabActive",
       highlight_background = "NeoTreeTabInactive",
-      sources = "NeoTreeTabSeparatorInactive",
       highlight_separator_active = "NeoTreeTabSeparatorActive",
     },
     default_component_configs = {
@@ -329,7 +325,7 @@ local M = {
       -- `fi init`
       -- will match: `./sources/filesystem/init.lua
       --find_command = "fd", -- this is determined automatically, you probably don't need to set it
-      find_args               = { -- you can specify extra args to pass to the find command.
+      find_args = { -- you can specify extra args to pass to the find command.
         fd = { "--exclude", ".git", "--exclude", "node_modules" },
       },
       ---- or use a function instead of list of strings
@@ -353,18 +349,18 @@ local M = {
       --  end
       --  return args
       --end,
-      group_empty_dirs        = false, -- when true, empty folders will be grouped together
-      search_limit            = 50,    -- max number of search results when using filters
-      follow_current_file     = false, -- This will find and focus the file in the active buffer every time
+      group_empty_dirs = false, -- when true, empty folders will be grouped together
+      search_limit = 50,    -- max number of search results when using filters
+      follow_current_file = { enabled = false }, -- This will find and focus the file in the active buffer every time
       -- "disabled", netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
       -- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
-      hijack_netrw_behavior   = "open_default", -- "open_current",
-      use_libuv_file_watcher  = false,          -- This will use the OS level file watchers to detect changes
+      hijack_netrw_behavior = "open_default", -- "open_current",
+      use_libuv_file_watcher = false,          -- This will use the OS level file watchers to detect changes
       -- instead of relying on nvim autocmd events.
     },
     buffers = {
       bind_to_cwd = true,
-      follow_current_file = true, -- This will find and focus the file in the active buffer every time
+      follow_current_file = { enabled = true }, -- This will find and focus the file in the active buffer every time
       -- the current file is changed while the tree is open.
       group_empty_dirs = true,    -- when true, empty directories will be grouped together
       window = {
