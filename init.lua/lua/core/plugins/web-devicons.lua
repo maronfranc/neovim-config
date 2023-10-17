@@ -32,6 +32,11 @@ local M = {
           color = "#414141",
           name = "Log"
         },
+        ["md"] = {
+          icon = "󰍔",
+          color = "#fefefe",
+          name = "Markdown"
+        }
       },
     })
   end

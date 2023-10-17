@@ -5,6 +5,7 @@ local lua_ls = require("core.plugins.lsp.settings.lua_ls")
 local pyright = require("core.plugins.lsp.settings.pyright")
 local rust_analyzer = require("core.plugins.lsp.settings.rust_analyzer")
 local tsserver = require("core.plugins.lsp.settings.tsserver")
+local bashls = require("core.plugins.lsp.settings.bashls")
 
 local lsp_settings = {
   jsonls,
@@ -14,6 +15,7 @@ local lsp_settings = {
   pyright,
   rust_analyzer,
   tsserver,
+  bashls,
 }
 
 local fns = require("core.utils.functions")
