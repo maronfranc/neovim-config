@@ -10,9 +10,8 @@ M.setup = {
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
   root_dir = util.root_pattern("package.json"),
   on_attach = function(client, bufnr)
-    local utils = require("core.utils.functions")
     if client.server_capabilities.documentFormattingProvider then
-      utils.format_on_save(bufnr)
+      _G.F_format_on_save(bufnr)
     end
   end,
 }

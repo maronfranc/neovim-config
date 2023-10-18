@@ -1,6 +1,5 @@
 -- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/pyright.lua
 local util = require 'lspconfig.util'
-local utilFunctions = require("core.utils.functions")
 
 local M = {}
 M.serverName = "pyright"
@@ -22,7 +21,7 @@ M.setup = {
     return util.root_pattern(unpack(root_files))(fname)
   end,
   before_init = function(_, config)
-    config.settings.python.pythonPath = utilFunctions.get_python_path(config.root_dir)
+    config.settings.python.pythonPath = _G.F_get_python_path(config.root_dir)
   end,
   docs = {
     description = [[

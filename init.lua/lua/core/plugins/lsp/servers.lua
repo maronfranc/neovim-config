@@ -18,8 +18,7 @@ local lsp_settings = {
   bashls,
 }
 
-local fns = require("core.utils.functions")
-local ensure_installed = fns.map(lsp_settings, function(s)
+local ensure_installed = _G.F_map(lsp_settings, function(s)
   return s.serverName
 end)
 table.insert(ensure_installed, "eslint")
