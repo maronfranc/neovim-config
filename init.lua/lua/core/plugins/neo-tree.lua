@@ -158,13 +158,9 @@ local M = {
           "container",
           content = {
             { "name",        zindex = 10 },
-            -- {
-            --   "symlink_target",
-            --   zindex = 10,
-            --   highlight = "NeoTreeSymbolicLinkTarget",
-            -- },
             { "clipboard",   zindex = 10 },
             { "diagnostics", errors_only = true, zindex = 20, align = "right" },
+            -- { "symlink_target", zindex = 10, highlight = "NeoTreeSymbolicLinkTarget", },
           },
         },
       },
@@ -208,19 +204,18 @@ local M = {
       -- You can also create your own commands by providing a function instead of a string.
       mapping_options = { noremap = true, nowait = true },
       mappings = {
-        ["<space>"] = {
+        -- ["C"] = "close_node",
+        ["C"] = {
           "toggle_node",
           nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
         },
-        ["<2-LeftMouse>"] = "open_with_window_picker",
+        ["<2-LeftMouse>"] = "open",
         ["<cr>"] = "open",
+        ["l"] = "open",
         ["S"] = "open_split",
-        -- ["S"] = "split_with_window_picker",
         ["s"] = "open_vsplit",
-        -- ["s"] = "vsplit_with_window_picker",
         ["t"] = "open_tabnew",
         ["P"] = "toggle_preview",
-        ["C"] = "close_node",
         ["z"] = "close_all_nodes",
         ["Z"] = "expand_all_nodes",
         ["R"] = "refresh",
@@ -305,10 +300,9 @@ local M = {
         hide_dotfiles = false,
         hide_gitignored = false,
         hide_hidden = true, -- only works on Windows for hidden files/directories
-        hide_by_name = { ".DS_Store", "thumbs.db", "node_modules" },
+        hide_by_name = { },
         hide_by_pattern = { -- uses glob style patterns
           --"*.meta",
-          --"*/src/*/tsconfig.json"
         },
         always_show = { -- remains visible even if other settings would normally hide it
           ".gitignored",

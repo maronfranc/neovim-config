@@ -1,5 +1,5 @@
 -- @see: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/bashls.lua
-local util = require 'lspconfig.util'
+local util = require 'lspconfig/util'
 
 local M = {}
 M.serverName = "bashls"

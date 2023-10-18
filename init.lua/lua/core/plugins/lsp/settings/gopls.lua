@@ -1,6 +1,6 @@
 -- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
-local util = require 'lspconfig.util'
-local async = require 'lspconfig.async'
+local util = require 'lspconfig/util'
+local async = require 'lspconfig/async'
 local mod_cache = nil
 
 local M = {}
@@ -24,6 +24,7 @@ M.setup = {
     if client.server_capabilities.documentFormattingProvider then
       _G.F_format_on_save(bufnr)
     end
+    _G.F_buffer_load_keys(bufnr)
   end,
   -- root_pattern "go.work" | "go.mod" | ".git"
   root_dir = function(fname)
