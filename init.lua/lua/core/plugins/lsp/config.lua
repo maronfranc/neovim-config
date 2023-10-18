@@ -13,7 +13,6 @@ local default_on_attach = function(_client, bufnr)
   _G.F_buffer_load_keys(bufnr)
 end
 
--- @todo fix error that happens when config.lua load before servers.lua 
 local server = require("core.plugins.lsp.servers")
 -- Default configuration for all servers
 for _, lsp in ipairs(server.lsp_settings) do

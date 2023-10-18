@@ -5,13 +5,12 @@ local M = {
   "numToStr/Navigator.nvim",
   config = function()
     require("Navigator").setup({})
-    local map = vim.api.nvim_set_keymap
     local default_options = { noremap = true, silent = true }
     -- tmux navigation
-    map("n", "<C-h>", "<cmd>lua require('Navigator').left()<CR>", default_options)
-    map("n", "<C-k>", "<cmd>lua require('Navigator').up()<CR>", default_options)
-    map("n", "<C-l>", "<cmd>lua require('Navigator').right()<CR>", default_options)
-    map("n", "<C-j>", "<cmd>lua require('Navigator').down()<CR>", default_options)
+    vim.keymap.set({"n", "t"}, "<A-h>", "<CMD>lua require('Navigator').left()<CR>", default_options)
+    vim.keymap.set({"n", "t"}, "<A-k>", "<CMD>lua require('Navigator').up()<CR>", default_options)
+    vim.keymap.set({"n", "t"}, "<A-l>", "<CMD>lua require('Navigator').right()<CR>", default_options)
+    vim.keymap.set({"n", "t"}, "<A-j>", "<CMD>lua require('Navigator').down()<CR>", default_options)
   end,
 }
 

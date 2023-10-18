@@ -13,7 +13,9 @@ local M = {
 		},
   },
   config = function()
-    require("core.plugins.lsp.config")
+    -- require() is sometimes throwing error: "loop or previous error loading module"
+    pcall(require, "core.plugins.lsp.servers")
+    pcall(require, "core.plugins.lsp.config")
   end,
 }
 
