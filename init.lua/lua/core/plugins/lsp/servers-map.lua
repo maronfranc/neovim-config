@@ -1,5 +1,5 @@
 local function require_and_insert(lsp_name, lsp_setting_map)
-  local ok, lsp_module = pcall(require, "core.plugins.lsp.settings." .. lsp_name)
+  local ok, lsp_module = pcall(require, "core.plugins.lsp.servers." .. lsp_name)
   if (ok) then table.insert(lsp_setting_map, lsp_module) end
 end
 

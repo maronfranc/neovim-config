@@ -13,7 +13,7 @@ local default_on_attach = function(_client, bufnr)
   _G.F_buffer_load_keys(bufnr)
 end
 
-local server = require("core.plugins.lsp.servers")
+local server = require("core.plugins.lsp.servers-map")
 -- Default configuration for all servers
 for _, lsp in ipairs(server.lsp_settings) do
   if not lsp.setup.on_attach then

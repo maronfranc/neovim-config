@@ -6,7 +6,6 @@ local M = {
   config = function()
     require("Navigator").setup({})
     local default_options = { noremap = true, silent = true }
-    -- tmux navigation
     vim.keymap.set({"n", "t"}, "<A-h>", "<CMD>lua require('Navigator').left()<CR>", default_options)
     vim.keymap.set({"n", "t"}, "<A-k>", "<CMD>lua require('Navigator').up()<CR>", default_options)
     vim.keymap.set({"n", "t"}, "<A-l>", "<CMD>lua require('Navigator').right()<CR>", default_options)

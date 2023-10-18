@@ -9,7 +9,7 @@ local M = {
   config = function()
     -- install_root_dir = path.concat({ vim.fn.stdpath("data"), "mason" }),
     require("mason").setup()
-    local lsp_server = require("core.plugins.lsp.servers")
+    local lsp_server = require("core.plugins.lsp.servers-map")
     local mr = require("mason-registry")
     local mason_config = require("mason-lspconfig")
 
