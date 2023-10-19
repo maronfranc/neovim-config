@@ -16,9 +16,9 @@ vim.opt.hlsearch = false -- disable search highlight
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true -- set termguicolors to enable highlight groups
-vim.opt.cursorline = true -- Highlight current cursorline
+vim.opt.cursorline = true    -- Highlight current cursorline
 
-vim.opt.scrolloff = 8 -- minimal distance to bottom/top
+vim.opt.scrolloff = 8        -- minimal distance to bottom/top
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 

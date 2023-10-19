@@ -4,7 +4,7 @@ vim.keymap.set('n', '<leader>ff', builtin.git_files, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 
--- builtin.grep_string({ search = vim.fn.input("Grep > ") }) 
+-- builtin.grep_string({ search = vim.fn.input("Grep > ") })
 vim.keymap.set('n', '<leader>fg', "<CMD>Telescope live_grep<CR>")
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', "<leader>fe", "<CMD>Neotree reveal toggle<CR>", {
@@ -12,9 +12,23 @@ vim.keymap.set('n', "<leader>fe", "<CMD>Neotree reveal toggle<CR>", {
 })
 vim.keymap.set('n', '<leader>pi', "<CMD>Telescope symbols<CR>", {}) -- pick icons
 
+local error_lines_ok, lsp_lines = pcall(require, "core.plugins.lsp.lsp_lines")
+--- Toggle lsp_lines and untoggle standard error diagnostic.
+local function toggle_diagnostics()
+  if (not error_lines_ok) then
+    print("[Error]: require() 'lsp_lines' load error")
+    return
+  end
+  local lsp_lines_state = lsp_lines.toggle()
+  vim.diagnostic.config({ virtual_text = not lsp_lines_state })
+end
+vim.keymap.set("", "<leader>ert", toggle_diagnostics, {
+  desc = "Toggle error diagnostics extension",
+})
+
 _G.F_buffer_load_keys = function(bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
