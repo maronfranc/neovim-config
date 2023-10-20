@@ -1,8 +1,8 @@
 local builtin = require('telescope.builtin')
 
-vim.keymap.set('n', '<leader>ff', builtin.git_files, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<C-p>', builtin.git_files, {})
 
 -- builtin.grep_string({ search = vim.fn.input("Grep > ") })
 vim.keymap.set('n', '<leader>fg', "<CMD>Telescope live_grep<CR>")
@@ -28,7 +28,7 @@ vim.keymap.set("", "<leader>ert", toggle_diagnostics, {
 
 _G.F_buffer_load_keys = function(bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)

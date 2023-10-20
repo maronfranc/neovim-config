@@ -1,6 +1,11 @@
 local function require_and_insert(lsp_name, lsp_setting_map)
-  local ok, lsp_module = pcall(require, "core.plugins.lsp.servers." .. lsp_name)
-  if (ok) then table.insert(lsp_setting_map, lsp_module) end
+  local path = "core.plugins.lsp.servers." .. lsp_name
+  local ok, lsp_module = pcall(require, path)
+  if (not ok) then
+    print.except("[Error require_and_insert()] path: ", path)
+    return
+  end
+  table.insert(lsp_setting_map, lsp_module)
 end
 
 local lsp_module_map = {}
@@ -12,26 +17,22 @@ require_and_insert("jsonls", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
 require_and_insert("tsserver", lsp_module_map)
 require_and_insert("rust_analyzer", lsp_module_map)
+require_and_insert("html", lsp_module_map)
 
 local ensure_installed = _G.F_map(lsp_module_map, function(s)
   return s.serverName
 end)
 table.insert(ensure_installed, "eslint")
-table.insert(ensure_installed, "html")
 table.insert(ensure_installed, "tailwindcss")
+
 -- Ensure tools (except LSPs) are installed
 local ensure_tools = {
   -- Formatter
-  "black",
-  "prettier",
   "stylua",
   "shfmt",
   -- Linter
-  "eslint_d",
   "yamllint",
   "ruff",
-  -- "shellcheck",
-  -- "tflint",
 }
 
 local M = {

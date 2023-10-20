@@ -14,8 +14,13 @@ local M = {
   },
   config = function()
     -- require() is sometimes throwing error: "loop or previous error loading module"
-    pcall(require, "core.plugins.lsp.servers-map")
-    pcall(require, "core.plugins.lsp.setup")
+    -- require("core.plugins.lsp.servers-map")
+    -- require("core.plugins.lsp.setup")
+    local map_ok, _= pcall(require, "core.plugins.lsp.servers-map")
+    if (not map_ok) then print("[Error] server load error") end
+
+    local setup_ok, _= pcall(require, "core.plugins.lsp.setup")
+    if (not setup_ok) then print("[Error] server setup error") end
 
     local ok, lsp_lines = pcall(require, "core.plugins.lsp.lsp_lines")
     if (not ok) then return end

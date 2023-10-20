@@ -9,7 +9,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local default_on_attach = function(_client, bufnr)
+local default_on_attach = function(_, bufnr)
   _G.F_buffer_load_keys(bufnr)
 end
 
