@@ -11,13 +11,14 @@ end
 local lsp_module_map = {}
 require_and_insert("bashls", lsp_module_map)
 require_and_insert("cssls", lsp_module_map)
+require_and_insert("emmet-ls", lsp_module_map)
 require_and_insert("gopls", lsp_module_map)
+require_and_insert("html", lsp_module_map)
 require_and_insert("lua_ls", lsp_module_map)
 require_and_insert("jsonls", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
-require_and_insert("tsserver", lsp_module_map)
 require_and_insert("rust_analyzer", lsp_module_map)
-require_and_insert("html", lsp_module_map)
+require_and_insert("tsserver", lsp_module_map)
 
 local ensure_installed = _G.F_map(lsp_module_map, function(s)
   return s.serverName

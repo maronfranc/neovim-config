@@ -1,6 +1,6 @@
 -- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
-local util = require 'lspconfig/util'
-local async = require 'lspconfig/async'
+local util = require('lspconfig/util')
+local async = require('lspconfig/async')
 local mod_cache = nil
 
 local M = {}
@@ -41,8 +41,8 @@ M.setup = {
         return clients[#clients].config.root_dir
       end
     end
-    return util.root_pattern 'go.work'(fname) or util.root_pattern('go.mod', '.git')(fname)
-    end,
+    return util.root_pattern 'go.work' (fname) or util.root_pattern('go.mod', '.git')(fname)
+  end,
   single_file_support = true,
   docs = {
     description = [[
@@ -56,4 +56,3 @@ Google's lsp server for golang.
   },
 }
 return M
-
