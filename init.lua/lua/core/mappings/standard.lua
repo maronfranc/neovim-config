@@ -28,13 +28,14 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 vim.keymap.set("n", "Q", "<nop>")
 
+vim.keymap.set("i", "<C-c>", "<ESC>")
 vim.keymap.set("n", "<C-z>", "u")
 vim.keymap.set("n", "<C-e>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>a")
-vim.keymap.set("i", "<C-c>", "<ESC>")
-vim.keymap.set("n", "<C-w>", ":wqa")
 vim.keymap.set("n", "<C-q>", ":q!")
+vim.keymap.set("i", "<C-q>", "<ESC>:q!")
+vim.keymap.set("n", "<C-w>", ":wqa")
 
 -- quickfix
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -46,9 +47,8 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader><leader>", function()
-  vim.cmd("so")
-end)
-
 -- Rename variable and all occurences
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+
+vim.keymap.set("i", "<C-DEL>", "<C-o>de")
+vim.keymap.set("i", "<C-H>", "<C-o>db") -- <C-H>~=<C-BS>

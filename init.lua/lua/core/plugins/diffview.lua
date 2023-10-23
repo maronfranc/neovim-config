@@ -10,7 +10,6 @@ local M = {
   },
   config = function()
     local actions = require("diffview.actions")
-    local icons = require("core.utils.icons")
 
     require("diffview").setup({
       diff_binaries = false, -- Show diffs for binaries
@@ -19,8 +18,8 @@ local M = {
       use_icons = false, -- Requires nvim-web-devicons
       watch_index = true, -- Update views and index buffers when the git index changes.
       signs = {
-        fold_closed = icons.ui.Folder,
-        fold_open = icons.ui.FolderOpen,
+        -- fold_closed = icons.ui.Folder,
+        -- fold_open = icons.ui.FolderOpen,
         done = "✓",
       },
       view = {

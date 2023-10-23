@@ -2,7 +2,6 @@
 -- Neo-tree is a Neovim plugin to browse the file system and other tree like structures
 -- in whatever style suits you, including sidebars, floating windows, netrw split style,
 -- or all of them at once.
-local icons = require("core.utils.icons")
 
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
@@ -109,23 +108,15 @@ local M = {
         highlight = "NeoTreeIndentMarker",
         -- expander config, needed for nesting files
         with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-        expander_collapsed = icons.ui.Folder,
-        expander_expanded = icons.ui.FolderOpen,
         expander_highlight = "NeoTreeExpander",
       },
       icon = {
-        folder_closed = icons.ui.Folder,
-        folder_open = icons.ui.FolderOpen,
-        folder_empty = icons.ui.FolderOpen,
         -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
         -- then these will never be used.
         default = "*",
         highlight = "NeoTreeFileIcon",
       },
-      modified = {
-        symbol = "[+] ",
-        highlight = "NeoTreeModified",
-      },
+      modified = { symbol = "[+] ", highlight = "NeoTreeModified" },
       name = {
         trailing_slash = false,
         use_git_status_colors = true,
