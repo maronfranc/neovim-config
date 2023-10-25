@@ -5,28 +5,12 @@ local M = {
   depedencies = { 'nvim-tree/nvim-web-devicons', opt = true },
   config = function()
     local lualine = require('lualine')
-    local icons = require('core.utils.nerdfonts-icons')
+    local icons = require('core.utils.icons')
     local colors = require("core.utils.colors")
     local web_devicons = require("nvim-web-devicons")
+
     local dynamic_color = require("core.utils.color-by-mode")
-    local color_by_mode = function()
-      return { fg = dynamic_color() }
-    end
-
-    local conditions = {
-      buffer_not_empty = function()
-        return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-      end,
-      hide_in_width = function()
-        return vim.fn.winwidth(0) > 80
-      end,
-      check_git_workspace = function()
-        local filepath = vim.fn.expand('%:p:h')
-        local gitdir = vim.fn.finddir('.git', filepath .. ';')
-        return gitdir and #gitdir > 0 and #gitdir < #filepath
-      end,
-    }
-
+    local function color_by_mode() return { fg = dynamic_color() } end
     local config = {
       options = {
         -- Disable sections and component separators
@@ -60,50 +44,54 @@ local M = {
         lualine_x = {},
       },
     }
-
     -- Inserts a component in lualine_c at left section
-    local function ins_left(component)
+    local function insert_left(component)
       table.insert(config.sections.lualine_c, component)
     end
     -- Inserts a component in lualine_x at right section
-    local function ins_right(component)
+    local function insert_right(component)
       table.insert(config.sections.lualine_x, component)
     end
 
-    ins_left {
-      function() return '▊' end,
-      color = color_by_mode,  -- Sets highlighting of component
-      padding = { left = 0 }, -- We don't need space before this
+    local conditions = {
+      buffer_not_empty = function()
+        local is_toggleterm = vim.bo.filetype == "toggleterm"
+        return not is_toggleterm and vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+      end,
+      hide_in_width = function() return vim.fn.winwidth(0) > 80 end,
+      -- check_git_workspace = function()
+      --   local filepath = vim.fn.expand('%:p:h')
+      --   local gitdir = vim.fn.finddir('.git', filepath .. ';')
+      --   return gitdir and #gitdir > 0 and #gitdir < #filepath
+      -- end,
     }
 
-    ins_left {
-      -- mode component
+    local section_rectangle = {
+      function() return '▊' end,
+      color = color_by_mode,
+      padding = { left = 0 }, -- We don't need left space before this
+    }
+    local section_file_icon = {
+      cond = conditions.hide_in_width,
       function()
         return web_devicons.get_icon_by_filetype(vim.bo.filetype, {
           default = true
         })
       end,
       color = color_by_mode,
-      padding = { right = 1 },
+      padding = { right = 0 },
     }
-
-    ins_left {
-      -- filesize component
+    local section_filesize = {
       'filesize',
       cond = conditions.buffer_not_empty,
     }
-
-    ins_left {
+    local section_filename = {
       'filename',
       cond = conditions.buffer_not_empty,
-      color = { fg = colors.magenta, gui = 'bold' },
+      color = { fg = "#ffffff", gui = 'bold' },
     }
-
-    ins_left { 'location' }
-
-    ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
-
-    ins_left {
+    local section_diagnostics = {
+      cond = conditions.hide_in_width,
       'diagnostics',
       sources = { 'nvim_diagnostic' },
       symbols = {
@@ -117,15 +105,7 @@ local M = {
         color_info = { fg = colors.cyan },
       },
     }
-
-    -- Insert mid section. You can make any number of sections in neovim :)
-    -- for lualine it's any number greater then 2
-    ins_left {
-      function() return '%=' end,
-    }
-
-    ins_left {
-      -- Lsp server name .
+    local section_lsp_server = {
       function()
         local inactive_msg = 'No Active Lsp'
         local clients = vim.lsp.get_active_clients()
@@ -146,31 +126,14 @@ local M = {
         return msg or inactive_msg
       end,
       icon = icons.ui.Code .. 'LSP:',
-      color = { fg = '#ffffff', gui = 'bold' },
+      color = { fg = '#ffffff'},
     }
-
-    -- Add components to right sections
-    -- ins_right {
-    --   'o:encoding',       -- option component same as &encoding in viml
-    --   fmt = string.upper, -- I'm not sure why it's upper case either ;)
-    --   cond = conditions.hide_in_width,
-    --   color = { fg = colors.green, gui = 'bold' },
-    -- }
-
-    -- ins_right {
-    --   'fileformat',
-    --   fmt = string.upper,
-    --   icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-    --   color = { fg = colors.green, gui = 'bold' },
-    -- }
-
-    ins_right {
+    local section_branch = {
       'branch',
       icon = icons.git.Branch,
       color = { fg = colors.violet, gui = 'bold' },
     }
-
-    ins_right {
+    local section_diff = {
       'diff',
       symbols = { added = icons.ui.Plus, modified = icons.ui.Mod, removed = icons.ui.Trash },
       diff_color = {
@@ -181,11 +144,33 @@ local M = {
       cond = conditions.hide_in_width,
     }
 
-    ins_right {
-      function() return '▊' end,
-      color = color_by_mode,
-      padding = { left = 1 },
-    }
+    insert_left(section_rectangle)
+    insert_left(section_filesize)
+    insert_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
+    insert_left(section_diagnostics)
+    -- Insert mid section. You can make any number of sections in neovim :)
+    -- for lualine it's any number greater then 2
+    insert_left { function() return '%=' end }
+    insert_left { 'location' }
+    insert_left(section_file_icon)
+    insert_left(section_filename)
+    insert_left(section_lsp_server)
+
+    -- insert_right {
+    --   'o:encoding',       -- option component same as &encoding in viml
+    --   fmt = string.upper, -- I'm not sure why it's upper case either ;)
+    --   cond = conditions.hide_in_width,
+    --   color = { fg = colors.green, gui = 'bold' },
+    -- }
+    -- insert_right {
+    --   'fileformat',
+    --   fmt = string.upper,
+    --   icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+    --   color = { fg = colors.green, gui = 'bold' },
+    -- }
+    insert_right(section_branch)
+    insert_right(section_diff)
+    insert_right(section_rectangle)
 
     lualine.setup(config)
   end
