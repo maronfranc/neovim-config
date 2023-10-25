@@ -16,8 +16,7 @@ With Emmet, you can type expressions (abbreviations) similar to CSS selectors an
   filetypes = {
     "html",
     "css", "less", "sass", "scss",
-    "javascript", "javascriptreact",
-    "svelte", "typescriptreact", "vue",
+    "javascriptreact", "typescriptreact", "svelte", "vue",
   },
   init_options = {
     html = { options = { ["bem.enabled"] = true } },

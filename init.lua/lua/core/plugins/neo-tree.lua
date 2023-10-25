@@ -2,7 +2,6 @@
 -- Neo-tree is a Neovim plugin to browse the file system and other tree like structures
 -- in whatever style suits you, including sidebars, floating windows, netrw split style,
 -- or all of them at once.
-
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
@@ -55,9 +54,9 @@ local M = {
       -- of the top visible node when scrolled down.
       tab_labels = {
         -- falls back to source_name if nil
-        filesystem = " Files ",
-        buffers = " Buffers ",
-        git_status = " Git ",
+        filesystem  = " Files ",
+        buffers     = " Buffers ",
+        git_status  = " Git ",
         diagnostics = " diagnostics ",
       },
       content_layout = "start", -- only with `tabs_layout` = "equal", "focus"
@@ -99,15 +98,15 @@ local M = {
         right_padding = 0,
       },
       indent = {
-        indent_size = 2,
-        padding = 1,
+        indent_size        = 2,
+        padding            = 1,
         -- indent guides
-        with_markers = true,
-        indent_marker = "│",
+        with_markers       = true,
+        indent_marker      = "│",
         last_indent_marker = "└",
-        highlight = "NeoTreeIndentMarker",
+        highlight          = "NeoTreeIndentMarker",
         -- expander config, needed for nesting files
-        with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+        with_expanders     = nil, -- if nil and file nesting is enabled, will enable expanders
         expander_highlight = "NeoTreeExpander",
       },
       icon = {
@@ -126,16 +125,16 @@ local M = {
         symbols = {
           -- NOTE: you can set any of these to an empty string to not show them
           -- Change type
-          added = "A",
-          deleted = "D",
-          modified = "M",
-          renamed = "R",
+          added     = "A",
+          deleted   = "D",
+          modified  = "M",
+          renamed   = "R",
           -- Status type
           untracked = "U",
-          ignored = "I",
-          unstaged = "U",
-          staged = "S",
-          conflict = "C",
+          ignored   = "I",
+          unstaged  = "U",
+          staged    = "S",
+          conflict  = "C",
         },
         align = "right",
       },
@@ -182,7 +181,7 @@ local M = {
       -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
       -- possible options. These can also be functions that return these options.
       position = "left", -- left, right, top, bottom, float, current
-      width = 30,        -- applies to left and right positions
+      width = 25,        -- applies to left and right positions
       height = 15,       -- applies to top and bottom positions
       popup = {
         -- settings that apply to float position only
@@ -195,9 +194,8 @@ local M = {
       -- You can also create your own commands by providing a function instead of a string.
       mapping_options = { noremap = true, nowait = true },
       mappings = {
-        -- ["C"] = "close_node",
         ["C"] = {
-          "toggle_node",
+          "toggle_node",  -- "close_node",
           nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
         },
         ["<2-LeftMouse>"] = "open",
@@ -217,7 +215,7 @@ local M = {
             show_path = "none", -- "none", "relative", "absolute"
           },
         },
-        ["A"] = "add_directory", -- also accepts the config.show_path option.
+        ["A"]  = "add_directory", -- also accepts the config.show_path option.
         ["dd"] = "delete",
         ["r"] = "rename",
         ["y"] = "copy_to_clipboard",
@@ -256,14 +254,14 @@ local M = {
       },
       window = {
         mappings = {
-          ["o"] = "system_open",
-          ["H"] = "toggle_hidden",
-          ["/"] = "fuzzy_finder",
-          ["D"] = "fuzzy_finder_directory",
-          ["f"] = "filter_on_submit",
-          ["."] = "set_root",
-          ["[g"] = "prev_git_modified",
-          ["]g"] = "next_git_modified",
+          ["o"]     = "system_open",
+          ["H"]     = "toggle_hidden",
+          ["/"]     = "fuzzy_finder",
+          ["D"]     = "fuzzy_finder_directory",
+          ["f"]     = "filter_on_submit",
+          ["."]     = "set_root",
+          ["[g"]    = "prev_git_modified",
+          ["]g"]    = "next_git_modified",
           ["<C-x>"] = "clear_filter",
           -- ["/"] = "filter_as_you_type", -- this was the default until v1.28
           -- ["<BS>"] = "navigate_up",
@@ -273,10 +271,10 @@ local M = {
       -- "auto"   means refreshes are async, but it's synchronous when called from the Neotree commands.
       -- "always" means directory scans are always async.
       -- "never"  means directory scans are never async.
-      bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
+      bind_to_cwd = true,   -- true creates a 2-way binding between vim's cwd and neo-tree's root
       cwd_target = {
-        sidebar = "tab",              -- sidebar is when position = left or right
-        current = "window",           -- current is when position = current
+        sidebar = "tab",    -- sidebar is when position = left or right
+        current = "window", -- current is when position = current
       },
       -- The renderer section provides the renderers that will be used to render the tree.
       --   The first level is the node type.
@@ -291,7 +289,7 @@ local M = {
         hide_dotfiles = false,
         hide_gitignored = false,
         hide_hidden = true, -- only works on Windows for hidden files/directories
-        hide_by_name = { "node_modules" },
+        hide_by_name = { "node_modules", "target" },
         hide_by_pattern = { -- uses glob style patterns
           --"*.meta",
         },
@@ -334,32 +332,32 @@ local M = {
       --  end
       --  return args
       --end,
-      group_empty_dirs = false, -- when true, empty folders will be grouped together
-      search_limit = 50,    -- max number of search results when using filters
+      group_empty_dirs = false,                  -- when true, empty folders will be grouped together
+      search_limit = 50,                         -- max number of search results when using filters
       follow_current_file = { enabled = false }, -- This will find and focus the file in the active buffer every time
       -- "disabled", netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
       -- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
       hijack_netrw_behavior = "open_default", -- "open_current",
-      use_libuv_file_watcher = false,          -- This will use the OS level file watchers to detect changes
+      use_libuv_file_watcher = false,         -- This will use the OS level file watchers to detect changes
       -- instead of relying on nvim autocmd events.
     },
     buffers = {
       bind_to_cwd = true,
       follow_current_file = { enabled = true }, -- This will find and focus the file in the active buffer every time
       -- the current file is changed while the tree is open.
-      group_empty_dirs = true,    -- when true, empty directories will be grouped together
+      group_empty_dirs = true,                  -- when true, empty directories will be grouped together
       window = {
         mappings = {
-          -- ["<bs>"] = "navigate_up",
-          ["."] = "set_root",
-          ["bd"] = "buffer_delete",
+          ["<bs>"] = "navigate_up",
+          ["."]    = "set_root",
+          ["bd"]   = "buffer_delete",
         },
       },
     },
     git_status = {
       window = {
         mappings = {
-          ["A"] = "git_add_all",
+          ["A"]  = "git_add_all",
           ["gu"] = "git_unstage_file",
           ["ga"] = "git_add_file",
           ["gr"] = "git_revert_file",
@@ -381,8 +379,8 @@ local M = {
       window = {
         mappings = {
           ["<cr>"] = "toggle_node",
-          ["e"] = "example_command",
-          ["d"] = "show_debug_info",
+          ["e"]    = "example_command",
+          ["d"]    = "show_debug_info",
         },
       },
     },

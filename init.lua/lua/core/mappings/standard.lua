@@ -51,4 +51,4 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
 
 vim.keymap.set("i", "<C-DEL>", "<C-o>de")
-vim.keymap.set("i", "<C-H>", "<C-o>db") -- <C-H>~=<C-BS>
+vim.keymap.set("i", "<C-H>", "<esc>dvbi") -- <C-H>~=<C-BS>

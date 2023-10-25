@@ -32,6 +32,11 @@ _G.F_map = function(tbl, f)
   return t
 end
 
+-- @see https://stackoverflow.com/questions/1410862/concatenation-of-tables-in-lua
+-- _G.f_merge_second_table = function(mut_table, t2)
+--   for i = 1, #t2 do mut_table[#mut_table + 1] = t2[i] end
+--   return mut_table
+-- end
 -- _G.F_print_table = function(t) print(table.concat(t, '\n')) end
 -- _G.F_path_exists = function(path)
 --   return vim.loop.fs_stat(path)
@@ -44,4 +49,3 @@ end
 --     return "Telescope find_files"
 --   end
 -- end
-

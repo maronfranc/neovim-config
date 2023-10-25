@@ -1,35 +1,56 @@
 -- @see https://github.com/hrsh7th/nvim-cmp
 -- @see https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
 -- @see https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-codicons-to-the-menu
--- A completion engine plugin for neovim written in Lua. Completion sources are installed
--- from external repositories and "sourced"
-
+-- @see https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua
+-- A completion engine plugin for neovim written in Lua.
+-- Completion sources are installed from external repositories and "sourced"
 local M = {
   "hrsh7th/nvim-cmp",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-calc",
-    "lukas-reineke/cmp-rg",
-    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-nvim-lsp",                -- LSP source for nvim-cmp
+    "hrsh7th/cmp-buffer",                  -- To enable other completions
+    "hrsh7th/cmp-cmdline",                 -- For ":", "/", "?" and possibly other buffers.
+    "hrsh7th/cmp-path",                    -- For file path.
+    "neovim/nvim-lspconfig",               -- Collection of configurations for built-in LSP client
+    "hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures with the current parameter emphasized
+    "L3MON4D3/LuaSnip",                    -- Snippets plugin.
+    "saadparwaiz1/cmp_luasnip",            -- Snippets source for nvim-cmp.
   },
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    local selectOption = 
+
+    local function next_cmp_or_snippet(fallback)
+      if cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+      elseif luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end
+    local function previous_cmp_or_snippet(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end
+
     cmp.setup({
-      complete = { completeopt="menu,menuone,noinsert,noselect" },
-      preselect = require('cmp').PreselectMode.None,
+      complete = { completeopt = "menu,menuone,noinsert,noselect" },
+      preselect = cmp.PreselectMode.None,
       formatting = {
         format = function(entry, vim_item)
-          -- vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+          -- string.format("%s %s", icons[vim_item.kind], vim_item.kind)
+          vim_item.kind = string.sub(vim_item.kind, 0, 4)
           vim_item.menu = ({
-            buffer = "[ ]",
-            nvim_lsp = "[ ]",
-            luasnip = "[󱉥 ]",
             -- copilot = "[ ]",
+            luasnip  = "[󰢱 ]",
+            nvim_lsp = "[ ]",
+            buffer   = "[ ]",
           })[entry.source.name]
           vim_item.abbr = string.gsub(vim_item.abbr, "%(.+%)", "")
           return vim_item
@@ -38,7 +59,9 @@ local M = {
       snippet = {
         expand = function(args) luasnip.lsp_expand(args.body) end,
       },
-      mapping = {
+      mapping = cmp.mapping.preset.insert({
+        ["<C-j>"] = cmp.mapping(next_cmp_or_snippet, { "i", "c" }),
+        ["<C-k>"] = cmp.mapping(previous_cmp_or_snippet, { "i", "c" }),
         -- @fixme: not working maybe this issue.
         -- @see: https://github.com/hrsh7th/nvim-cmp/issues/1074
         ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
@@ -57,40 +80,20 @@ local M = {
           }),
           { 'i', 'c' }
         ),
-        ["<C-j>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-          else fallback() end
-        end, { "i", "s" }),
-        ["<C-k>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
-          else fallback() end
-        end, { "i", "s" }),
-        -- ["<TAB>"] =  cmp.mapping(function(fallback)
-        --     if cmp.visible() and cmp.get_active_entry() then
-        --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace })
-        --     elseif luasnip.expand_or_locally_jumpable() then
-        --       luasnip.expand_or_jump()
-        --     else
-        --       fallback()
-        --     end
-        --   end, { "i", "s" }),
-      },
+      }),
       sources = {
-          { name = "nvim_lsp" },
-          { name = "nvim_lsp_signature_help" },
-          { name = "buffer", keyword_length = 5 },
-          { name = "luasnip" },
-          { name = "calc" },
-          { name = "path" },
-          { name = "rg", keyword_length = 5 },
-        },
+        { name = "luasnip" },
+        { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help" },
+        { name = "buffer",                 keyword_length = 5 },
+        { name = "path" },
+      },
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
     })
+
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline("/", {
       mapping = cmp.mapping.preset.cmdline(),
@@ -101,10 +104,20 @@ local M = {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = "path" },
+        {
+          name = 'luasnip',
+          -- option = {
+          --   use_show_condition = false,
+          --   show_autosnippets = true,
+          -- }
+        },
       }, {
         { name = "cmdline" },
       }),
     })
+
+    require("core.plugins.snippets.lua.js_and_ts").load_snippets()
+    require("core.plugins.snippets.lua.go").load_snippets()
   end,
 }
 
