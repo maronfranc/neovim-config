@@ -5,7 +5,7 @@ local M = {
   depedencies = { 'nvim-tree/nvim-web-devicons', opt = true },
   config = function()
     local lualine = require('lualine')
-    local icons = require('core.utils.icons')
+    local icons = require('core.utils.nerdfonts-icons')
     local colors = require("core.utils.colors")
     local web_devicons = require("nvim-web-devicons")
     local dynamic_color = require("core.utils.color-by-mode")
@@ -79,7 +79,6 @@ local M = {
     ins_left {
       -- mode component
       function()
-        -- return ''
         return web_devicons.get_icon_by_filetype(vim.bo.filetype, {
           default = true
         })
