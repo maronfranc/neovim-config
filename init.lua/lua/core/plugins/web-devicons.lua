@@ -25,6 +25,7 @@ local M = {
       -- takes effect when `strict` is true
       override_by_extension = {
         ["env"] = { icon = "", color = color.yellow, name = "Environment" },
+        ["conf"] = { icon = "󰒓", color = color.darkblue, name = "Configuration" },
       },
     })
   end

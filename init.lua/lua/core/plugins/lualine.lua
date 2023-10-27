@@ -11,6 +11,7 @@ local M = {
 
     local dynamic_color = require("core.utils.color-by-mode")
     local function color_by_mode() return { fg = dynamic_color() } end
+
     local config = {
       options = {
         -- Disable sections and component separators
@@ -72,13 +73,17 @@ local M = {
       padding = { left = 0 }, -- We don't need left space before this
     }
     local section_file_icon = {
-      cond = conditions.hide_in_width,
+      cond = conditions.buffer_not_empty,
       function()
-        return web_devicons.get_icon_by_filetype(vim.bo.filetype, {
-          default = true
-        })
+        return web_devicons
+        .get_icon_by_filetype(vim.bo.filetype, { default = true })
       end,
-      color = color_by_mode,
+      color = function()
+        local _, color_by_filetype = web_devicons
+          .get_icon_color_by_filetype(vim.bo.filetype)
+        return { fg = color_by_filetype }
+      end,
+      -- color = color_by_filetype,
       padding = { right = 0 },
     }
     local section_filesize = {
@@ -126,7 +131,7 @@ local M = {
         return msg or inactive_msg
       end,
       icon = icons.ui.Code .. 'LSP:',
-      color = { fg = '#ffffff'},
+      color = { fg = '#ffffff' },
     }
     local section_branch = {
       'branch',
@@ -168,8 +173,8 @@ local M = {
     --   icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
     --   color = { fg = colors.green, gui = 'bold' },
     -- }
-    insert_right(section_branch)
     insert_right(section_diff)
+    insert_right(section_branch)
     insert_right(section_rectangle)
 
     lualine.setup(config)

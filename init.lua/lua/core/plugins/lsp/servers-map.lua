@@ -18,13 +18,13 @@ require_and_insert("lua_ls", lsp_module_map)
 require_and_insert("jsonls", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
 require_and_insert("rust_analyzer", lsp_module_map)
+-- require_and_insert("tailwindcss", lsp_module_map)
 require_and_insert("tsserver", lsp_module_map)
 
 local ensure_installed = _G.F_map(lsp_module_map, function(s)
   return s.serverName
 end)
 table.insert(ensure_installed, "eslint")
-table.insert(ensure_installed, "tailwindcss")
 
 -- Ensure tools (except LSPs) are installed
 local ensure_tools = {

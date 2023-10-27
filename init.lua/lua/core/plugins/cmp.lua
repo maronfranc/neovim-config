@@ -44,8 +44,8 @@ local M = {
       preselect = cmp.PreselectMode.None,
       formatting = {
         format = function(entry, vim_item)
-          -- string.format("%s %s", icons[vim_item.kind], vim_item.kind)
           vim_item.kind = string.sub(vim_item.kind, 0, 4)
+          -- icons[vim_item.kind], vim_item.kind
           vim_item.menu = ({
             -- copilot = "[ ]",
             luasnip  = "[󰢱 ]",
@@ -82,16 +82,34 @@ local M = {
         ),
       }),
       sources = {
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "buffer",                 keyword_length = 5 },
-        { name = "path" },
+        { priority = 10, name = "luasnip" },
+        { priority = 20, name = "nvim_lsp" },
+        { priority = 30, name = "nvim_lsp_signature_help" },
+        {
+          priority = 40,
+          keyword_length = 5,
+          name = "buffer",
+        },
+        { priority = 50, name = "path" },
       },
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
+      sorting = {
+        priority_weight = 1.0,
+        -- @see https://www.reddit.com/r/neovim/comments/14k7pbc/what_is_the_nvimcmp_comparatorsorting_you_are/
+        -- @see https://github.com/gennaro-tedesco/dotfiles/blob/4a175cce9f8f445543ac61cc6c4d6a95d6a6da10/nvim/lua/plugins/cmp.lua#L79-L88
+        comparators = {
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score, -- based on:  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+          cmp.config.compare.recently_used,
+          cmp.config.compare.kind,
+          -- cmp.config.compare.locality,
+          -- cmp.config.compare.order,
+        },
+      }
     })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -104,16 +122,17 @@ local M = {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = "path" },
-        {
-          name = 'luasnip',
-          -- option = {
-          --   use_show_condition = false,
-          --   show_autosnippets = true,
-          -- }
-        },
       }, {
         { name = "cmdline" },
       }),
+    })
+    -- Set configuration for specific filetype.
+    cmp.setup.filetype('gitcommit', {
+      sources = cmp.config.sources({
+        { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+      }, {
+        { name = 'buffer' },
+      })
     })
 
     require("core.plugins.snippets.lua.js_and_ts").load_snippets()
