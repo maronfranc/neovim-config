@@ -1,5 +1,5 @@
 -- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/jsonls.lua
-local util = require 'lspconfig/util'
+local util = require("lspconfig.util")
 
 local M = {}
 M.serverName = "jsonls"
@@ -12,8 +12,8 @@ M.setup = {
   root_dir = util.find_git_ancestor,
   single_file_support = true,
   docs = {
-  -- this language server config is in VSCode built-in package.json
-  description = [[
+    -- this language server config is in VSCode built-in package.json
+    description = [[
 https://github.com/hrsh7th/vscode-langservers-extracted
 
 vscode-json-language-server, a language server for JSON and JSON schema
@@ -41,4 +41,3 @@ capabilities = capabilities,
   },
 }
 return M
-

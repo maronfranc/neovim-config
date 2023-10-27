@@ -30,7 +30,6 @@ vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("i", "<C-c>", "<ESC>")
 vim.keymap.set("n", "<C-z>", "u")
-vim.keymap.set("n", "<C-e>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>a")
 vim.keymap.set("n", "<C-q>", ":q!")
@@ -51,4 +50,8 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
 
 vim.keymap.set("i", "<C-DEL>", "<C-o>de")
-vim.keymap.set("i", "<C-H>", "<esc>dvbi") -- <C-H>~=<C-BS>
+-- <C-H>~=<C-BS>. SEE: https://vi.stackexchange.com/questions/8603/what-does-ctrl-h-do
+--  there are certain control characters that map exactly to other keys, and console vim can not tell the difference between them <C-m> == <CR>, and <C-h> == <BS> and <C-[> == <ESC> and <C-j> is a newline. This means you cannot map to one of these key combos without getting the other one - DJMcMayhem
+vim.keymap.set("i", "<C-H>", "<esc>dvbi")
+vim.keymap.set("n", "<C-h>", "<CMD>:vertical resize +10<CR>", { silent = true })
+vim.keymap.set("n", "<C-l>", "<CMD>:vertical resize -10<CR>", { silent = true })
