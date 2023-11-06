@@ -25,7 +25,7 @@ M.load_snippets = function()
       t("func "), i(1), t("("), i(2), t(")"), i(3), t({ " {",
       "\t " }), i(0), t({ "",
       "}" })
-    })
+    }),
   }
 
   luasnip.add_snippets("go", go_snippets)

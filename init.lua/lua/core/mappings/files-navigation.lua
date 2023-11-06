@@ -28,7 +28,7 @@ vim.keymap.set("", "<LEADER>er", toggle_diagnostics, {
 
 _G.F_buffer_load_keys = function(bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+  -- vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
@@ -36,7 +36,7 @@ _G.F_buffer_load_keys = function(bufnr)
   vim.keymap.set('n', 'gtd', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  -- vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<LEADER>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<LEADER>fd', vim.lsp.buf.formatting, bufopts)
 end

@@ -32,8 +32,5 @@ M.setup = {
     maxPreload = 2000,
     preloadFileSize = 1000,
   },
-  -- format = {
-  --   enable = false, -- let null-ls handle the formatting
-  -- },
 }
 return M

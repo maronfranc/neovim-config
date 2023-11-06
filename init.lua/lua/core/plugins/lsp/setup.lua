@@ -6,7 +6,6 @@ if (not status_ok) then return end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- enable autocompletion via nvim-cmp
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local default_on_attach = function(_, bufnr)
   _G.F_buffer_load_keys(bufnr)

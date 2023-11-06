@@ -7,8 +7,6 @@ local M = {
     local lualine = require('lualine')
     local icons = require('core.utils.icons')
     local colors = require("core.utils.colors")
-    local web_devicons = require("nvim-web-devicons")
-
     local dynamic_color = require("core.utils.color-by-mode")
     local function color_by_mode() return { fg = dynamic_color() } end
 
@@ -19,7 +17,7 @@ local M = {
         section_separators = '',
         theme = {
           -- We are going to use lualine_c an lualine_x as left and
-          -- right section. Both are highlighted by c theme .  So we
+          -- right section. Both are highlighted by c theme.  So we
           -- are just setting default looks o statusline
           normal = { c = { fg = colors.fg, bg = colors.bg } },
           inactive = { c = { fg = colors.fg, bg = colors.bg } },
@@ -70,31 +68,63 @@ local M = {
     local section_rectangle = {
       function() return '▊' end,
       color = color_by_mode,
-      padding = { left = 0 }, -- We don't need left space before this
+      padding = { left = 0, right = 0 }, -- We don't need left space before this
     }
-    local section_file_icon = {
+    -- local section_filesize = {
+    --   'filesize',
+    --   cond = conditions.buffer_not_empty,
+    -- }
+    local section_foldername = {
+      'filename',
       cond = conditions.buffer_not_empty,
-      function()
-        return web_devicons
-        .get_icon_by_filetype(vim.bo.filetype, { default = true })
+      color = { fg = "#999999" },
+      -- 0: Just the filename
+      -- 1: Relative path
+      -- 2: Absolute path
+      -- 3: Absolute path, with tilde as the home directory
+      -- 4: Filename and parent dir, with tilde as the home directory
+      path = 4,
+      fmt = function(path, _) -- (path, context)
+        local folder_and_filename = vim.split(path, "/")
+        return " " .. folder_and_filename[1] .. "/"
       end,
-      color = function()
-        local _, color_by_filetype = web_devicons
-          .get_icon_color_by_filetype(vim.bo.filetype)
-        return { fg = color_by_filetype }
-      end,
-      -- color = color_by_filetype,
-      padding = { right = 0 },
+      padding = { right = 0, left = 0 },
+      symbols = { modified = "", readonly = "", unnamed = "", newfile = "" }
     }
-    local section_filesize = {
-      'filesize',
-      cond = conditions.buffer_not_empty,
-    }
+
     local section_filename = {
       'filename',
       cond = conditions.buffer_not_empty,
       color = { fg = "#ffffff", gui = 'bold' },
+      path = 0,
+      padding = { right = 0, left = 0 },
+      ---@todo Try to implement this regex in lua `([a-zA-Z-0-9]+)(?:\.[a-zA-Z-0-9]+)?\s*(.+)?`
+      ---Match: "filename.ext" and "filename.ext [+]" and "filename [+]" and "filename [+]" 
+      fmt = function(path, _) -- (path, context)
+        local REGEX_FILENAME_AND_EXT = "^([a-zA-Z-0-9]+)%.[a-zA-Z-0-9]+"
+        local REGEX_FILENAME = "^([a-zA-Z-0-9]+)"
+        local matched_filename =
+            path:match(REGEX_FILENAME_AND_EXT) or
+            path:match(REGEX_FILENAME)
+            or ""
+        if matched_filename == "" then return path end
+
+        local REGEX_ENDING_WITH_SYMBOLD = "%s+(.+)$"
+        local matched_symbold = path:match(REGEX_ENDING_WITH_SYMBOLD) or ""
+        return matched_symbold .. matched_filename
+      end,
     }
+
+    local section_file_icon = {
+      'filetype',
+      cond = conditions.buffer_not_empty,
+      colored = true,
+      icon_only = false,
+      icon = { align = 'right' }, -- Display filetype icon on the right hand side
+      fmt = function(ext_name, _) return "." .. ext_name end,
+      padding = { left = 0, right = 1 },
+    }
+
     local section_diagnostics = {
       cond = conditions.hide_in_width,
       'diagnostics',
@@ -110,6 +140,7 @@ local M = {
         color_info = { fg = colors.cyan },
       },
     }
+
     local section_lsp_server = {
       function()
         local inactive_msg = 'No Active Lsp'
@@ -133,34 +164,36 @@ local M = {
       icon = icons.ui.Code .. 'LSP:',
       color = { fg = '#ffffff' },
     }
+
     local section_branch = {
       'branch',
       icon = icons.git.Branch,
       color = { fg = colors.violet, gui = 'bold' },
     }
+
     local section_diff = {
       'diff',
+      cond = conditions.hide_in_width,
       symbols = { added = icons.ui.Plus, modified = icons.ui.Mod, removed = icons.ui.Trash },
       diff_color = {
         added = { fg = colors.green },
         modified = { fg = colors.orange },
         removed = { fg = colors.red },
       },
-      cond = conditions.hide_in_width,
     }
 
     insert_left(section_rectangle)
-    insert_left(section_filesize)
+    -- insert_left(section_filesize)
     insert_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
     insert_left(section_diagnostics)
+    insert_left { 'location' }
     -- Insert mid section. You can make any number of sections in neovim :)
     -- for lualine it's any number greater then 2
     insert_left { function() return '%=' end }
-    insert_left { 'location' }
-    insert_left(section_file_icon)
+    insert_left(section_foldername)
     insert_left(section_filename)
+    insert_left(section_file_icon)
     insert_left(section_lsp_server)
-
     -- insert_right {
     --   'o:encoding',       -- option component same as &encoding in viml
     --   fmt = string.upper, -- I'm not sure why it's upper case either ;)

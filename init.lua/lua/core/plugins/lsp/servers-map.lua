@@ -18,11 +18,10 @@ require_and_insert("lua_ls", lsp_module_map)
 require_and_insert("jsonls", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
 require_and_insert("rust_analyzer", lsp_module_map)
--- require_and_insert("tailwindcss", lsp_module_map)
 require_and_insert("tsserver", lsp_module_map)
 
-local ensure_installed = _G.F_map(lsp_module_map, function(s)
-  return s.serverName
+local ensure_installed = _G.F_map(lsp_module_map, function(m)
+  return m.serverName
 end)
 table.insert(ensure_installed, "eslint")
 

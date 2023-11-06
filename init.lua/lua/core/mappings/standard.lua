@@ -55,3 +55,6 @@ vim.keymap.set("i", "<C-DEL>", "<C-o>de")
 vim.keymap.set("i", "<C-H>", "<esc>dvbi")
 vim.keymap.set("n", "<C-h>", "<CMD>:vertical resize +10<CR>", { silent = true })
 vim.keymap.set("n", "<C-l>", "<CMD>:vertical resize -10<CR>", { silent = true })
+
+vim.keymap.set("n", "<C-k>", "5k", { silent = true })
+vim.keymap.set("n", "<C-j>", "5j", { silent = true })

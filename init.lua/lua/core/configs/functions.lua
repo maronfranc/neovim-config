@@ -24,14 +24,18 @@ _G.F_format_on_save = function(bufnr)
   })
 end
 
-_G.F_map = function(tbl, f)
+_G.F_map = function(tbl, fn)
   local t = {}
   for k, v in pairs(tbl) do
-    t[k] = f(v)
+    t[k] = fn(v)
   end
   return t
 end
 
+---@see http://lua-users.org/wiki/StringRecipes
+-- local function starts_with(str, start)
+--    return str:sub(1, #start) == start
+-- end
 -- @see https://stackoverflow.com/questions/1410862/concatenation-of-tables-in-lua
 -- _G.f_merge_second_table = function(mut_table, t2)
 --   for i = 1, #t2 do mut_table[#mut_table + 1] = t2[i] end
