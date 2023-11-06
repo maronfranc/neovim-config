@@ -1,0 +1,1 @@
+---@alias options { filetypes: string[]|nil, trigger_characters: string[]|nil }

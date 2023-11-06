@@ -16,7 +16,9 @@ vim.opt.rtp:prepend(lazypath)
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
 
+---@see https://github.com/folke/lazy.nvim#-plugin-spec
 require("lazy").setup("core.plugins", {
+  dir = "./local-plugins",
   -- defaults = { lazy = true },
   change_detection = {
     -- automatically check for config file changes and reload the ui
