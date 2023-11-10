@@ -1,5 +1,5 @@
--- @see https://github.com/nvim-lualine/lualine.nvim
--- A blazing fast and easy to configure Neovim statusline written in Lua.
+---A blazing fast and easy to configure Neovim statusline written in Lua.
+---@see https://github.com/nvim-lualine/lualine.nvim
 local M = {
   'nvim-lualine/lualine.nvim',
   depedencies = { 'nvim-tree/nvim-web-devicons', opt = true },
@@ -9,48 +9,6 @@ local M = {
     local colors = require("core.utils.colors")
     local dynamic_color = require("core.utils.color-by-mode")
     local function color_by_mode() return { fg = dynamic_color() } end
-
-    local config = {
-      options = {
-        -- Disable sections and component separators
-        component_separators = '',
-        section_separators = '',
-        theme = {
-          -- We are going to use lualine_c an lualine_x as left and
-          -- right section. Both are highlighted by c theme.  So we
-          -- are just setting default looks o statusline
-          normal = { c = { fg = colors.fg, bg = colors.bg } },
-          inactive = { c = { fg = colors.fg, bg = colors.bg } },
-        },
-      },
-      sections = {
-        -- these are to remove the defaults
-        lualine_a = {},
-        lualine_b = {},
-        lualine_y = {},
-        lualine_z = {},
-        -- These will be filled later
-        lualine_c = {},
-        lualine_x = {},
-      },
-      inactive_sections = {
-        -- these are to remove the defaults
-        lualine_a = {},
-        lualine_b = {},
-        lualine_y = {},
-        lualine_z = {},
-        lualine_c = {},
-        lualine_x = {},
-      },
-    }
-    -- Inserts a component in lualine_c at left section
-    local function insert_left(component)
-      table.insert(config.sections.lualine_c, component)
-    end
-    -- Inserts a component in lualine_x at right section
-    local function insert_right(component)
-      table.insert(config.sections.lualine_x, component)
-    end
 
     local conditions = {
       buffer_not_empty = function()
@@ -70,10 +28,6 @@ local M = {
       color = color_by_mode,
       padding = { left = 0, right = 0 }, -- We don't need left space before this
     }
-    -- local section_filesize = {
-    --   'filesize',
-    --   cond = conditions.buffer_not_empty,
-    -- }
     local section_foldername = {
       'filename',
       cond = conditions.buffer_not_empty,
@@ -91,6 +45,14 @@ local M = {
       padding = { right = 0, left = 0 },
       symbols = { modified = "", readonly = "", unnamed = "", newfile = "" }
     }
+    local section_absolute_path = {
+      'filename',
+      cond = function()
+        return conditions.buffer_not_empty() and conditions.hide_in_width()
+      end,
+      fmt = function(path, _) return " " .. path end,
+      path = 3,
+    }
 
     local section_filename = {
       'filename',
@@ -99,9 +61,9 @@ local M = {
       path = 0,
       padding = { right = 0, left = 0 },
       ---@todo Try to implement this regex in lua `([a-zA-Z-0-9]+)(?:\.[a-zA-Z-0-9]+)?\s*(.+)?`
-      ---Match: "filename.ext" and "filename.ext [+]" and "filename [+]" and "filename [+]" 
+      ---Match: "filename.ext" and "filename.ext [+]" and "filename [+]" and "filename [+]"
       fmt = function(path, _) -- (path, context)
-        local REGEX_FILENAME_AND_EXT = "^([a-zA-Z-0-9]+)%.[a-zA-Z-0-9]+"
+        local REGEX_FILENAME_AND_EXT = "^([a-zA-Z-0-9_-]+)%.[a-zA-Z-0-9]+"
         local REGEX_FILENAME = "^([a-zA-Z-0-9]+)"
         local matched_filename =
             path:match(REGEX_FILENAME_AND_EXT) or
@@ -140,6 +102,10 @@ local M = {
         color_info = { fg = colors.cyan },
       },
     }
+
+    ---Insert mid section. You can make any number of sections in neovim :)
+    ---for lualine it's any number greater then 2
+    local section_empty_space = { function() return '%=' end }
 
     local section_lsp_server = {
       function()
@@ -182,35 +148,49 @@ local M = {
       },
     }
 
-    insert_left(section_rectangle)
-    -- insert_left(section_filesize)
-    insert_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
-    insert_left(section_diagnostics)
-    insert_left { 'location' }
-    -- Insert mid section. You can make any number of sections in neovim :)
-    -- for lualine it's any number greater then 2
-    insert_left { function() return '%=' end }
-    insert_left(section_foldername)
-    insert_left(section_filename)
-    insert_left(section_file_icon)
-    insert_left(section_lsp_server)
-    -- insert_right {
-    --   'o:encoding',       -- option component same as &encoding in viml
-    --   fmt = string.upper, -- I'm not sure why it's upper case either ;)
-    --   cond = conditions.hide_in_width,
-    --   color = { fg = colors.green, gui = 'bold' },
-    -- }
-    -- insert_right {
-    --   'fileformat',
-    --   fmt = string.upper,
-    --   icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-    --   color = { fg = colors.green, gui = 'bold' },
-    -- }
-    insert_right(section_diff)
-    insert_right(section_branch)
-    insert_right(section_rectangle)
-
-    lualine.setup(config)
+    lualine.setup({
+      options = {
+        -- Disable sections and component separators
+        component_separators = '',
+        section_separators = '',
+        theme = {
+          normal = { c = { fg = colors.fg, bg = colors.bg } },
+          inactive = { c = { fg = colors.fg, bg = colors.bg } },
+        },
+      },
+      sections = {
+        lualine_a = {},
+        lualine_b = { section_branch },
+        lualine_c = {
+          section_rectangle,
+          section_diff,
+          section_empty_space,
+          section_foldername,
+          section_filename,
+          section_file_icon,
+          section_lsp_server,
+        },
+        lualine_x = { section_diagnostics, section_rectangle },
+        lualine_y = {
+          { 'progress', color = { fg = colors.fg, gui = 'bold' } },
+          { 'location' },
+        },
+        lualine_z = {},
+      },
+      inactive_sections = {
+        -- Empty values to remove defaults
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+          section_rectangle,
+          section_empty_space,
+          section_absolute_path,
+        },
+        lualine_x = { section_rectangle },
+        lualine_y = {},
+        lualine_z = {},
+      },
+    })
   end
 }
 return M
