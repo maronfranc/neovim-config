@@ -1,5 +1,6 @@
 local M = {}
 
+local MAX_COL = 90
 local HIGHLIGHTS = {
   native = {
     [vim.diagnostic.severity.ERROR] = "DiagnosticVirtualTextError",
@@ -36,7 +37,7 @@ local function distance_between_cols(bufnr, lnum, start_col, end_col)
   end
 
   local sub = string.sub(lines[1], start_col, end_col)
-  return vim.fn.strdisplaywidth(sub, 0) -- these are indexed starting at 0
+  return vim.fn.strdisplaywidth(sub, 0) or 0 -- these are indexed starting at 0
 end
 
 ---@param namespace number
@@ -65,10 +66,30 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
   end)
 
   vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
-  if #diagnostics == 0 then
-    return
-  end
+  if #diagnostics == 0 then return end
+
   local highlight_groups = HIGHLIGHTS[source or "native"]
+  ---If a msg line is above max column value
+  ---@param msg_line string
+  ---@param max_col integer
+  local function wrap_msg_by_col(msg_line, max_col)
+    local msgs = {}
+    for i = 1, #msg_line, max_col do
+      if i == 1 then
+        msgs[#msgs + 1] = msg_line:sub(i, i + max_col - 1) .. " "
+      else
+        msgs[#msgs + 1] = "  " .. msg_line:sub(i, i + max_col - 1)
+      end
+    end
+    return msgs
+  end
+  local function insert_line(virt_lines, msg_line, left, center, diagnostic)
+    local vline = {}
+    vim.list_extend(vline, left)
+    vim.list_extend(vline, center)
+    vim.list_extend(vline, { { msg_line, highlight_groups[diagnostic.severity] } })
+    table.insert(virt_lines, vline)
+  end
 
   -- This loop reads line by line, and puts them into stacks with some
   -- extra data, since rendering each line will require understanding what
@@ -175,20 +196,25 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
         -- b. Has enough space on the left.
         -- c. Is just one line.
         -- d. Is not an overlap.
-
         local msg
         if diagnostic.code then
           msg = string.format("%s: %s", diagnostic.code, diagnostic.message)
         else
           msg = diagnostic.message
         end
-        for msg_line in msg:gmatch("([^\n]+)") do
-          local vline = {}
-          vim.list_extend(vline, left)
-          vim.list_extend(vline, center)
-          vim.list_extend(vline, { { msg_line, highlight_groups[diagnostic.severity] } })
 
-          table.insert(virt_lines, vline)
+        for msg_line in msg:gmatch("([^\n]+)") do
+          local available_col = MAX_COL - (diagnostic.col or 0)
+          local is_line_too_long = available_col < string.len(msg_line)
+          if not is_line_too_long then
+            insert_line(virt_lines, msg_line, left, center, diagnostic)
+          else
+            local lines = wrap_msg_by_col(msg_line, available_col)
+            for _, l in ipairs(lines) do
+              ---@FIXME: add "│" overlap if not last iteration.
+              insert_line(virt_lines, l, left, center, diagnostic)
+            end
+          end
 
           -- Special-case for continuation lines:
           if overlap then
