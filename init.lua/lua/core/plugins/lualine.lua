@@ -149,6 +149,7 @@ local M = {
     }
 
     lualine.setup({
+      disabled_buftypes = { 'quickfix', 'prompt' }, -- Hide a window if its buffer's type is disabled
       options = {
         -- Disable sections and component separators
         component_separators = '',
@@ -158,6 +159,7 @@ local M = {
           inactive = { c = { fg = colors.fg, bg = colors.bg } },
         },
       },
+      -- winbar = {}, inactive_winbar = {}, top bar
       sections = {
         lualine_a = {},
         lualine_b = { section_branch },

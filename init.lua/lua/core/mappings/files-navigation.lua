@@ -39,4 +39,5 @@ _G.F_buffer_load_keys = function(bufnr)
   -- vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<LEADER>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<LEADER>fd', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<LEADER>fd', vim.lsp.buf.formatting, bufopts)
 end

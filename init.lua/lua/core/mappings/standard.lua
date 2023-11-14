@@ -4,6 +4,7 @@ vim.g.mapleader = " "
 -- vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
 
 vim.keymap.set("n", "<leader>fo", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
 
 -- move highlighted lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -29,12 +30,14 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("i", "<C-c>", "<ESC>")
+
+-- vim.keymap.set("n", "<C-z>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<C-z>", "u")
 vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>a")
 vim.keymap.set("n", "<C-q>", ":q!")
 vim.keymap.set("i", "<C-q>", "<ESC>:q!")
-vim.keymap.set("n", "<C-w>", ":wqa")
+vim.keymap.set("n", "<C-w>", ":wq")
 
 -- quickfix
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
