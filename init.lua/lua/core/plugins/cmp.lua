@@ -143,6 +143,8 @@ local M = {
         -- @see https://github.com/gennaro-tedesco/dotfiles/blob/4a175cce9f8f445543ac61cc6c4d6a95d6a6da10/nvim/lua/plugins/cmp.lua#L79-L88
         comparators = {
           -- cmp.config.compare.exact,
+          cmp.config.compare.order,
+          cmp.config.compare.scopes,
           cmp.config.compare.locality,
           cmp.config.compare.kind,
           cmp.config.compare.recently_used,
