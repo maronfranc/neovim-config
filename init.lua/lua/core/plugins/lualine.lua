@@ -83,7 +83,12 @@ local M = {
       colored = true,
       icon_only = false,
       icon = { align = 'right' }, -- Display filetype icon on the right hand side
-      fmt = function(ext_name, _) return "." .. ext_name end,
+      fmt = function(ext_name, _)
+        -- if ext_name then return "." .. ext_name end
+        -- return ""
+        -- if not ext_name then return "" end
+        return "." .. ext_name
+      end,
       padding = { left = 0, right = 1 },
     }
 

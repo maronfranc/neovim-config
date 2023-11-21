@@ -1,8 +1,9 @@
 local function require_and_insert(lsp_name, lsp_setting_map)
   local path = "core.plugins.lsp.servers." .. lsp_name
+  -- print(path)
   local ok, lsp_module = pcall(require, path)
   if (not ok) then
-    print.except("[Error require_and_insert()] path: ", path)
+    print("[Error require_and_insert()] path: ", path)
     return
   end
   table.insert(lsp_setting_map, lsp_module)
@@ -18,6 +19,7 @@ require_and_insert("lua_ls", lsp_module_map)
 require_and_insert("jsonls", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
 require_and_insert("rust_analyzer", lsp_module_map)
+require_and_insert("sqlls", lsp_module_map)
 require_and_insert("tsserver", lsp_module_map)
 
 local ensure_installed = _G.F_map(lsp_module_map, function(m)

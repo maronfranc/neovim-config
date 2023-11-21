@@ -183,6 +183,9 @@ local M = {
     require("core.plugins.snippets.lua.lua").load_snippets()
     require("core.plugins.snippets.lua.js_and_ts").load_snippets()
     require("core.plugins.snippets.lua.go").load_snippets()
+    require("core.plugins.snippets.lua.markdown").load_snippets()
+    require("core.plugins.snippets.lua.rust").load_snippets()
+    require("core.plugins.snippets.lua.sql_postgres").load_snippets()
   end,
 }
 return M

@@ -92,11 +92,7 @@ local M = {
       highlight_separator_active = "NeoTreeTabSeparatorActive",
     },
     default_component_configs = {
-      container = {
-        enable_character_fade = true,
-        width = "100%",
-        right_padding = 0,
-      },
+      container = { enable_character_fade = true, width = "100%", right_padding = 0 },
       indent = {
         indent_size        = 2,
         padding            = 1,
@@ -166,7 +162,7 @@ local M = {
             { "modified",    zindex = 20, align = "right" },
             { "diagnostics", zindex = 20, align = "right" },
             { "git_status",  zindex = 20, align = "right" },
-            -- { "symlink_target", zindex = 10, highlight = "NeoTreeSymbolicLinkTarget" },
+            { "symlink_target", zindex = 10, highlight = "NeoTreeSymbolicLinkTarget" },
           },
         },
       },
@@ -181,7 +177,7 @@ local M = {
       -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
       -- possible options. These can also be functions that return these options.
       position = "left", -- left, right, top, bottom, float, current
-      width = 20,        -- applies to left and right positions
+      width = 25,        -- applies to left and right positions
       height = 15,       -- applies to top and bottom positions
       popup = {
         -- settings that apply to float position only
@@ -207,7 +203,7 @@ local M = {
         ["P"] = "toggle_preview",
         ["z"] = "close_all_nodes",
         ["Z"] = "expand_all_nodes",
-        ["R"] = "refresh",
+        ["<C-r>"] = "refresh",
         ["a"] = {
           "add",
           -- some commands may take optional config options, see `:h neo-tree-mappings` for details

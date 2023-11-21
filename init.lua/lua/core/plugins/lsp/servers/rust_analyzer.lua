@@ -1,5 +1,5 @@
 -- @see https://github.com/pwntester/nvim-lsp/blob/master/lua/nvim_lsp/rust_analyzer.lua
-local util = require("lspconfig/util")
+local util = require("lspconfig.util")
 local M = {}
 M.serverName = "rust_analyzer"
 M.setup = {
