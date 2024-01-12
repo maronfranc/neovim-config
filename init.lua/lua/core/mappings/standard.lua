@@ -34,7 +34,8 @@ vim.keymap.set("i", "<C-c>", "<ESC>")
 -- vim.keymap.set("n", "<C-z>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<C-z>", "u")
 vim.keymap.set("n", "<C-s>", ":w<CR>")
-vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>a")
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>")
 vim.keymap.set("n", "<C-q>", ":q!")
 vim.keymap.set("i", "<C-q>", "<ESC>:q!")
 vim.keymap.set("n", "<C-w>", ":wq")
@@ -61,3 +62,13 @@ vim.keymap.set("n", "<C-l>", "<CMD>:vertical resize -10<CR>", { silent = true })
 
 vim.keymap.set("n", "<C-k>", "5k", { silent = true })
 vim.keymap.set("n", "<C-j>", "5j", { silent = true })
+
+---@see https://stackoverflow.com/a/2148055
+vim.keymap.set("n", "<LEADER>dpsa", [[ciw'<C-r>''<ESC>]])  -- wrap in single quotes.
+vim.keymap.set("n", "<LEADER>dpda", [[ciw""<ESC>P]])       -- wrap in double quotes.
+vim.keymap.set("n", "<LEADER>dpas", [[di'hPl2x]])          -- unwrap single quotes.
+vim.keymap.set("n", "<LEADER>dpad", [[di"hPl2x]])          -- unwrap double quotes.
+vim.keymap.set("n", "<LEADER>dpsd", [[di'h2"_xi""<ESC>P]]) -- change single quote to double.
+vim.keymap.set("n", "<LEADER>dpds", [[di"h2"_xi''<ESC>P]]) -- change double quote to single.
+
+vim.keymap.set("n", "<LEADER>rp", [["_dawP]]) -- replace word with yanked value.
