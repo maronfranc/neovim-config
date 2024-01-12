@@ -1,4 +1,4 @@
-local util = require 'lspconfig.util'
+local util = require('lspconfig.util')
 
 local M = {}
 M.serverName = "tsserver"
@@ -7,7 +7,7 @@ M.setup = {
   -- Don't forget to install typescript language server itself:
   -- npm i -g typescript-language-server
   cmd = { "typescript-language-server", "--stdio" },
-  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  filetypes = { "javascript", "typescript", "typescriptreact", "typescript.tsx" },
   root_dir = util.root_pattern("package.json"),
   on_attach = function(client, bufnr)
     if client.server_capabilities.documentFormattingProvider then

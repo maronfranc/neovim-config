@@ -16,13 +16,14 @@ M.load_snippets = function()
     s("nononunu", { t("NOT NULL") }),
     s("create_table_if_not_exists", {
       t("CREATE TABLE IF NOT EXISTS "), i(1), t({ " (",
-      "" }), i(0), t({ "",
+      "\t" }), i(0), t({ "",
       ")" })
     }),
     s("column_id_primary", { t("id SERIAL PRIMARY KEY,", i(0)) }),
-    s("column_varchar_255", { i(1), t(" VARCHAR(255),"), i(0) }),
+    s("column_varchar_255", { i(1), t(" VARCHAR("), i(2), t("255),"), i(0) }),
     s("column_int", { i(1), t(" INT,"), i(0) }),
     s("column_timestamp", { i(1), t(" TIMESTAMP,"), i(0) }),
+    s("column_decimal", { i(1), t(" DECIMAL("), i(2), t("10,2),"), i(0) }),
     s("constraint_unique", t("CONSTRAINT "), i(1), t("UNIQUE,")),
     s("constraint_check_length", {
       ---CONSTRAINT ${name } CHECK (LENGTH(${column_name}), >= ${length}),

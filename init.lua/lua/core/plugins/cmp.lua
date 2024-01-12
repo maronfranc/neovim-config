@@ -75,11 +75,13 @@ local M = {
           local NAME_LIMIT = 4
           local kind_name = string.sub(vim_item.kind, 0, NAME_LIMIT)
           local kind_icon = kind_icons[vim_item.kind]
+          -- if vim_item.kind == "Text" then return false end
+
           vim_item.kind = string.format('%s %s', kind_icon, kind_name)
           vim_item.menu = ({
             luasnip                 = "[󰢱",
             nvim_lsp                = "[",
-            buffer                  = "[󰂡",
+            -- buffer                  = "[󰂡",
             nvim_lsp_signature_help = "[.?",
             path                    = "[ ",
             cmp_css                 = "[",
@@ -94,22 +96,22 @@ local M = {
         { priority = 10, name = "luasnip" },
         { priority = 20, name = "nvim_lsp" },
         { priority = 30, name = "cmp_css" },
-        {
-          priority = 40,
-          name = "buffer",
-          option = {
-            ---@see https://github.com/hrsh7th/nvim-cmp/issues/32#issuecomment-900459735
-            get_bufnrs = function()
-              local bufs = {}
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                bufs[vim.api.nvim_win_get_buf(win)] = true
-              end
-              return vim.tbl_keys(bufs)
-            end
-          }
-        },
         { priority = 50, name = "path" },
         { priority = 90, name = "nvim_lsp_signature_help" },
+        -- {
+        --   priority = 40,
+        --   name = "buffer",
+        --   option = {
+        --     ---@see https://github.com/hrsh7th/nvim-cmp/issues/32#issuecomment-900459735
+        --     get_bufnrs = function()
+        --       local bufs = {}
+        --       for _, win in ipairs(vim.api.nvim_list_wins()) do
+        --         bufs[vim.api.nvim_win_get_buf(win)] = true
+        --       end
+        --       return vim.tbl_keys(bufs)
+        --     end
+        --   }
+        -- },
       },
       mapping = cmp.mapping.preset.insert({
         ["<C-j>"] = cmp.mapping(next_cmp_or_snippet, { "i", "c" }),
@@ -183,6 +185,7 @@ local M = {
     require("core.plugins.snippets.lua.lua").load_snippets()
     require("core.plugins.snippets.lua.js_and_ts").load_snippets()
     require("core.plugins.snippets.lua.go").load_snippets()
+    require("core.plugins.snippets.lua.html").load_snippets()
     require("core.plugins.snippets.lua.markdown").load_snippets()
     require("core.plugins.snippets.lua.rust").load_snippets()
     require("core.plugins.snippets.lua.sql_postgres").load_snippets()
