@@ -18,8 +18,8 @@ local M = {
     local setup_ok, _ = pcall(require, "core.plugins.lsp.setup")
     if (not setup_ok) then print("[Error] server setup error") end
 
-    local ok, lsp_lines = pcall(require, "core.plugins.lsp.lsp_lines")
-    if (not ok) then return end
+    local diagnostics_ok, lsp_lines = pcall(require, "core.plugins.lsp.lsp_lines")
+    if (not diagnostics_ok) then return end
     -- Disable error message in favor of lsp_lines
     lsp_lines.setup(); vim.diagnostic.config({ virtual_text = false })
 
@@ -37,7 +37,7 @@ local M = {
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
-        client.server_capabilities.semanticTokensProvider = nil
+        if client then client.server_capabilities.semanticTokensProvider = nil end
       end
     })
   end,

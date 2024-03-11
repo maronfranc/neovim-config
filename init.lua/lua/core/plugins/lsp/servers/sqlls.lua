@@ -1,5 +1,5 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/postgres_lsp.lua
-local util = require('lspconfig.util')
+-- local util = require('lspconfig.util')
 
 local M = {}
 M.serverName = 'sqlls'

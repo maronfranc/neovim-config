@@ -54,3 +54,8 @@ end
 --     return "Telescope find_files"
 --   end
 -- end
+-- function read_dir() 
+--   ---@see https://www.reddit.com/r/lua/comments/xpqabs/how_to_list_all_files_in_a_directory/
+--   path = [[ls -pa /home/user | grep -v /]] -- getcwd()
+--   for dir in io.popen(path):lines() do print(dir) end
+-- end

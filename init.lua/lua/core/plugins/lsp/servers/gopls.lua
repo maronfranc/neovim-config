@@ -6,6 +6,7 @@ local mod_cache = nil
 local M = {}
 M.serverName = "gopls"
 M.setup = {
+  -- go install golang.org/x/tools/gopls@latest
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
   gopls = {
@@ -13,7 +14,7 @@ M.setup = {
       nilness = true,
       unusedparams = true,
       unusedwrite = true,
-      useany = true,
+      useany = true
     },
     experimentalPostfixCompletions = true,
     gofumpt = true,

@@ -6,13 +6,11 @@ M.serverName = 'cssmodules_ls'
 M.setup = {
   default_config = {
     cmd = { 'cssmodules-language-server' },
-    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    filetypes = { 'javascriptreact', 'typescriptreact' },
     root_dir = util.find_package_json_ancestor,
   },
   ---@see https://github.com/antonk52/cssmodules-language-server
-  init_options = {
-    camelCase = 'dashes',
-  },
+  init_options = { camelCase = 'dashes' },
   docs = {
     description = [[
 https://github.com/antonk52/cssmodules-language-server

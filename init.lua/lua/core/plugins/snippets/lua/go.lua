@@ -21,11 +21,28 @@ M.load_snippets = function()
         "}",
       }),
     }),
-    s("function_def", {
+    s("func_def", {
       t("func "), i(1), t("("), i(2), t(")"), i(3), t({ " {",
       "\t " }), i(0), t({ "",
       "}" })
     }),
+    s("stringconcat",
+      t({ "fmt.Sprintf(", i(1), ")",
+        "" }, i(0)
+      )
+    ),
+    s("printerr", t("log.Printf(\"[Error]: %v\", err)")),
+    s("qqqeeqqeqe", {
+      t("log.Print(\""), i(1), t("\")")
+    }),
+    s("qqffqqff", {
+      t("log.Printf(\"[LOG]:%v\","), i(1), t(")"), t({ "", "" }), i(0)
+    }),
+    s("iferrnil", t({
+      "if err := p.Error(); err != nil {",
+      "\treturn (\"[Error]:%w\", err)",
+      "}",
+    }))
   }
 
   luasnip.add_snippets("go", go_snippets)

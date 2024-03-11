@@ -5,7 +5,7 @@ function CC_tab_size(n --[[int]])
 end
 
 local is_transparent = false
-local toggle_bg = function ()
+local toggle_bg = function()
   if is_transparent then
     is_transparent = false
     vim.opt.background = "dark" -- vim.cmd("set background=dark")
@@ -17,8 +17,7 @@ end
 
 vim.api.nvim_create_user_command(
   'CCBgTransparentToggle',
-  function () -- function(input) vim.print(input)
-    toggle_bg()
-  end,
+  -- function(input) vim.print(input) end
+  function() toggle_bg() end,
   { desc = 'Toggle transparent background' }
 )

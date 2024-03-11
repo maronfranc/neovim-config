@@ -52,18 +52,6 @@ local function buf_search(bufnr)
   end
 end
 
--- bufnr isn't actually required here, but we need a valid buffer in order to
--- be able to find the client for buf_request.
--- TODO find a client by looking through buffers for a valid client?
--- local function build_cancel_all(bufnr)
---   bufnr = util.validate_bufnr(bufnr)
---   local params = { token = "texlab-build-*" }
---   lsp.buf_request(bufnr, 'window/progress/cancel', params, function(err, method, result, client_id)
---     if err then error(tostring(err)) end
---     print("Cancel result", vim.inspect(result))
---   end)
--- end
-
 local M = {}
 M.serverName = "texlab"
 M.setup = {
@@ -75,7 +63,14 @@ M.setup = {
     texlab = {
       rootDirectory = nil,
       build = {
-        -- latex "my-file.tex" -halt-on-error --output-directory=./output-directory;
+        ---Debian based example of latex installation.
+        ---```bash
+        ---# Texlab required installation:
+        ---sudo apt install latexmk 
+        ---# Texlab commonly used packages:
+        ---sudo apt-get install texlive-latex-extra --no-install-recommends
+        ---sudo apt-get install texlive-fonts-extra
+        ---```
         executable = 'latexmk',
         args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
         onSave = true,

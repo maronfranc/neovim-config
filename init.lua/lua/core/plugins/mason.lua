@@ -10,13 +10,15 @@ local M = {
   config = function()
     require("mason").setup()
     local lsp_server = require("core.plugins.lsp.servers-map")
-    local mr = require("mason-registry")
+    local registry = require("mason-registry")
     local mason_config = require("mason-lspconfig")
 
     for _, tool in ipairs(lsp_server.ensure_tools) do
-      local p = mr.get_package(tool)
+      local p = registry.get_package(tool)
       if not p:is_installed() then p:install() end
     end
+
+    -- registry.refresh(function() mason_config.get_available_servers() end)
     -- LSPs that should be installed by Mason-lspconfig
     mason_config.setup({
       ensure_installed = lsp_server.ensure_installed,
