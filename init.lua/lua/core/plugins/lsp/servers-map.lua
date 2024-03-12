@@ -24,6 +24,7 @@ require_and_insert("rust_analyzer", lsp_module_map)
 require_and_insert("sqlls", lsp_module_map)
 require_and_insert("texlab", lsp_module_map)
 require_and_insert("tsserver", lsp_module_map)
+require_and_insert("vuels", lsp_module_map)
 
 local ensure_installed = _G.F_map_and_filter_nil(lsp_module_map, function(m)
   return m.serverName
