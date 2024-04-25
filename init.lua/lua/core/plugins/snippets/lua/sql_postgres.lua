@@ -54,7 +54,12 @@ M.load_snippets = function()
     }),
     s("comment_column", {
       t("COMMENT ON COLUMN "), i(1), t("."), i(2), t(" IS '"), i(3), t("'"), i(0),
-    })
+    }),
+    s("insert_into_table", {
+      t("INSERT INTO "), i(1), t("("), i(2), t({ ") VALUES",
+      "(" }), i(0), f(copy, 2), t({ ")",
+      "();"})
+    }),
   }
 
   luasnip.add_snippets("sql", lua_snippets)

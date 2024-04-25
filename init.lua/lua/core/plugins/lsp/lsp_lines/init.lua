@@ -1,7 +1,9 @@
--- Copied from: https://git.sr.ht/~whynothugo/
--- @see https://git.sr.ht/~whynothugo/lsp_lines.nvim
--- @see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/render.lua
--- @see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/init.lua
+---Copied from: https://git.sr.ht/~whynothugo/
+---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim
+---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/render.lua
+---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/init.lua
+---And other links:
+---@see https://www.reddit.com/r/neovim/comments/ve3k7s/what_are_the_plugins_that_utilizes_the_virt_lines/
 local M = {}
 
 local render = require("core.plugins.lsp.lsp_lines.render")
@@ -12,7 +14,7 @@ local function render_current_line(diagnostics, ns, bufnr, opts)
 
   for _, diagnostic in pairs(diagnostics) do
     local show = diagnostic.end_lnum and (lnum >= diagnostic.lnum and lnum <= diagnostic.end_lnum)
-      or (lnum == diagnostic.lnum)
+        or (lnum == diagnostic.lnum)
     if show then
       table.insert(current_line_diag, diagnostic)
     end
@@ -28,8 +30,8 @@ end
 ---@field only_current_line boolean Only render for current line
 ---@field highlight_whole_line boolean Highlight empty space to the left of a diagnostic
 
--- Registers a wrapper-handler to render lsp lines.
--- This should usually only be called once, during initialisation.
+---Registers a wrapper-handler to render lsp lines.
+---This should usually only be called once, during initialisation.
 M.setup = function()
   vim.api.nvim_create_augroup("LspLines", { clear = true })
   -- TODO: On LSP restart (e.g.: diagnostics cleared), errors don't go away.
@@ -74,6 +76,8 @@ end
 ---@return boolean
 M.toggle = function()
   local new_value = not vim.diagnostic.config().virtual_lines
+  vim.keymap.set("n", "<C-k>", "5k", { silent = true })
+  vim.keymap.set("n", "<C-j>", "5j", { silent = true })
   vim.diagnostic.config({ virtual_lines = new_value })
   return new_value
 end
