@@ -27,7 +27,7 @@ https://github.com/phpactor/phpactor
 Installation: https://phpactor.readthedocs.io/en/master/usage/standalone.html#global-installation
 ]],
   },
-  -- formatCommand = "echo aajajjboiajsoidjo",
+  -- formatCommand = "echo dev_test",
   -- formatStdin = true,
 }
 

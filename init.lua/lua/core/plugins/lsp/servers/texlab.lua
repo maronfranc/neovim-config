@@ -72,7 +72,8 @@ M.setup = {
         ---sudo apt-get install texlive-fonts-extra
         ---```
         executable = 'latexmk',
-        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
+        -- args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
+        args = { '-g', '-pdf', '-silent', '-f', '%f' },
         onSave = true,
         forwardSearchAfter = false,
       },

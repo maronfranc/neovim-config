@@ -1,3 +1,4 @@
+---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/vuels.lua
 local util = require('lspconfig.util')
 
 local M = {}

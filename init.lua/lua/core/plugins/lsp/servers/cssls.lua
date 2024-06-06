@@ -3,7 +3,7 @@ local M = {}
 M.serverName = "cssls"
 M.setup = {
   cmd = { "vscode-css-language-server", "--stdio"},
-  filetypes = { "html", "css" },
+  filetypes = { "css" },
   settings = {
     css = { validate = true },
   },
