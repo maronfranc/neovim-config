@@ -12,7 +12,9 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- common navigation
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-k>", "5k", { silent = true })
+vim.keymap.set("n", "<C-j>", "5jzz", { silent = true })
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "x", [["_x]]) -- "x" skip yank
@@ -41,8 +43,8 @@ vim.keymap.set("i", "<C-q>", "<ESC>:q!")
 vim.keymap.set("n", "<C-w>", ":wq")
 
 -- quickfix
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+-- vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
+-- vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
@@ -61,15 +63,20 @@ vim.keymap.set("i", "<C-H>", "<esc>dvbi")
 vim.keymap.set("n", "<C-h>", "<CMD>:vertical resize +10<CR>", { silent = true })
 vim.keymap.set("n", "<C-l>", "<CMD>:vertical resize -10<CR>", { silent = true })
 
-vim.keymap.set("n", "<C-k>", "5k", { silent = true })
-vim.keymap.set("n", "<C-j>", "5j", { silent = true })
 
 ---@see https://stackoverflow.com/a/2148055
-vim.keymap.set("n", "<LEADER>dpsa", [[ciw'<C-r>''<ESC>]])  -- wrap in single quotes.
-vim.keymap.set("n", "<LEADER>dpda", [[ciw""<ESC>P]])       -- wrap in double quotes.
-vim.keymap.set("n", "<LEADER>dpas", [[di'hPl2x]])          -- unwrap single quotes.
-vim.keymap.set("n", "<LEADER>dpad", [[di"hPl2x]])          -- unwrap double quotes.
-vim.keymap.set("n", "<LEADER>dpsd", [[di'h2"_xi""<ESC>P]]) -- change single quote to double.
-vim.keymap.set("n", "<LEADER>dpds", [[di"h2"_xi''<ESC>P]]) -- change double quote to single.
+---@fixme not working as expected yet.
+-- vim.keymap.set("n", "<LEADER>waqs", [[ciw'<C-r>''<ESC>]])  -- wrap in single quotes.
+-- vim.keymap.set("n", "<LEADER>waqd", [[ciw""<ESC>P]])       -- wrap in double quotes.
+-- vim.keymap.set("n", "<LEADER>dpas", [[di'hPl2x]])          -- unwrap single quotes.
+-- vim.keymap.set("n", "<LEADER>dpad", [[di"hPl2x]])          -- unwrap double quotes.
+-- vim.keymap.set("n", "<LEADER>dpsd", [[di'h2"_xi""<ESC>P]]) -- change single quote to double.
+-- vim.keymap.set("n", "<LEADER>dpds", [[di"h2"_xi''<ESC>P]]) -- change double quote to single.
 
 vim.keymap.set("n", "<LEADER>rp", [["_dawP]]) -- replace word with yanked value.
+
+vim.keymap.set("n", "<LEADER>v", [[f,a<CR><ESC>]]) -- add enter after comma.
+
+---CammelCase to snake_case.
+---@see https://www.reddit.com/r/vim/comments/lwr56a/search_and_replace_camelcase_to_snake_case/
+vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]])

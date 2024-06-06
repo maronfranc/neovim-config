@@ -285,9 +285,10 @@ local M = {
         hide_dotfiles = false,
         hide_gitignored = false,
         hide_hidden = true, -- only works on Windows for hidden files/directories
-        hide_by_name = { "node_modules", "target" },
+        hide_by_name = { "node_modules", "target", "__pycache__"},
         hide_by_pattern = { -- uses glob style patterns
-          --"*.meta",
+          "*.fls", "*.fdb_latexmk", "*.aux", "*.out", "*.synctex.gz", "*.dvi", -- LaTeX files
+          "*.log"
         },
         always_show = { -- remains visible even if other settings would normally hide it
           ".gitignored",

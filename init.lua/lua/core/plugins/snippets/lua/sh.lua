@@ -13,6 +13,11 @@ M.load_snippets = function()
         "" }), i(0)
     }),
     s("trycatch", t("{ # try } || { # catch }")),
+    s("default_variable", i(1), t('="${'), i(2), t(':-default_value}"')),
+    -- s('if_defined', t()),
+    -- if [ -z "$DB_HOST" ]; then
+    -- else
+    -- fi
   }
 
   luasnip.add_snippets("sh", lua_snippets)

@@ -47,7 +47,9 @@ M.load_snippets = function()
     -- }),
     s("foreign_column_complete", {
       i(1), t(" "), i(2), t(","), t({ "",
-      "" }), t("FOREIGN KEY ("), f(copy, 1), t(") REFERENCES "), i(3), t("(id)"), i(0),
+      "" }), t("FOREIGN KEY ("), f(copy, 1), t(") REFERENCES "), i(3), t({ "(id)",
+      "\tON DELETE RESTRICT ON UPDATE CASCADE" }),
+      i(0),
     }),
     s("comment_table", {
       t("COMMENT ON TABLE "), i(1), t(" IS '"), i(2), t("'"), i(0),
@@ -58,7 +60,7 @@ M.load_snippets = function()
     s("insert_into_table", {
       t("INSERT INTO "), i(1), t("("), i(2), t({ ") VALUES",
       "(" }), i(0), f(copy, 2), t({ ")",
-      "();"})
+      "();" })
     }),
   }
 

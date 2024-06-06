@@ -11,12 +11,12 @@ local M = {}
 M.load_snippets = function()
   local function js_console_log()
     return s("qqpppdqjwpjdojpasdpjoqjwdjqpjaposjdposjp", {
-      t("console.log"), t("(\""), i(1), t("\");", i(0))
+      t("console.log"), t("(\"| ----- | ----- | "), i(1), t(" | ----- | ----- | \");", i(0))
     })
   end
   local function js_console_log_2()
     return s("qqffppvv", {
-      t({ "console.log" }), t("(`[Log(${typeof "), f(copy, 1),t("}):"), f(copy, 1), t("]:`, "), i(1), t(");"), i(0)
+      t({ "console.log" }), t("(`[Log:"), f(copy, 1), t("]:`, "), i(1), t(");"), i(0)
     })
   end
   local function js_console_table()
@@ -47,8 +47,8 @@ M.load_snippets = function()
   local function both_for_let_i_loop()
     return s("for_let_i_loop", {
       -- t({ "for (let i = 0; i <= 5; i++) {",
-      t("for(let i=0; i<= "), i(1), t({".length; i++) {",
-        "" }), i(0), t({ "",
+      t("for(let i=0; i<= "), i(1), t({ ".length; i++) {",
+      "" }), i(0), t({ "",
       "}" })
     })
   end
@@ -79,6 +79,12 @@ M.load_snippets = function()
       t("function "), i(1), t("("), i(2), t({ ") {",
       "\t" }), i(0), t({ "",
       "}" }),
+    })
+  end
+
+  local function js_typedef_interface()
+    return s("@typedef interface", {
+      t(" * @typedef {"), i(1), t("}"), i(2),
     })
   end
 
@@ -157,7 +163,9 @@ M.load_snippets = function()
     both_supertest(),
     both_comment(),
     both_for_let_i_loop(),
+    js_typedef_interface(),
   }
+
   luasnip.add_snippets("javascript", js_snippets)
   luasnip.add_snippets("typescript", ts_snippets)
   luasnip.add_snippets("typescriptreact", ts_snippets)
