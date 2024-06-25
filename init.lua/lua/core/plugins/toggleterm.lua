@@ -13,7 +13,7 @@ local M = {
         if term.direction == "horizontal" then
           return 15
         elseif term.direction == "vertical" then
-          return vim.o.columns * 0.4
+          return vim.o.columns * 0.6
         end
       end,
       open_mapping = "<C-t>",

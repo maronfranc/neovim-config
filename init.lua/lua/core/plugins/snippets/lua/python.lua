@@ -19,6 +19,11 @@ M.load_snippets = function()
         "\tmain()",
       }),
     }),
+    s("iso now", {
+      t({ "from datetime import datetime",
+        "now = datetime.now().isoformat()"
+      }),
+    }),
     s("qqff", {
       t("print(f\"{"), i(1), t(" = }\")")
     }),
@@ -30,7 +35,7 @@ M.load_snippets = function()
     }),
     s("try_catch_except", {
       t({ "try:",
-          "\t"}), i(1),
+        "\t" }), i(1),
       t({ "except Exception as e: print(e)" }),
     }),
     s("import_from", { t("from "), i(1), t(" import "), i(0) }),

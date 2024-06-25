@@ -9,7 +9,7 @@ M.setup = {
     -- filetypes copied and adjusted from tailwindcss-intellisense
     filetypes = {
       -- html
-      'blade',
+      -- 'blade',
       'django-html',
       'gohtml',
       'gohtmltmpl',

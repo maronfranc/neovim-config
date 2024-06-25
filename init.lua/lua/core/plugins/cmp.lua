@@ -23,6 +23,7 @@ local M = {
     local kind_icons = require("core.utils.file-kind-icons")
     local css_cmp_ok, css_cmp = pcall(require, "core.local-plugins.nvim-cmp-css")
     if css_cmp_ok then css_cmp.setup() end
+    local snippets_setup = require("core.plugins.snippets.setup")
 
     local function next_cmp_or_snippet(fallback)
       if cmp.visible() then
@@ -44,7 +45,6 @@ local M = {
     end
     local function scroll_up(fallback)
       if cmp.visible() then
-        ---@todo look for better implementation
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -56,7 +56,6 @@ local M = {
     end
     local function scroll_down(fallback)
       if cmp.visible() then
-        ---@todo look for better implementation
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
@@ -71,6 +70,8 @@ local M = {
       complete = { completeopt = "menu,menuone,noinsert,noselect" },
       preselect = cmp.PreselectMode.None,
       formatting = {
+        expandable_indicator = true,
+        fields = { 'abbr', 'kind', 'menu' },
         format = function(entry, vim_item)
           local NAME_LIMIT = 4
           local kind_name = string.sub(vim_item.kind, 0, NAME_LIMIT)
@@ -98,20 +99,7 @@ local M = {
         { priority = 30, name = "cmp_css" },
         { priority = 50, name = "path" },
         { priority = 90, name = "nvim_lsp_signature_help" },
-        -- {
-        --   priority = 40,
-        --   name = "buffer",
-        --   option = {
-        --     ---@see https://github.com/hrsh7th/nvim-cmp/issues/32#issuecomment-900459735
-        --     get_bufnrs = function()
-        --       local bufs = {}
-        --       for _, win in ipairs(vim.api.nvim_list_wins()) do
-        --         bufs[vim.api.nvim_win_get_buf(win)] = true
-        --       end
-        --       return vim.tbl_keys(bufs)
-        --     end
-        --   }
-        -- },
+        -- { priority = 40, name = "buffer" },
       },
       mapping = cmp.mapping.preset.insert({
         ["<C-j>"] = cmp.mapping(next_cmp_or_snippet, { "i", "c" }),
@@ -167,28 +155,19 @@ local M = {
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-        { name = "path" },
-      }, {
-        { name = "cmdline" },
-      }),
+      sources = cmp.config.sources(
+        { { name = "path" } },
+        { { name = "cmdline" } }),
     })
     -- Set configuration for specific filetype.
     cmp.setup.filetype('gitcommit', {
-      sources = cmp.config.sources({
-        { name = 'git' }, -- You can specify the `git` source if installed(https://github.com/petertriho/cmp-git).
-      }, {
-        { name = 'buffer' },
-      })
+      sources = cmp.config.sources(
+      -- You can specify the `git` source if installed(https://github.com/petertriho/cmp-git).
+        { { name = 'git' } },
+        { { name = 'buffer' } })
     })
 
-    require("core.plugins.snippets.lua.lua").load_snippets()
-    require("core.plugins.snippets.lua.js_and_ts").load_snippets()
-    require("core.plugins.snippets.lua.go").load_snippets()
-    require("core.plugins.snippets.lua.html").load_snippets()
-    require("core.plugins.snippets.lua.markdown").load_snippets()
-    require("core.plugins.snippets.lua.rust").load_snippets()
-    require("core.plugins.snippets.lua.sql_postgres").load_snippets()
+    snippets_setup.load_snippets()
   end,
 }
 return M
