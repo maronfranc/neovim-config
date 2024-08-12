@@ -1,12 +1,12 @@
 --- Execute normal command and keep cursor initial position.
---- @param normal_cmd string
-local function keep_pos(normal_cmd)
-  return function()
-    local cursor_pos = vim.api.nvim_win_get_cursor(0)
-    vim.cmd('normal! ' .. normal_cmd)
-    vim.api.nvim_win_set_cursor(0, cursor_pos)
-  end
-end
+-- @param normal_cmd string
+-- local function keep_pos(normal_cmd)
+--   return function()
+--     local cursor_pos = vim.api.nvim_win_get_cursor(0)
+--     vim.cmd('normal! ' .. normal_cmd)
+--     vim.api.nvim_win_set_cursor(0, cursor_pos)
+--   end
+-- end
 
 vim.g.mapleader = " "
 
@@ -131,6 +131,57 @@ vim.keymap.set('n', '<LEADER>qs', add_single_quotes, {
 vim.keymap.set('n', '<LEADER>qb', add_backtick_quotes, {
   desc = 'Add backtick around the word under the cursor.',
 })
-vim.keymap.set('n', '<LEADER>dq', keep_pos([[di"hPl2"_x]]), {
-  desc = 'Remove double quote around the cursor.',
+
+local function is_cursor_inside(char)
+  local pos = vim.api.nvim_win_get_cursor(0)
+  local row, col = pos[1] - 1, pos[2]
+
+  local line = vim.api.nvim_buf_get_lines(0, row, row + 1, false)[1] or ""
+  local left_pos = line:sub(1, col)
+  local right_pos = line:sub(col + 1)
+
+  local count = 0
+  local counted_more_than_one = false
+  local inside = false
+
+  for i = 1, #left_pos do
+    if left_pos:sub(i, i) == char then
+      count = count + 1
+      counted_more_than_one = true
+    end
+  end
+  for i = 1, #right_pos do
+    if right_pos:sub(i, i) == char then
+      count = count - 1
+      counted_more_than_one = true
+    end
+  end
+
+  if count == 0 and counted_more_than_one then
+    inside = true
+  end
+
+  return inside
+end
+
+local function remove_quote_around()
+  local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+  if is_cursor_inside([["]]) then
+    vim.cmd([[normal! di"hPl2"_x]])
+  elseif is_cursor_inside([[']]) then
+    vim.cmd([[normal! di'hPl2"_x]])
+  elseif is_cursor_inside([[`]]) then
+    vim.cmd([[normal! di`hPl2"_x]])
+  else
+    vim.print("Cursor not inside quotes")
+  end
+
+  vim.api.nvim_win_set_cursor(0, cursor_pos)
+end
+
+vim.keymap.set('n', '<leader>dq', remove_quote_around, {
+  noremap = true,
+  silent = true,
+  desc = [[Remove quotes(either ", ', or `) around cursor.]],
 })
