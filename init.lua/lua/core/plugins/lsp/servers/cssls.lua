@@ -8,9 +8,10 @@ M.setup = {
     css = { validate = true },
   },
   on_attach = function(client, bufnr)
-    if client.server_capabilities.documentFormattingProvider then
-      _G.F_format_on_save(bufnr)
-    end
+    -- Disabled because it breaks `ctrl-z` flow.
+    -- if client.server_capabilities.documentFormattingProvider then
+    --   _G.F_format_on_save(bufnr)
+    -- end
     _G.F_buffer_load_keys(bufnr)
     _G.CC_tab_size(4)
   end,

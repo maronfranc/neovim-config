@@ -12,6 +12,7 @@ M.setup = {
   on_attach = function(client, bufnr)
     if client.server_capabilities.documentFormattingProvider then
       _G.F_format_on_save(bufnr)
+      _G.CC_tab_size(2)
     end
     _G.F_buffer_load_keys(bufnr)
   end,
