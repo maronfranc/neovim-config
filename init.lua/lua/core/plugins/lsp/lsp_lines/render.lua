@@ -1,6 +1,6 @@
 local M = {}
 
-local MAX_COL = 90
+local MAX_COL = 80
 local HIGHLIGHTS = {
   native = {
     [vim.diagnostic.severity.ERROR] = "DiagnosticVirtualTextError",
@@ -32,12 +32,12 @@ local BLANK = "blank"
 local function distance_between_cols(bufnr, lnum, start_col, end_col)
   local lines = vim.api.nvim_buf_get_lines(bufnr, lnum, lnum + 1, false)
   if vim.tbl_isempty(lines) then
-    -- This can only happen is the line is somehow gone or out-of-bounds.
+    -- This can only happen if the line is somehow gone or out-of-bounds.
     return 1
   end
 
   local sub = string.sub(lines[1], start_col, end_col)
-  return vim.fn.strdisplaywidth(sub, 0) or 0 -- these are indexed starting at 0
+  return vim.fn.strdisplaywidth(sub, 0) or 0
 end
 
 ---@param namespace number
@@ -51,7 +51,7 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
     bufnr = { bufnr, "n" },
     diagnostics = {
       diagnostics,
-      vim.tbl_islist,
+      vim.islist,
       "a list of diagnostics",
     },
     opts = { opts, "t", true },
@@ -226,6 +226,7 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
       end
     end
 
+    ---@see https://github.com/neovim/neovim/issues/20365
     vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum, 0, { virt_lines = virt_lines })
   end
 end

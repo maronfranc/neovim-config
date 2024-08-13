@@ -75,10 +75,13 @@ end
 
 ---@return boolean
 M.toggle = function()
+  -- The custom property `virtual_lines` is defined but doesn't have a type defined.
   local new_value = not vim.diagnostic.config().virtual_lines
-  vim.keymap.set("n", "<C-k>", "5k", { silent = true })
-  vim.keymap.set("n", "<C-j>", "5j", { silent = true })
-  vim.diagnostic.config({ virtual_lines = new_value })
+  vim.diagnostic.config({
+    virtual_lines = new_value,
+    virtual_text = not new_value,
+  })
+
   return new_value
 end
 

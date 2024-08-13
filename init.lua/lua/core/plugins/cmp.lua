@@ -8,14 +8,14 @@
 local M = {
   "hrsh7th/nvim-cmp",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",                -- LSP source for nvim-cmp
-    "hrsh7th/cmp-buffer",                  -- To enable other completions
-    "hrsh7th/cmp-cmdline",                 -- For ":", "/", "?" and possibly other buffers.
-    "hrsh7th/cmp-path",                    -- For file path.
-    "neovim/nvim-lspconfig",               -- Collection of configurations for built-in LSP client
-    "hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures with the current parameter emphasized
-    "L3MON4D3/LuaSnip",                    -- Snippets plugin.
-    "saadparwaiz1/cmp_luasnip",            -- Snippets source for nvim-cmp.
+    "hrsh7th/cmp-nvim-lsp",                    -- LSP source for nvim-cmp
+    "hrsh7th/cmp-buffer",                      -- To enable other completions
+    "hrsh7th/cmp-cmdline",                     -- For ":", "/", "?" and possibly other buffers.
+    "hrsh7th/cmp-path",                        -- For file path.
+    "neovim/nvim-lspconfig",                   -- Collection of configurations for built-in LSP client
+    "hrsh7th/cmp-nvim-lsp-signature-help",     -- function signatures with the current parameter emphasized
+    "L3MON4D3/LuaSnip",                        -- Snippets plugin.
+    "saadparwaiz1/cmp_luasnip",                -- Snippets source for nvim-cmp.
   },
   config = function()
     local cmp = require("cmp")
@@ -165,6 +165,13 @@ local M = {
       -- You can specify the `git` source if installed(https://github.com/petertriho/cmp-git).
         { { name = 'git' } },
         { { name = 'buffer' } })
+    })
+
+    cmp.setup.filetype({ 'sql' }, {
+      sources = {
+        { name = 'vim-dadbod-completion' },
+        { name = 'buffer' },
+      },
     })
 
     snippets_setup.load_snippets()
