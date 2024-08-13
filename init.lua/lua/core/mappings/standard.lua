@@ -97,40 +97,24 @@ vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
 -- vim.keymap.set("n", "<LEADER>dpsd", [[di'h2"_xi""<ESC>P]]) -- change single quote to double.
 -- vim.keymap.set("n", "<LEADER>dpds", [[di"h2"_xi''<ESC>P]]) -- change double quote to single.
 
-local function add_double_quotes()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local current_word = vim.fn.expand("<cword>")
-  if current_word == "" then return end
-  local quoted_word = '"' .. current_word .. '"'
-  vim.cmd('normal! ciw' .. quoted_word)
-  vim.api.nvim_win_set_cursor(0, cursor_pos)
-end
-local function add_single_quotes()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local current_word = vim.fn.expand("<cword>")
-  if current_word == "" then return end
-  local quoted_word = "'" .. current_word .. "'"
-  vim.cmd('normal! ciw' .. quoted_word)
-  vim.api.nvim_win_set_cursor(0, cursor_pos)
-end
-local function add_backtick_quotes()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local current_word = vim.fn.expand("<cword>")
-  if current_word == "" then return end
-  local quoted_word = "`" .. current_word .. "`"
-  vim.cmd('normal! ciw' .. quoted_word)
-  vim.api.nvim_win_set_cursor(0, cursor_pos)
+---@param char string to add around word.
+local function add_char_around(char)
+  return function()
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    local current_word = vim.fn.expand("<cword>")
+    if current_word == "" then return end
+    local quoted_word = char .. current_word .. char
+    vim.cmd('normal! "_ciw' .. quoted_word)
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
+  end
 end
 
-vim.keymap.set('n', '<LEADER>qd', add_double_quotes, {
-  desc = 'Add double quotes around the word under the cursor.',
-})
-vim.keymap.set('n', '<LEADER>qs', add_single_quotes, {
-  desc = 'Add single quotes around the word under the cursor.',
-})
-vim.keymap.set('n', '<LEADER>qb', add_backtick_quotes, {
-  desc = 'Add backtick around the word under the cursor.',
-})
+vim.keymap.set('n', '<LEADER>qd', add_char_around([["]]), {
+  desc = 'Add double quotes around the word under the cursor.' })
+vim.keymap.set('n', '<LEADER>qs', add_char_around([[']]), {
+  desc = 'Add single quotes around the word under the cursor.' })
+vim.keymap.set('n', '<LEADER>qb', add_char_around([[`]]), {
+  desc = 'Add backtick around the word under the cursor.' })
 
 local function is_cursor_inside(char)
   local pos = vim.api.nvim_win_get_cursor(0)
