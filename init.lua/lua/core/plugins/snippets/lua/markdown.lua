@@ -69,6 +69,9 @@ M.load_snippets = function()
         "</details>",
       }),
     }),
+    s("-----separator-----", {
+      t("--------------------------------------------------------------------------------"),
+    }),
   }
 
   luasnip.add_snippets("markdown", lua_snippets)

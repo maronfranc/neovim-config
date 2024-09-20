@@ -8,6 +8,7 @@ function M.load_snippets()
     require("core.plugins.snippets.lua.markdown").load_snippets()
     require("core.plugins.snippets.lua.rust").load_snippets()
     require("core.plugins.snippets.lua.sh").load_snippets()
+    require("core.plugins.snippets.lua.svelte").load_snippets()
     require("core.plugins.snippets.lua.sql_postgres").load_snippets()
 end
 

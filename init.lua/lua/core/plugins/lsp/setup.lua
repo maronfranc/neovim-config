@@ -9,7 +9,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local default_on_attach = function(_, bufnr)
   _G.F_buffer_load_keys(bufnr)
-  -- TODO: check if is necessary to readd this: _G.CC_tab_size(4)
+  _G.CC_tab_size(2)
 end
 
 local server = require("core.plugins.lsp.servers-map")

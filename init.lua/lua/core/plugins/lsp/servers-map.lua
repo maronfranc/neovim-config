@@ -2,32 +2,36 @@ local function require_and_insert(file_name, lsp_setting_map)
   local path = "core.plugins.lsp.servers." .. file_name
   local ok, lsp_module = pcall(require, path)
   if (not ok) then
-    print("[Error require_and_insert()] path: ", path)
+    print("[Error lsp.servers-map require_and_insert()] path:", path)
     return
   end
   table.insert(lsp_setting_map, lsp_module)
 end
 
 local lsp_module_map = {}
+-- require_and_insert("astro", lsp_module_map)
 require_and_insert("bashls", lsp_module_map)
+require_and_insert("clangd", lsp_module_map)
 require_and_insert("cssls", lsp_module_map)
 require_and_insert("cssmodule_ls", lsp_module_map)
 require_and_insert("emmet-ls", lsp_module_map)
 require_and_insert("gopls", lsp_module_map)
 require_and_insert("html", lsp_module_map)
 require_and_insert("lua_ls", lsp_module_map)
-require_and_insert("jdtls", lsp_module_map)
+-- require_and_insert("jdtls", lsp_module_map)
+-- require_and_insert("julials", lsp_module_map)
 require_and_insert("jsonls", lsp_module_map)
 -- require_and_insert("phpactor", lsp_module_map)
 -- require_and_insert("intelephense", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
 require_and_insert("rust_analyzer", lsp_module_map)
 require_and_insert("sqlls", lsp_module_map)
+require_and_insert("svelte", lsp_module_map)
 require_and_insert("texlab", lsp_module_map)
 require_and_insert("tailwindcss", lsp_module_map)
 require_and_insert("terraformls", lsp_module_map)
-require_and_insert("tsserver", lsp_module_map)
-require_and_insert("vuels", lsp_module_map)
+require_and_insert("ts_ls", lsp_module_map)
+-- require_and_insert("vuels", lsp_module_map)
 
 local ensure_installed = _G.F_map_and_filter_nil(lsp_module_map, function(m)
   return m.serverName

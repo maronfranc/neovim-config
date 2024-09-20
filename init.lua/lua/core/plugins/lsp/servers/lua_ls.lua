@@ -22,6 +22,10 @@ M.setup = {
       "use",
     },
   },
+  on_attach = function(_, bufnr)
+    _G.CC_tab_size(2)
+    _G.F_buffer_load_keys(bufnr)
+  end,
   workspace = {
     library = {
       vim.api.nvim_get_runtime_file("", true),

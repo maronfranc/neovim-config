@@ -17,13 +17,13 @@ M.load_snippets = function()
     s("iferr!=nil", {
       t({
         "if err != nil {",
-        "\treturn nil, err",
+        '\treturn fmt.Errorf("Error: %w", err)',
         "}",
       }),
     }),
     s("iferrnil", {
       t("if err := "), i(1), t({ "; err != nil {",
-      "" }), t("\tlog.Printf(\"[Error]: %v\", err)"), i(2), t({ "",
+      "" }), t('\treturn fmt.Errorf("Error: %w", err)'), i(2), t({ "",
       "}" }),
     }),
     s("func_def", {
@@ -63,6 +63,20 @@ M.load_snippets = function()
         "}",
         "" }), t("log.Printf(\"[response.body]: %v\", "), f(copy, 1), t(")")
     }),
+    s("any", t("interface{}")),
+    ---Helpers
+    s("template_string", {
+      t({
+        "// templateString concat strings variables.",
+        "// SEE: https://github.com/golang/go/issues/34174#issuecomment-759125836",
+        "func templateString(template string, variables map[string]string) string {",
+        "\tf := func(ph string) string {",
+        "\t\treturn variables[ph]",
+        "\t}",
+        "\treturn os.Expand(template, f)",
+        "}"
+      })
+    }),
     ---Convert values
     ---now, err := time.Parse(time.RFC3339, "2024-03-22 22:33:10.834 -0300")
     s("convert_ISO_to_date", {
@@ -80,19 +94,77 @@ M.load_snippets = function()
       "log.Printf(\"[LOG:json.string]:%v\", string(" }), f(copy, 1), t({ "))",
       "" })
     }),
+    s("convert_string_to_int", {
+      t("intValue, err := strconv.ParseInt("), i(1), t(", 10, 64)"), t({ "",
+      "if err != nil {",
+      "\tfmt.Println(\"Error converting string to int64:\", err)",
+      "}"
+    }),
+    }),
+    s("convert_string_to_float", {
+      t("floatValue, err := strconv.ParseFloat("), i(1), t(", 64)"), t({ "",
+      "if err != nil {",
+      "\tfmt.Println(\"Error converting string to float64:\", err)",
+      "}"
+    }),
+    }),
+    s("convert_any_to_float", {
+      t({
+        "toFloat64 := func(v interface{}) float64 {",
+        "\tswitch v := v.(type) {",
+        "\tcase float64:",
+        "\t\treturn v",
+        "\tcase int:",
+        "\t\treturn float64(v)",
+        "\tcase string:",
+        "\t\tfloatVal, err := strconv.ParseFloat(v, 64)",
+        "\t\tif err != nil {",
+        "\t\t\tpanic(err)",
+        "\t\t}",
+        "\t\treturn floatVal",
+        "\tdefault:",
+        "\t\tpanic(\"Float error \")",
+        "\t}",
+        "}"
+      }),
+    }),
+    ---Validation Validators
+    s("is_valid_date_yyyy_MM_dd", {
+      t({
+        "// isValidDateYyyyMMdd checks if the input string is a valid date in the format yyyy-MM-dd.",
+        "func isValidDateYyyyMMdd(possibleDate string) bool {",
+        '\tconst version = "2006-01-02"',
+        "\t_, err := time.Parse(version, possibleDate)",
+        "\treturn err == nil",
+        "}"
+      }),
+    }),
+    s("is_valid_date_yyyy_MM", {
+      t({
+        "// isValidDateYyyyMM checks if the input string is a valid date in the format yyyy-MM.",
+        "func isValidDateYyyyMM(possibleDate string) bool {",
+        '\tconst version = "2006-01"',
+        "\t_, err := time.Parse(version, possibleDate)",
+        "\treturn err == nil",
+        "}"
+      }),
+    }),
     ---Prints
-    s("printerr", t("log.Printf(\"[Error]: %v\", err)")),
+    s("printerr", t('log.Printf("[Error]: %v", err)')),
     s("printtype", {
       t("log.Print(reflect.TypeOf("), i(1), t("))"),
+    }),
+    s("qqqpjoidqpjwdpowjeqpjoepjqepjqepjpjajpsjqpejqpoej", {
+      t("log.Print(\" ----- ----- | "), i(1), t(" | ----- ----- \")")
     }),
     s("qqqeeqqeqe", {
       t("log.Print(\""), i(1), t("\")")
     }),
     s("qqffqqff", {
-      t("log.Printf(\"[LOG("), f(copy, 1), t(")]:%v\", "), i(1), t(")"), t({ "", "" }),
+      t("log.Printf(\"<("), f(copy, 1), t(")>:%v\", "), i(1), t(")"), t({ "", "" }),
     }),
     s("concatstring", {
-      t("fmt.SPrintf(\"%s\", "), i(1), t(")"), t({ "", "" }), i(0)
+      t("fmt.Sprintf(\"%s\", "), i(1), t(")"), t({ "", "" }), i(0)
     }),
   }
 

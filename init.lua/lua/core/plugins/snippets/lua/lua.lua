@@ -14,7 +14,7 @@ local M = {}
 M.load_snippets = function()
   local lua_snippets = {
     s("qqee", { t("vim.print("), i(1), t({ ")", "" }), i(0) }),
-    s("qqffqqff", { t("vim.print(\""), f(copy, 1), t("\", "), i(1), t({ ")", "" }), i(0) }),
+    s("qqffqqff", { t("vim.print(\"- "), f(copy, 1), t(": \" .. "), i(1), t({ ")", "" }), i(0) }),
     s("reret", { t("return "), i(0) }),
   }
 

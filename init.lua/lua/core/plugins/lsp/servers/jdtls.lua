@@ -92,43 +92,45 @@ local root_files = {
 local M = {}
 M.serverName = 'jdtls'
 M.setup = {
-  default_config = {
-    cmd = {
-      'jdtls',
-      '-configuration',
-      get_jdtls_config_dir(),
-      '-data',
-      get_jdtls_workspace_dir(),
-      get_jdtls_jvm_args(),
-    },
-    settings = {
-      java = {
-        signatureHelp = { enabled = true },
-        import = { enabled = true },
-        rename = { enabled = true },
-      }
-    },
-    filetypes = { 'java' },
-    root_dir = function(fname)
-      for _, patterns in ipairs(root_files) do
-        local root = util.root_pattern(unpack(patterns))(fname)
-        if root then return root end
-      end
-    end,
-    -- single_file_support = true,
-    init_options = {
-      workspace = get_jdtls_workspace_dir(),
-      jvm_args = {},
-      os_config = nil,
-    },
-    handlers = {
-      -- Due to an invalid protocol implementation in the jdtls we have to conform these to be spec compliant.
-      -- https://github.com/eclipse/eclipse.jdt.ls/issues/376
-      ['textDocument/codeAction'] = on_textdocument_codeaction,
-      ['textDocument/rename'] = on_textdocument_rename,
-      ['workspace/applyEdit'] = on_workspace_applyedit,
-      ['language/status'] = vim.schedule_wrap(on_language_status),
-    },
+  cmd = {
+    'jdtls',
+    '-configuration',
+    get_jdtls_config_dir(),
+    '-data',
+    get_jdtls_workspace_dir(),
+    get_jdtls_jvm_args(),
+  },
+  on_attach = function(client, bufnr)
+    -- _G.F_buffer_load_keys(bufnr)
+    _G.CC_tab_size(4)
+  end,
+  settings = {
+    java = {
+      signatureHelp = { enabled = true },
+      import = { enabled = true },
+      rename = { enabled = true },
+    }
+  },
+  filetypes = { 'java' },
+  root_dir = function(fname)
+    for _, patterns in ipairs(root_files) do
+      local root = util.root_pattern(unpack(patterns))(fname)
+      if root then return root end
+    end
+  end,
+  -- single_file_support = true,
+  init_options = {
+    workspace = get_jdtls_workspace_dir(),
+    jvm_args = {},
+    os_config = nil,
+  },
+  handlers = {
+    -- Due to an invalid protocol implementation in the jdtls we have to conform these to be spec compliant.
+    -- https://github.com/eclipse/eclipse.jdt.ls/issues/376
+    ['textDocument/codeAction'] = on_textdocument_codeaction,
+    ['textDocument/rename'] = on_textdocument_rename,
+    ['workspace/applyEdit'] = on_workspace_applyedit,
+    ['language/status'] = vim.schedule_wrap(on_language_status),
   },
   docs = {
     description = [[

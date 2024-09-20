@@ -98,7 +98,7 @@ M.load_snippets = function()
 
   local ts_snippets = {
     s("function_def", {
-      t("function "), i(1), t("("), i(2), t("): "), i(3), t({ " {",
+      t("function "), i(1), t("("), i(2), t(")"), i(3), t({ " {",
       "\t" }), i(0), t({ "",
       "}" }),
     }),
@@ -118,7 +118,12 @@ M.load_snippets = function()
       "" }), i(0), t({ "",
       "}" })
     }),
-    s("exportdefaultsingleton", { t("export default new "), i(1), t("();"), i(0) }),
+    s("export_default_singleton", { t("export default new "), i(1), t("();"), i(0) }),
+    s("export_async_function", {
+      t("export async function "), i(1), t("("), i(2), t(")"), i(3), t({ "{",
+      "\t" }), i(0), t({ "",
+      "}" })
+    }),
     s("sleep", {
       t({ "function sleep(ms: number) {",
         "\treturn new Promise((resolve) => {",
@@ -127,6 +132,7 @@ M.load_snippets = function()
         "}" }),
     }),
     s("@ts-ignore", { t("// @ts-ignore") }),
+    s("nayany", { t("any") }),
     s("gagambiarra", { t("// @ts-ignore") }),
     js_console_log(),
     js_console_log_2(),
@@ -169,6 +175,7 @@ M.load_snippets = function()
   luasnip.add_snippets("javascript", js_snippets)
   luasnip.add_snippets("typescript", ts_snippets)
   luasnip.add_snippets("typescriptreact", ts_snippets)
+  luasnip.add_snippets("astro", ts_snippets)
 end
 
 return M
