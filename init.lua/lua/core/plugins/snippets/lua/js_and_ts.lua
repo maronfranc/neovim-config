@@ -3,8 +3,8 @@ local luasnip = require("luasnip")
 local s = luasnip.snippet
 local t = luasnip.text_node                  -- Simple static text.
 local i = luasnip.insert_node                -- Placeholder/Insert. int): Placeholder with initial text.
-local f = luasnip.function_node              -- function, first parameter is the function, second the Placeholders
-local function copy(args) return args[1] end -- whose text it gets as input.
+local f = luasnip.function_node              -- Function, first parameter is the function, second the Placeholders
+local function copy(args) return args[1] end -- Whose text it gets as input.
 
 local M = {}
 -- luasnip.add_snippets("all", {
@@ -176,6 +176,7 @@ M.load_snippets = function()
   luasnip.add_snippets("typescript", ts_snippets)
   luasnip.add_snippets("typescriptreact", ts_snippets)
   luasnip.add_snippets("astro", ts_snippets)
+  luasnip.add_snippets("svelte", ts_snippets)
 end
 
 return M

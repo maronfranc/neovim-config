@@ -4,6 +4,15 @@
 local M = {}
 M.serverName = "emmet_ls"
 M.setup = {
+  filetypes = {
+    "html",
+    "css", -- "less", "sass", "scss",
+    "javascriptreact", "typescriptreact", "vue",
+  },
+  init_options = {
+    html = { options = { ["bem.enabled"] = true } },
+    css = { options = { ["bem.enabled"] = true } },
+  },
   docs = {
     description = [[
 ## Emmet — the essential toolkit for web-developers
@@ -12,15 +21,6 @@ Emmet is a web-developer’s toolkit for boosting HTML & CSS code writing.
 
 With Emmet, you can type expressions (abbreviations) similar to CSS selectors and convert them into code fragment with a single keystroke. For example, this abbreviation:
 ]],
-  },
-  filetypes = {
-    "html",
-    "css", -- "less", "sass", "scss",
-    "javascriptreact", "typescriptreact", "astro", "svelte", "vue",
-  },
-  init_options = {
-    html = { options = { ["bem.enabled"] = true } },
-    css = { options = { ["bem.enabled"] = true } },
   },
 }
 return M

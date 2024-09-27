@@ -25,7 +25,7 @@ M.load_snippets = function()
         "| col 3 is | right-aligned |    $1 |",
       }),
     }),
-    s("qqcode_block", {
+    s("code_block", {
       t("```"), i(1), t({ "",
       "" }), i(0), t({ "",
       "```" }),

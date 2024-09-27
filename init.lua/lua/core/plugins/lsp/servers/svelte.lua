@@ -3,11 +3,14 @@ local util = require('lspconfig.util')
 local M = {}
 M.serverName = 'svelte'
 M.setup = {
-  default_config = {
-    cmd = { 'svelteserver', '--stdio' },
-    filetypes = { 'svelte' },
-    root_dir = util.root_pattern('package.json', '.git'),
-  },
+  cmd = { 'svelteserver', '--stdio' },
+  filetypes = { 'svelte' },
+  root_dir = util.root_pattern('package.json', '.git'),
+  on_attach = function(client, bufnr)
+    -- _G.F_buffer_load_keys(bufnr)
+    _G.CC_tab_size(2)
+    _G.F_format_on_save(bufnr)
+  end,
   docs = {
     description = [[
 https://github.com/sveltejs/language-tools/tree/master/packages/language-server

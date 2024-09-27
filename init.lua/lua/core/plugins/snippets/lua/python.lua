@@ -53,6 +53,9 @@ M.load_snippets = function()
     s("array_map_list", {
       t("[print("), i(1), t(") for "), f(copy, 1), t(" in "), i(2), t("]"),
     }),
+    s("array_map_list_with_index", {
+     t('[print(f"{index}. '), i(1), t('") for index, '), f(copy, 1), t(' in enumerate('), i(2), t(')]'),
+    }),
     --- --- --- --- --- Type --- --- --- --- ---
     s('gagagambia_type', t("# type: ignore")),
     s('any_type', t({ 'from typing import Any', '' })),
