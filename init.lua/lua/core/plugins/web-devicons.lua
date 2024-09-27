@@ -20,12 +20,16 @@ local M = {
       override_by_filename = {
         ["go.mod"] = { icon = "", color = color.red, name = "GoMod" },
         ["go.sum"] = { icon = "", color = color.red, name = "GoSum" },
+        ["pyproject.toml"] = { icon = "󰌠", name = "PythonPackage" },
+        -- [".development"] = { icon = "", color = color.yellow, name = "Dev environment" },
+        -- [".production"] = { icon = "", color = color.yellow, name = "Prod environment" },
       },
       -- same as `override` but specifically for overrides by extension
       -- takes effect when `strict` is true
       override_by_extension = {
         ["env"] = { icon = "", color = color.yellow, name = "Environment" },
         ["conf"] = { icon = "󰒓", color = color.darkblue, name = "Configuration" },
+        ["astro"] = { icon = "󰑣", color = color.fg, name = "Astro" },
       },
     })
   end

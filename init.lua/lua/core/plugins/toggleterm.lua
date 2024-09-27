@@ -44,7 +44,8 @@ local M = {
         },
       },
     })
-    map("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true }) -- back to normal mode in Terminal
+    -- back to normal mode in Terminal
+    map("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true })
 
     -- Better navigation to and from terminal
     local set_terminal_keymaps = function()
