@@ -6,9 +6,9 @@ M.setup = {
   cmd = { "rust-analyzer" },
   filetypes = { "rust" },
   on_attach = function(client, bufnr)
-    if client.server_capabilities.documentFormattingProvider then
-      _G.F_format_on_save(bufnr)
-    end
+    -- if client.server_capabilities.documentFormattingProvider then
+    --   _G.F_format_on_save(bufnr)
+    -- end
     _G.F_buffer_load_keys(bufnr)
   end,
   root_dir = util.root_pattern("Cargo.toml", "rust-project.json"),

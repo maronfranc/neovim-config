@@ -8,21 +8,14 @@ M.setup = {
   -- filetypes copied and adjusted from tailwindcss-intellisense
   filetypes = {
     -- html
-    -- 'blade',
-    'django-html',
-    'gohtml',
-    'gohtmltmpl',
-    'handlebars',
-    'hbs',
-    'html',
-    'css',
+    -- 'blade', 'django-html', 'gohtml', 'gohtmltmpl', 'handlebars', 'hbs',
+    'templ',
+    'html', 'css',
     -- js
-    'javascriptreact',
-    'typescriptreact',
+    'javascriptreact', 'typescriptreact',
     -- mixed
-    'astro',
-    'vue',
-    'svelte',
+    'astro', 'vue', 'svelte',
+    'rust',
   },
   init_options = {
     userLanguages = {

@@ -8,6 +8,7 @@ M.setup = {
     "html",
     "css", -- "less", "sass", "scss",
     "javascriptreact", "typescriptreact", "vue",
+    "templ",
   },
   init_options = {
     html = { options = { ["bem.enabled"] = true } },

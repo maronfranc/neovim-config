@@ -10,7 +10,7 @@ M.setup = {
   cmd = { "vscode-html-language-server", "--stdio" },
   -- root_dir = util.root_pattern('package.json', '.git'),
   single_file_support = true,
-  filetypes = { "html" },
+  filetypes = { 'html', 'rust' },
   init_options = {
     provideFormatter = true,
     embeddedLanguages = { css = true, javascript = true },
@@ -18,8 +18,9 @@ M.setup = {
   },
   on_attach = function(client, bufnr)
     if client.server_capabilities.documentFormattingProvider then
-      _G.F_format_on_save(bufnr)
-      _G.CC_tab_size(2)
+      -- _G.F_format_on_save(bufnr)
+      -- _G.CC_tab_size(2)
+      _G.CC_tab_size(4)
     end
   end,
 }

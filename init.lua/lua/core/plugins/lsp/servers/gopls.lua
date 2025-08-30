@@ -1,4 +1,4 @@
--- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
+---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/gopls.lua
 local util = require('lspconfig.util')
 local async = require('lspconfig.async')
 local mod_cache = nil
