@@ -10,6 +10,8 @@ local M = {
   "nvim-tree/nvim-web-devicons",
   config = function()
     local color = require("core.utils.colors")
+    local icon_config = { icon = "", color = color.yellow, name = "Config_file" }
+
     require("nvim-web-devicons").setup({
       -- globally enable different highlight colors per icon (default to true)
       -- if set to false all icons will have the default icon's color
@@ -21,15 +23,18 @@ local M = {
         ["go.mod"] = { icon = "", color = color.red, name = "GoMod" },
         ["go.sum"] = { icon = "", color = color.red, name = "GoSum" },
         ["pyproject.toml"] = { icon = "󰌠", name = "PythonPackage" },
-        -- [".development"] = { icon = "", color = color.yellow, name = "Dev environment" },
-        -- [".production"] = { icon = "", color = color.yellow, name = "Prod environment" },
+        [".air.toml"] = { icon = "☁️", name = "Go_auto_reload" },
+        [".env.development"] = icon_config,
+        [".env.production"] = icon_config,
+        [".env.production_example"] = icon_config,
       },
       -- same as `override` but specifically for overrides by extension
       -- takes effect when `strict` is true
       override_by_extension = {
-        ["env"] = { icon = "", color = color.yellow, name = "Environment" },
+        -- ["env"] = { icon = "", color = color.yellow, name = "Environment" },
         ["conf"] = { icon = "󰒓", color = color.darkblue, name = "Configuration" },
         ["astro"] = { icon = "󰑣", color = color.fg, name = "Astro" },
+        ["toml"] = { icon = "󰒓", color = color.yellow, name = "Toml" },
       },
     })
   end
