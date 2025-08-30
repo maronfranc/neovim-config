@@ -112,6 +112,7 @@ vim.keymap.set({ "i", "n" }, "<C-DEL>", "<C-o>de", { desc = 'Delete next word.' 
 local ctrl_backspace = "<C-H>"
 vim.keymap.set("i", ctrl_backspace, "<ESC>dvbi", { desc = 'Delete previous word.' })
 vim.keymap.set('i', '<C-l>', '<ESC>A', { desc = 'Move to the end of the line.' })
+vim.keymap.set('n', '<C-l>', '$', { desc = 'Move to the end of the line.' })
 
 vim.keymap.set("n", "<A-h>", "<CMD>:vertical resize +10<CR>", { silent = true })
 vim.keymap.set("n", "<A-l>", "<CMD>:vertical resize -10<CR>", { silent = true })

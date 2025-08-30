@@ -17,6 +17,12 @@ M.load_snippets = function()
       t("println!(\""), i(1), t("> {:#?}\","), i(2), t({ " );",
       "" }), i(0)
     }),
+    s("simple_map", {
+      t("[1, 2, 3].into_iter().map(|x| x + 1).rev().collect();"),
+    }),
+    s("simple_map_enumerate", {
+      t("[\"A\", \"B\"].iter().enumerate().map(|(i, f)| my_function(f, i))"),
+    }),
   }
 
   luasnip.add_snippets("rust", lua_snippets)

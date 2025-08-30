@@ -53,6 +53,9 @@ M.load_snippets = function()
     s("array_map_list", {
       t("[print("), i(1), t(") for "), f(copy, 1), t(" in "), i(2), t("]"),
     }),
+    s("array_map_list_filter_None", {
+      t("[print("), i(1), t(") for "), f(copy, 1), t(" in "), i(2), t(" if "), f(copy, 1), t(" is not None]"),
+    }),
     s("array_map_list_with_index", {
      t('[print(f"{index}. '), i(1), t('") for index, '), f(copy, 1), t(' in enumerate('), i(2), t(')]'),
     }),
@@ -75,6 +78,9 @@ M.load_snippets = function()
     }),
     s("pandas_conditional_replace", {
       t("df.loc["), i(1), t("condition, '"), i(2), t("field'] = '"), i(3), t("value'"),
+    }),
+    s("pandas_dict_to_dataframe", {
+      t("df = pd.DataFrame([item.__dict__ for item in items])"),
     }),
     s("pandas_conditional_set_value", {
       -- df.loc[df['column name'] condition, 'new column name'] = 'value if condition is met'

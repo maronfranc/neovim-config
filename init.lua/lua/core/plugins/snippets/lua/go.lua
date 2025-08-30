@@ -17,7 +17,7 @@ M.load_snippets = function()
     s("iferr!=nil", {
       t({
         "if err != nil {",
-        '\treturn fmt.Errorf("Error: %w", err)',
+        '\treturn err',
         "}",
       }),
     }),
@@ -32,7 +32,7 @@ M.load_snippets = function()
       "}" })
     }),
     s("method_func_def", {
-      t("func (m *"), i(1), t(") "), i(2), t("("), i(3), t(")"), i(4), t({ " {",
+      t("func (self *"), i(1), t(") "), i(2), t("("), i(3), t(")"), i(4), t({ " {",
       "\t " }), i(0), t({ "",
       "}" })
     }),
@@ -44,6 +44,20 @@ M.load_snippets = function()
     s("time_sleep_miliseconds", t("time.Sleep(time.Millisecond)")),
     s("string_concat", { t("fmt.Sprintf(\"%s"), i(1), t("\")"), i(0), }),
     s("date_time_now_ISO", { i(1), t(" := time.Now().Format(time.RFC3339)") }),
+    ---Dto @todo struct_dto_field dynamic that set first field to uppercase
+    s("struct_dto_field", { t('Id string `form:"id" json:"id" db:"id"`') }),
+    ---Array
+    s("for_range", {
+      t("for _, "), i(1), t(" := range "), i(2), t({ " {",
+      "\t" }), i(0), t({ "",
+      "}" })
+    }),
+    s("for_let_i", {
+      t("for i := 0; i < "), i(1), t({ " i++ {",
+      "\t" }), i(0), t({ "",
+      "}" })
+    }),
+    ---HTTP
     s("http_w_r_params", { t("w http.ResponseWriter, r *http.Request") }),
     s("http_get_request", {
       t({
@@ -76,6 +90,10 @@ M.load_snippets = function()
         "\treturn os.Expand(template, f)",
         "}"
       })
+    }),
+    ---Dates
+    s("now_iso_date", {
+      t({ "iso8601String := time.Now().Format(time.RFC3339)" }),
     }),
     ---Convert values
     ---now, err := time.Parse(time.RFC3339, "2024-03-22 22:33:10.834 -0300")
@@ -169,6 +187,7 @@ M.load_snippets = function()
   }
 
   luasnip.add_snippets("go", go_snippets)
+  luasnip.add_snippets("templ", go_snippets)
 end
 
 return M

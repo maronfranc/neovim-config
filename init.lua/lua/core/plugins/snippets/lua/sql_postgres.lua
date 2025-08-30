@@ -65,6 +65,7 @@ M.load_snippets = function()
   }
 
   luasnip.add_snippets("sql", lua_snippets)
+  luasnip.add_snippets("sqlls", lua_snippets)
 end
 
 return M

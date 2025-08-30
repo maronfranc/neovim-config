@@ -12,23 +12,18 @@ local i = luasnip.insert_node -- Placeholder/Insert. int): Placeholder with init
 
 local M = {}
 M.load_snippets = function()
-  local css_snippets = {
-    ---@todo create css snippet
-    s("prefer_light_mode", {
-      t({ "@media (prefers-color-scheme: light) {",
-        "" }), i(0), t({ "",
-      "}" }),
-    }),
-    s("linkhref", {
-      ---@todo add choice_node on rel
-      t("<link rel=\"stylesheet\" href=\""), i(1), t("\">"), i(0),
-    }),
-    s("scriptdefer", {
-      t("<script defer src=\""), i(1), t("\"></script>"), i(0)
-    }),
-  }
-
-  luasnip.add_snippets("html", css_snippets)
+  -- N
+  -- local css_snippets = {
+  --   s("prefer_light_mode", {
+  --     t({ "@media (prefers-color-scheme: light) {",
+  --       "" }), i(0), t({ "",
+  --     "}" })
+  --   }),
+  -- }
+  --
+  -- luasnip.add_snippets("cssls", css_snippets)
+  -- luasnip.add_snippets("css_modules_ls", css_snippets)
+  -- luasnip.add_snippets("emmet_ls", css_snippets)
 end
 
 return M
