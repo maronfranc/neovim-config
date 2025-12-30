@@ -1,5 +1,6 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/julials.lua
 local util = require('lspconfig.util')
+local helper = require("core.utils.helper")
 
 local cmd = {
   'julia',
@@ -47,7 +48,7 @@ M.setup = {
   cmd = cmd,
   filetypes = { 'julia' },
   root_dir = function(fname)
-    return util.root_pattern('Project.toml')(fname) or util.find_git_ancestor(fname)
+    return util.root_pattern('Project.toml')(fname) or helper.find_git_ancestor(fname)
   end,
   single_file_support = true,
   docs = {

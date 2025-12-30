@@ -1,5 +1,6 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/tailwindcss.lua
 local util = require('lspconfig.util')
+local helper = require("core.utils.helper")
 
 local M = {}
 M.serverName = 'tailwindcss'
@@ -67,10 +68,10 @@ M.setup = {
           'postcss.config.cjs',
           'postcss.config.mjs',
           'postcss.config.ts'
-        )(fname) or util.find_package_json_ancestor(fname) or util.find_node_modules_ancestor(fname) or
-        util.find_git_ancestor(
-          fname
-        )
+        )(fname) or
+          helper.find_package_json_ancestor(fname) or
+          helper.find_node_modules_ancestor(fname) or
+          helper.find_git_ancestor(fname)
   end,
   docs = {
     description = [[

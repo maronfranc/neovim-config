@@ -1,5 +1,5 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/cssmodules_ls.lua
-local util = require('lspconfig.util')
+local helper = require("core.utils.helper")
 
 local M = {}
 M.serverName = 'cssmodules_ls'
@@ -11,7 +11,7 @@ M.setup = {
     'html',
     'css',
   },
-  root_dir = util.find_package_json_ancestor,
+  root_dir = helper.find_package_json_ancestor,
   ---@see https://github.com/antonk52/cssmodules-language-server
   init_options = { camelCase = 'dashes' },
   docs = {
@@ -22,7 +22,7 @@ Language server for autocompletion and go-to-definition functionality for CSS mo
 
 You can install cssmodules-language-server via npm:
 ```sh
-npm install -g cssmodules-language-server
+npm install --global cssmodules-language-server
 ```
     ]],
     default_config = {

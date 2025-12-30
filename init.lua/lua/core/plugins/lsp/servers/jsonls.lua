@@ -1,5 +1,5 @@
 -- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/jsonls.lua
-local util = require("lspconfig.util")
+local helper = require("core.utils.helper")
 
 local M = {}
 M.serverName = "jsonls"
@@ -9,7 +9,7 @@ M.setup = {
   init_options = {
     provideFormatter = true,
   },
-  root_dir = util.find_git_ancestor,
+  root_dir = helper.find_git_ancestor,
   single_file_support = true,
   docs = {
     -- this language server config is in VSCode built-in package.json

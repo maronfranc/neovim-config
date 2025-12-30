@@ -9,19 +9,19 @@ local env = {
 }
 
 local function get_cache_dir()
-  return env.XDG_CACHE_HOME and env.XDG_CACHE_HOME or util.path.join(env.HOME, '.cache')
+  return env.XDG_CACHE_HOME and env.XDG_CACHE_HOME or table.concat({env.HOME, '.cache'})
 end
 
 local function get_jdtls_cache_dir()
-  return util.path.join(get_cache_dir(), 'jdtls')
+  return table.concat({get_cache_dir(), 'jdtls'})
 end
 
 local function get_jdtls_config_dir()
-  return util.path.join(get_jdtls_cache_dir(), 'config')
+  return table.concat({get_jdtls_cache_dir(), 'config'})
 end
 
 local function get_jdtls_workspace_dir()
-  return util.path.join(get_jdtls_cache_dir(), 'workspace')
+  return table.concat({get_jdtls_cache_dir(), 'workspace'})
 end
 
 local function get_jdtls_jvm_args()

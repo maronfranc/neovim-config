@@ -1,4 +1,4 @@
-local util = require('lspconfig.util')
+local helper = require("core.utils.helper")
 
 local M = {}
 M.serverName = "html"
@@ -55,7 +55,7 @@ M.setup = {
   },
   single_file_support = true,
   root_dir = function(fname)
-    return util.find_git_ancestor(fname)
+    return helper.find_git_ancestor(fname)
   end,
   docs = {
     description = [[
