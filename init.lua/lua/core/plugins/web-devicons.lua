@@ -11,7 +11,6 @@ local M = {
   config = function()
     local color = require("core.utils.colors")
     local icon_config = { icon = "", color = color.yellow, name = "Config_file" }
-
     require("nvim-web-devicons").setup({
       -- globally enable different highlight colors per icon (default to true)
       -- if set to false all icons will have the default icon's color

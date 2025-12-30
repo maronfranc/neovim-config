@@ -30,20 +30,15 @@ local M = {
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
       elseif luasnip.jumpable(1) then
         luasnip.jump(1)
-      else
-        fallback()
-      end
+      else fallback() end
     end
     local function previous_cmp_or_snippet(fallback)
       if cmp.visible() then
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
-      else
-        fallback()
-      end
+      else fallback() end
     end
-
 
     ---Define a function that takes another function and a number as parameters
     ---@param fn function: The function to be called repeatedly.

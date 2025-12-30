@@ -8,7 +8,6 @@ M.setup = {
   filetypes = { 'php' },
   on_attach = function(client, bufnr)
     if client.server_capabilities.documentFormattingProvider then
-      vim.print("FORMAT EXECUTED")
       _G.F_format_on_save(bufnr)
     end
     _G.F_buffer_load_keys(bufnr)
@@ -31,44 +30,4 @@ Installation: https://phpactor.readthedocs.io/en/master/usage/standalone.html#gl
   -- formatStdin = true,
 }
 
-
--- function aaa()
---   local prettier = function()
---     return {
---       exe = "npm run --silent prettier",
---       args = {
---         "--stdin-filepath",
---         vim.api.nvim_buf_get_name(0)
---       },
---       stdin = true
---     }
---   end
---
---   local prettier_php = function()
---     return {
---       exe = "npm run --silent prettier",
---       args = {
---         "--parser=php",
---         "--stdin-filepath",
---         vim.api.nvim_buf_get_name(0)
---       },
---       stdin = true
---     }
---   end
---
---   require("formatter").setup(
---     "formatter",
---     {
---       logging = false,
---       filetype = {
---         javascript = { prettier },
---         typescript = { prettier },
---         css = { prettier },
---         scss = { prettier },
---         php = { prettier_php },
---       }
---     }
---   )
--- end
---
 return M

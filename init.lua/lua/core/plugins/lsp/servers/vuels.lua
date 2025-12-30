@@ -1,5 +1,5 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/vuels.lua
-local util = require('lspconfig.util')
+-- local util = require('lspconfig.util')
 
 local M = {}
 
@@ -42,7 +42,7 @@ https://github.com/vuejs/vetur/tree/master/server
 Vue language server(vls)
 `vue-language-server` can be installed via `npm`:
 ```sh
-npm install -g vls
+npm install --global vls
 ```
 ]],
     default_config = {

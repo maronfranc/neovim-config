@@ -47,14 +47,14 @@ end
 ---@param source 'native'|'coc'|nil If nil, defaults to 'native'.
 function M.show(namespace, bufnr, diagnostics, opts, source)
   vim.validate({
-    namespace = { namespace, "n" },
-    bufnr = { bufnr, "n" },
+    namespace = { namespace, "number" },
+    bufnr = { bufnr, "number" },
     diagnostics = {
       diagnostics,
       vim.islist,
       "a list of diagnostics",
     },
-    opts = { opts, "t", true },
+    opts = { opts, "table", true },
   })
 
   table.sort(diagnostics, function(a, b)

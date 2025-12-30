@@ -23,7 +23,7 @@ local function buf_build(bufnr)
     position = { line = pos[1] - 1, character = pos[2] },
   }
   if texlab_client then
-    texlab_client.request('textDocument/build', params, function(err, result)
+    texlab_client:request('textDocument/build', params, function(err, result)
       if err then
         error(tostring(err))
       end
@@ -43,7 +43,7 @@ local function buf_search(bufnr)
     position = { line = pos[1] - 1, character = pos[2] },
   }
   if texlab_client then
-    texlab_client.request('textDocument/forwardSearch', params, function(err, result)
+    texlab_client:request('textDocument/forwardSearch', params, function(err, result)
       if err then error(tostring(err)) end
       print('Search ' .. texlab_forward_status[result.status])
     end, bufnr)

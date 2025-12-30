@@ -11,15 +11,10 @@ local M = {
     local default_options = { noremap = true, silent = true }
     local navigator = require('Navigator')
 
-    local function move_down() navigator.down() end
-    local function move_left() navigator.left() end
-    local function move_right() navigator.right() end
-    local function move_up() navigator.up() end
-
-    vim.keymap.set({ "n", "t" }, "<C-A-k>", move_up, default_options)
-    vim.keymap.set({ "n", "t" }, "<C-A-h>", move_left, default_options)
-    vim.keymap.set({ "n", "t" }, "<C-A-l>", move_right, default_options)
-    vim.keymap.set({ "n", "t" }, "<C-A-j>", move_down, default_options)
+    vim.keymap.set({ "n", "t" }, "<C-A-k>", navigator.up, default_options)
+    vim.keymap.set({ "n", "t" }, "<C-A-h>", navigator.left, default_options)
+    vim.keymap.set({ "n", "t" }, "<C-A-l>", navigator.right, default_options)
+    vim.keymap.set({ "n", "t" }, "<C-A-j>", navigator.down, default_options)
   end,
 }
 return M

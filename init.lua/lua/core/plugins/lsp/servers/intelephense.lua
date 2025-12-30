@@ -1,6 +1,6 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/cfad27c74c3a8943245904745dc3ef6658d07f9a/lua/lspconfig/intelephense.lua
 ---PHP format tool.
-local util = require('lspconfig/util')
+local util = require('lspconfig.util')
 
 local server_name = "intelephense"
 local bin_name = "intelephense"

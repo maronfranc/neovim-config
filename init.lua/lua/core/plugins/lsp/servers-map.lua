@@ -8,37 +8,39 @@ local function require_and_insert(file_name, lsp_setting_map)
   table.insert(lsp_setting_map, lsp_module)
 end
 
+
 local lsp_module_map = {}
 require_and_insert("astro", lsp_module_map)
 require_and_insert("bashls", lsp_module_map)
-require_and_insert("clangd", lsp_module_map)
+-- require_and_insert("clangd", lsp_module_map)
 require_and_insert("cssls", lsp_module_map)
 require_and_insert("cssmodule_ls", lsp_module_map)
 require_and_insert("emmet-ls", lsp_module_map)
-require_and_insert("gopls", lsp_module_map)
+-- require_and_insert("gopls", lsp_module_map)
 require_and_insert("html", lsp_module_map)
 -- require_and_insert("htmx", lsp_module_map)
-require_and_insert("lua_ls", lsp_module_map)
 -- require_and_insert("jdtls", lsp_module_map)
 -- require_and_insert("julials", lsp_module_map)
 require_and_insert("jsonls", lsp_module_map)
+require_and_insert("lua_ls", lsp_module_map)
 -- require_and_insert("phpactor", lsp_module_map)
 -- require_and_insert("intelephense", lsp_module_map)
 require_and_insert("pyright", lsp_module_map)
-require_and_insert("rust_analyzer", lsp_module_map)
+-- require_and_insert("rust_analyzer", lsp_module_map)
 require_and_insert("sqlls", lsp_module_map)
-require_and_insert("svelte", lsp_module_map)
-require_and_insert("texlab", lsp_module_map)
-require_and_insert("tailwindcss", lsp_module_map)
+-- require_and_insert("svelte", lsp_module_map)
+-- require_and_insert("texlab", lsp_module_map)
+-- require_and_insert("tailwindcss", lsp_module_map)
+-- require_and_insert("templ", lsp_module_map)
 require_and_insert("terraformls", lsp_module_map)
-require_and_insert("templ", lsp_module_map)
 require_and_insert("ts_ls", lsp_module_map)
 -- require_and_insert("vuels", lsp_module_map)
+
 
 local ensure_installed = _G.F_map_and_filter_nil(lsp_module_map, function(m)
   return m.serverName
 end)
--- table.insert(ensure_installed, "eslint")
+-- table.insert(ensure_installed, "eslint_lsp") -- Instal without file setup.
 
 -- Ensure tools (except LSPs) are installed
 local ensure_tools = {

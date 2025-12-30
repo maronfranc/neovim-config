@@ -17,27 +17,31 @@ local function organize_imports()
     arguments = { vim.uri_from_bufnr(0) },
   }
 
-  local clients = util.get_lsp_clients {
+  local clients = vim.lsp.get_clients({
     bufnr = vim.api.nvim_get_current_buf(),
     name = 'pyright',
-  }
+  })
   for _, client in ipairs(clients) do
-    client.request('workspace/executeCommand', params, nil, 0)
+    client:request(vim.lsp.protocol.Methods.workspace_executeCommand, params, nil, 0)
   end
 end
 
 local function set_python_path(path)
-  local clients = util.get_lsp_clients {
+  local clients = vim.lsp.get_clients({
     bufnr = vim.api.nvim_get_current_buf(),
     name = 'pyright',
-  }
+  })
   for _, client in ipairs(clients) do
     if client.settings then
+      client.settings.python = client.settings.python or {}
       client.settings.python = vim.tbl_deep_extend('force', client.settings.python, { pythonPath = path })
     else
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, { python = { pythonPath = path } })
     end
-    client.notify('workspace/didChangeConfiguration', { settings = nil })
+    client:notify(
+      vim.lsp.protocol.Methods.workspace_didChangeConfiguration,
+      { settings = nil }
+    )
   end
 end
 

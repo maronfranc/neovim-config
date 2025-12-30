@@ -1,11 +1,4 @@
 ---@see https://github.com/nyoom-engineering/oxocarbon.nvim
--- local M = {
---   "nyoom-engineering/oxocarbon.nvim",
---   config = function()
---     vim.cmd.colorscheme("oxocarbon")
---   end
--- }
-
 ---@see https://github.com/dasupradyumna/midnight.nvim
 local M = {
   'projekt0n/github-nvim-theme',
@@ -22,9 +15,6 @@ local M = {
     vim.opt.background = "dark"
     vim.api.nvim_set_hl(0, "Visual", { fg = "#333333", bg = "Gold" })
     vim.api.nvim_set_hl(0, "Search", { fg = "#333333", bg = "Orange" })
-
-
-
   end
 }
 

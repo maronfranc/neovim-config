@@ -115,7 +115,7 @@ local M = {
     local section_lsp_server = {
       function()
         local inactive_msg = 'No Active Lsp'
-        local clients = vim.lsp.get_active_clients()
+        local clients = vim.lsp.get_clients()
         if next(clients) == nil then return inactive_msg end
 
         local msg
