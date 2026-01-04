@@ -13,7 +13,7 @@ M.setup = {
     --   _G.F_format_on_save(bufnr)
     -- end
     _G.F_buffer_load_keys(bufnr)
-    _G.CC_tab_size(4)
+    _G.CC_tab_size(2)
   end,
   docs = {
     description = [[
