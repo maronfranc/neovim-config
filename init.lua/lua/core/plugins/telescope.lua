@@ -2,71 +2,46 @@
 -- telescope.nvim is a highly extendable fuzzy finder over lists. Built on the 
 -- latest awesome features from neovim core. Telescope is centered around modularity,
 -- allowing for easy customization.
--- SEE: https://github.com/Allaman/nvim/blob/main/lua/core/plugins/telescope.lua
 
 local M = {
   "nvim-telescope/telescope.nvim",
   cmd = "Telescope",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "jvgrootveld/telescope-zoxide",
-    "crispgm/telescope-heading.nvim",
     "nvim-telescope/telescope-symbols.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
-    "nvim-telescope/telescope-ui-select.nvim",
-    "ptethng/telescope-makefile",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
   keys = {
-    -- { "<leader>bb", "<cmd>Telescope buffers<cr>", desc = "Bufferlist" },
-    -- { "<leader>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
     -- Search stuff
     { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+    { "<leader>g?", "<cmd>Telescope help_tags<cr>", desc = "Help" },
+    { "<leader>kk", "<cmd>Telescope keymaps<cr>", desc = "Show keymaps list" },
     { "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Strings" },
-    { "<leader>s?", "<cmd>Telescope help_tags<cr>", desc = "Help" },
-    { "<leader>sh", "<cmd>Telescope heading<cr>", desc = "Headings" },
-    { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-    { "<leader>sO", "<cmd>Telescope vim_options<cr>", desc = "Vim Options" },
-    { "<leader>sp", "<cmd>Telescope projects<cr>", desc = "Projects" },
-    { "<leader>sR", "<cmd>Telescope regiesters<cr>", desc = "Registers" },
-    { "<leader>ss", "<cmd>Telescope grep_string<cr>", desc = "Text under cursor" },
-    { "<leader>sS", "<cmd>Telescope symbols<cr>", desc = "Emoji" },
-    { "<leader>s:", "<cmd>Telescope search_history<cr>", desc = "Search History" },
-    { "<leader>s;", "<cmd>Telescope command_history<cr>", desc = "Command history" },
     {
-      "<leader>sf",
+      "<leader>fg",
       "<cmd>lua require'telescope.builtin'.grep_string{ shorten_path = true, word_match = '-w', only_sort_text = true, search = '' }<cr>",
       desc = "Fuzzy search",
     },
     -- Git
-    { "<leader>gh", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
-    { "<leader>gg", "<cmd>Telescope git_status<cr>", desc = "Status" },
+    { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
+    { "<leader>gt", "<cmd>Telescope git_status<cr>", desc = "Status" },
     { "<leader>gm", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
-    -- files
+    -- Files
     { "<leader>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
-    { "<leader>fz", "<cmd>Telescope zoxide list<cr>", desc = "Zoxide" },
-    -- { "<leader>ff", "<cmd>" .. project_files() .. "<cr>", desc = "Open file" },
-    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
-    -- misc
-    { "<leader>mm", "<cmd>Telescope make<cr>", desc = "Run make" },
-    { "<leader>mt", "<cmd>Telescope<cr>", desc = "Telescope" },
+    -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
     -- Other
     { "<leader>bb", "<cmd>Telescope buffers<cr>", desc = "Bufferlist" },
     { "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Search in buffer" },
   },
   config = function()
-    -- local settings = require("core.settings")
     local telescope = require("telescope")
     local telescopeConfig = require("telescope.config")
     local actions = require("telescope.actions")
     local action_layout = require("telescope.actions.layout")
-    local fb_actions = require("telescope").extensions.file_browser.actions
-    -- local icons = require("core.utils.icons")
+    -- local fb_actions = require("telescope").extensions.file_browser.actions
 
     local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
-    -- if settings.telescope_grep_hidden then
-    --   table.insert(vimgrep_arguments, "--hidden")
-    -- end
     -- trim the indentation at the beginning of presented line
     table.insert(vimgrep_arguments, "--trim")
 
@@ -80,39 +55,14 @@ local M = {
     telescope.setup({
       extensions = {
         fzf = fzf_opts,
-        ["ui-select"] = {
-          require("telescope.themes").get_dropdown({}),
-        },
-        file_browser = {
-          theme = "ivy",
-          hijack_netrw = false,
-          hidden = true,
-          mappings = {
-            i = {
-              ["<c-n>"] = fb_actions.create,
-              ["<c-r>"] = fb_actions.rename,
-              -- ["<c-h>"] = actions.which_key,
-              ["<c-h>"] = fb_actions.toggle_hidden,
-              ["<c-x>"] = fb_actions.remove,
-              ["<c-p>"] = fb_actions.move,
-              ["<c-y>"] = fb_actions.copy,
-              ["<c-a>"] = fb_actions.select_all,
-            },
-          },
-        },
+        ["ui-select"] = { require("telescope.themes").get_dropdown({}) },
       },
       pickers = {
         find_files = { hidden = false },
-        buffers = {
-          ignore_current_buffer = true,
-          sort_lastused = true,
-        },
+        buffers = { ignore_current_buffer = true, sort_lastused = true },
         live_grep = {
           sorter = telescope.extensions.fzf.native_fzf_sorter(fzf_opts),
           only_sort_text = true, -- grep for content and not file name/path
-          mappings = {
-            i = { ["<c-f>"] = require("telescope.actions").to_fuzzy_refine },
-          },
         },
       },
       defaults = {
@@ -178,13 +128,7 @@ local M = {
       },
     })
 
-    -- telescope.load_extension("projects")
-    telescope.load_extension("zoxide")
-    telescope.load_extension("heading")
-    telescope.load_extension("ui-select")
-    telescope.load_extension("make")
     telescope.load_extension("fzf")
-    -- telescope.load_extension("noice")
   end,
 }
 
