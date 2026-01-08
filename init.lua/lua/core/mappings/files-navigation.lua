@@ -3,9 +3,14 @@ local builtin = require('telescope/builtin')
 vim.keymap.set('n', '<LEADER>fb', builtin.buffers, {})
 vim.keymap.set('n', '<LEADER>ff', builtin.find_files, {})
 vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+vim.keymap.set("n", "<LEADER>fg", function()
+  builtin.live_grep({
+    additional_args = function()
+      return { "--fixed-strings" }
+    end,
+  })
+end, { desc = "Cmd: `Telescope live_grep` escaping regex" })
 
--- builtin.grep_string({ search = vim.fn.input("Grep > ") })
-vim.keymap.set('n', '<LEADER>fg', "<CMD>Telescope live_grep<CR>")
 vim.keymap.set('n', '<LEADER>fh', builtin.help_tags, {})
 vim.keymap.set('n', "<LEADER>fe", "<CMD>Neotree reveal toggle<CR>", {
   desc = "Toggle neo-tree explorer",
