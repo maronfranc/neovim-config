@@ -12,7 +12,7 @@ vim.keymap.set('n', "<LEADER>fe", "<CMD>Neotree reveal toggle<CR>", {
 })
 vim.keymap.set('n', '<LEADER>pi', "<CMD>Telescope symbols<CR>", {}) -- pick icons
 
-local error_lines_ok, lsp_lines = pcall(require, "core.plugins.lsp.lsp_lines")
+local error_lines_ok, lsp_lines = pcall(require, "core.lsp.lsp_lines")
 --- Toggle lsp_lines and untoggle standard error diagnostic.
 local function toggle_diagnostics()
   if (not error_lines_ok) then

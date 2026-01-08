@@ -14,7 +14,6 @@ local M = {
   },
   keys = {
     -- Search stuff
-    { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
     { "<leader>g?", "<cmd>Telescope help_tags<cr>", desc = "Help" },
     { "<leader>kk", "<cmd>Telescope keymaps<cr>", desc = "Show keymaps list" },
     { "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Strings" },

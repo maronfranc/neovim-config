@@ -12,7 +12,7 @@ local default_on_attach = function(_, bufnr)
   _G.CC_tab_size(2)
 end
 
-local server = require("core.plugins.lsp.servers-map")
+local server = require("core.lsp.servers-map")
 -- Default configuration for all servers
 for _, lsp in ipairs(server.lsp_settings) do
   if not lsp.setup.on_attach then

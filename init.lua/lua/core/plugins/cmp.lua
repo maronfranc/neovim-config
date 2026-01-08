@@ -23,7 +23,7 @@ local M = {
     local kind_icons = require("core.utils.file-kind-icons")
     local css_cmp_ok, css_cmp = pcall(require, "core.local-plugins.nvim-cmp-css")
     if css_cmp_ok then css_cmp.setup() end
-    local snippets_setup = require("core.plugins.snippets.setup")
+    local snippets_setup = require("core.snippets.setup")
 
     local function next_cmp_or_snippet(fallback)
       if cmp.visible() then

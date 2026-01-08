@@ -1,5 +1,5 @@
 local function require_and_insert(file_name, lsp_setting_map)
-  local path = "core.plugins.lsp.servers." .. file_name
+  local path = "core.lsp.servers." .. file_name
   local ok, lsp_module = pcall(require, path)
   if (not ok) then
     print("[Error lsp.servers-map require_and_insert()] path:", path)
