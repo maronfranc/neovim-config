@@ -12,33 +12,15 @@ local M = {
     "nvim-telescope/telescope-file-browser.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
-  keys = {
-    -- Search stuff
-    { "<leader>g?", "<cmd>Telescope help_tags<cr>", desc = "Help" },
-    { "<leader>kk", "<cmd>Telescope keymaps<cr>", desc = "Show keymaps list" },
-    { "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Strings" },
-    {
-      "<leader>fg",
-      "<cmd>lua require'telescope.builtin'.grep_string{ shorten_path = true, word_match = '-w', only_sort_text = true, search = '' }<cr>",
-      desc = "Fuzzy search",
-    },
-    -- Git
-    { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
-    { "<leader>gt", "<cmd>Telescope git_status<cr>", desc = "Status" },
-    { "<leader>gm", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
-    -- Files
-    { "<leader>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
-    -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
-    -- Other
-    { "<leader>bb", "<cmd>Telescope buffers<cr>", desc = "Bufferlist" },
-    { "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Search in buffer" },
-  },
+  -- keys = { }, -- keymaps are in mapping file.
   config = function()
     local telescope = require("telescope")
     local telescopeConfig = require("telescope.config")
     local actions = require("telescope.actions")
     local action_layout = require("telescope.actions.layout")
+    local themes = require("telescope.themes")
     -- local fb_actions = require("telescope").extensions.file_browser.actions
+    local keymaps = require("core.mappings.telescope")
 
     local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
     -- trim the indentation at the beginning of presented line
@@ -54,7 +36,7 @@ local M = {
     telescope.setup({
       extensions = {
         fzf = fzf_opts,
-        ["ui-select"] = { require("telescope.themes").get_dropdown({}) },
+        ["ui-select"] = { themes.get_dropdown({}) },
       },
       pickers = {
         find_files = { hidden = false },
@@ -68,29 +50,8 @@ local M = {
         -- file_ignore_patterns = settings.telescope_file_ignore_patterns,
         vimgrep_arguments = vimgrep_arguments,
         mappings = {
-          i = {
-            -- Close on first esc instead of going to normal mode
-            -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
-            ["<esc>"] = actions.close,
-            ["<C-j>"] = actions.move_selection_next,
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<PageUp>"] = actions.results_scrolling_up,
-            ["<PageDown>"] = actions.results_scrolling_down,
-            ["<C-u>"] = actions.preview_scrolling_up,
-            ["<C-d>"] = actions.preview_scrolling_down,
-            ["<C-q>"] = actions.send_selected_to_qflist,
-            ["<C-l>"] = actions.send_to_qflist,
-            ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
-            ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
-            ["<cr>"] = actions.select_default,
-            ["<c-v>"] = actions.select_vertical,
-            ["<c-s>"] = actions.select_horizontal,
-            ["<c-t>"] = actions.select_tab,
-            ["<c-p>"] = action_layout.toggle_preview,
-            ["<c-o>"] = action_layout.toggle_mirror,
-            ["<c-h>"] = actions.which_key,
-            ["<c-x>"] = actions.delete_buffer,
-          },
+          -- i = keymaps.window_open_keymaps,
+          i = keymaps.load_window_opened_keymaps(actions, action_layout),
         },
         -- prompt_prefix = table.concat({ icons.arrows.ChevronRight, " " }),
         -- selection_caret = icons.arrows.CurvedArrowRight,
