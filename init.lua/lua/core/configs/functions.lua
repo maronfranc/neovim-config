@@ -6,15 +6,6 @@ _G.F_format_on_save = function(bufnr)
   })
 end
 
-_G.F_map_and_filter_nil = function(tbl, fn)
-  local t = {}
-  for _, v in pairs(tbl) do
-    local mapped_value = fn(v)
-    if mapped_value ~= nil then table.insert(t, mapped_value) end
-  end
-  return t
-end
-
 ---@see https://www.reddit.com/r/vim/comments/wm08fl/comment/ijwdgzs/
 -- Define the InlineColors function
 -- _G.F_inline_colors = function()

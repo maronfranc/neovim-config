@@ -6,7 +6,7 @@
 ---@see https://www.reddit.com/r/neovim/comments/ve3k7s/what_are_the_plugins_that_utilizes_the_virt_lines/
 local M = {}
 
-local render = require("core.lsp.lsp_lines.render")
+local render = require("core.local-plugins.lsp_lines.render")
 
 local function render_current_line(diagnostics, ns, bufnr, opts)
   local current_line_diag = {}

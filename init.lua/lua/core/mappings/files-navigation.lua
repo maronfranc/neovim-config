@@ -35,8 +35,8 @@ _G.F_buffer_load_keys = function(bufnr)
 end
 
 -- ----- ----- Error messages ----- -----
--- require("core.lsp.lsp_lines")
-local error_lines_ok, lsp_lines = pcall(require, "core.lsp.lsp_lines")
+-- require("core.local-plugins.lsp_lines")
+local error_lines_ok, lsp_lines = pcall(require, "core.local-plugins.lsp_lines")
 --- Toggle lsp_lines and untoggle standard error diagnostic.
 local function toggle_diagnostics()
 	if not error_lines_ok then

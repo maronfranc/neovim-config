@@ -35,7 +35,15 @@ require_and_insert("terraformls", lsp_module_map)
 require_and_insert("ts_ls", lsp_module_map)
 -- require_and_insert("vuels", lsp_module_map)
 
-local ensure_installed = _G.F_map_and_filter_nil(lsp_module_map, function(m)
+local map_and_filter_nil = function(tbl, fn)
+  local t = {}
+  for _, v in pairs(tbl) do
+    local mapped_value = fn(v)
+    if mapped_value ~= nil then table.insert(t, mapped_value) end
+  end
+  return t
+end
+local ensure_installed = map_and_filter_nil(lsp_module_map, function(m)
   return m.serverName
 end)
 -- table.insert(ensure_installed, "eslint_lsp") -- Instal without file setup.
