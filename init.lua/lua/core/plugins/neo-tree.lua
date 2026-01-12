@@ -2,6 +2,8 @@
 -- Neo-tree is a Neovim plugin to browse the file system and other tree like structures
 -- in whatever style suits you, including sidebars, floating windows, netrw split style,
 -- or all of them at once.
+local keymap = require("core.keymap.plugins.neo-tree")
+
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
@@ -189,41 +191,7 @@ local M = {
       -- Mappings for tree window. See `:h neo-tree-mappings` for a list of built-in commands.
       -- You can also create your own commands by providing a function instead of a string.
       mapping_options = { noremap = true, nowait = true },
-      mappings = {
-        ["C"] = {
-          "toggle_node",  -- "close_node",
-          nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
-        },
-        ["<2-LeftMouse>"] = "open",
-        ["<cr>"] = "open",
-        ["l"] = "open",
-        ["S"] = "open_split",
-        ["s"] = "open_vsplit",
-        ["t"] = "open_tabnew",
-        ["P"] = "toggle_preview",
-        ["z"] = "close_all_nodes",
-        ["Z"] = "expand_all_nodes",
-        ["<C-r>"] = "refresh",
-        ["a"] = {
-          "add",
-          -- some commands may take optional config options, see `:h neo-tree-mappings` for details
-          config = {
-            show_path = "none", -- "none", "relative", "absolute"
-          },
-        },
-        ["A"]  = "add_directory", -- also accepts the config.show_path option.
-        ["dd"] = "delete",
-        ["r"] = "rename",
-        ["y"] = "copy_to_clipboard",
-        ["x"] = "cut_to_clipboard",
-        ["p"] = "paste_from_clipboard",
-        ["c"] = "copy", -- takes text input for destination, also accepts the config.show_path option
-        ["m"] = "move", -- takes text input for destination, also accepts the config.show_path option
-        ["q"] = "close_window",
-        ["?"] = "show_help",
-        ["<"] = "prev_source",
-        [">"] = "next_source",
-      },
+      mappings = keymap.explorer,
     },
     filesystem = {
       commands = {
@@ -248,21 +216,7 @@ local M = {
           vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
         end,
       },
-      window = {
-        mappings = {
-          ["o"]     = "system_open",
-          ["H"]     = "toggle_hidden",
-          ["/"]     = "fuzzy_finder",
-          ["D"]     = "fuzzy_finder_directory",
-          ["f"]     = "filter_on_submit",
-          ["."]     = "set_root",
-          ["[g"]    = "prev_git_modified",
-          ["]g"]    = "next_git_modified",
-          ["<C-x>"] = "clear_filter",
-          -- ["/"] = "filter_as_you_type", -- this was the default until v1.28
-          -- ["<BS>"] = "navigate_up",
-        },
-      },
+      window = { mappings = keymap.filesystem },
       async_directory_scan = "auto",
       -- "auto"   means refreshes are async, but it's synchronous when called from the Neotree commands.
       -- "always" means directory scans are always async.
@@ -343,26 +297,10 @@ local M = {
       follow_current_file = { enabled = true }, -- This will find and focus the file in the active buffer every time
       -- the current file is changed while the tree is open.
       group_empty_dirs = true,                  -- when true, empty directories will be grouped together
-      window = {
-        mappings = {
-          ["<bs>"] = "navigate_up",
-          ["."]    = "set_root",
-          ["bd"]   = "buffer_delete",
-        },
-      },
+      window = { mappings = keymap.buffer },
     },
     git_status = {
-      window = {
-        mappings = {
-          ["A"]  = "git_add_all",
-          ["gu"] = "git_unstage_file",
-          ["ga"] = "git_add_file",
-          ["gr"] = "git_revert_file",
-          ["gc"] = "git_commit",
-          ["gp"] = "git_push",
-          -- ["gg"] = "git_commit_and_push",
-        },
-      },
+      window = { mappings = keymap.git },
     },
     example = {
       renderers = {
