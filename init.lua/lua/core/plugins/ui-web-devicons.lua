@@ -1,11 +1,11 @@
--- @see https://github.com/nvim-tree/nvim-web-devicons
--- @see https://github.com/ryanoasis/nerd-fonts
--- @see https://github.com/primer/octicons/archive/refs/tags/v19.8.0.zip
--- Patch terminal fonts with icons:
--- 1. Download nerdfonts with icons.
--- 2. unzip devicons in ~/.local/share/fonts/.
--- 3. Run `fc-cache -fv`.
--- 4. Change terminal font.
+---@see https://github.com/nvim-tree/nvim-web-devicons
+---@see https://github.com/ryanoasis/nerd-fonts
+---@see https://github.com/primer/octicons/archive/refs/tags/v19.8.0.zip
+---Patch terminal fonts with icons:
+---1. Download nerdfonts with icons.
+---2. unzip devicons in ~/.local/share/fonts/.
+---3. Run `fc-cache -fv`.
+---4. Change terminal font.
 local M = {
   "nvim-tree/nvim-web-devicons",
   config = function()

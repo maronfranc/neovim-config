@@ -1,7 +1,7 @@
--- @see https://github.com/nvim-neo-tree/neo-tree.nvim
--- Neo-tree is a Neovim plugin to browse the file system and other tree like structures
--- in whatever style suits you, including sidebars, floating windows, netrw split style,
--- or all of them at once.
+---@see https://github.com/nvim-neo-tree/neo-tree.nvim
+---Neo-tree is a Neovim plugin to browse the file system and other tree like structures
+---in whatever style suits you, including sidebars, floating windows, netrw split style,
+---or all of them at once.
 local keymap = require("core.keymap.plugins.neo-tree")
 
 local M = {
