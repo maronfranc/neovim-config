@@ -1,4 +1,5 @@
 require("core.keymap.buf")
 require("core.keymap.git")
 require("core.keymap.standard")
+require("core.keymap.error-diagnostics")
 require("core.keymap.plugins.telescope").load_keymaps()

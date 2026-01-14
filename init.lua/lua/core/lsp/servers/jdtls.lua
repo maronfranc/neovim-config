@@ -101,7 +101,7 @@ M.setup = {
     get_jdtls_jvm_args(),
   },
   on_attach = function(client, bufnr)
-    -- _G.F_buffer_load_keys(bufnr)
+    require("core.keymap.buf").buffer_load_keymaps(bufnr)
     _G.CC_tab_size(4)
   end,
   settings = {

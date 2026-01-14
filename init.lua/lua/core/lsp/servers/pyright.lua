@@ -54,8 +54,8 @@ M.setup = {
     return util.root_pattern(unpack(root_files))(fname)
   end,
   on_attach = function(client, bufnr)
+    require("core.keymap.buf").load_keymaps(bufnr)
     _G.CC_tab_size(4)
-    _G.F_buffer_load_keys(bufnr)
   end,
   single_file_support = true,
   settings = {

@@ -6,10 +6,9 @@ M.setup = {
   cmd = { "rust-analyzer" },
   filetypes = { "rust" },
   on_attach = function(client, bufnr)
-    -- if client.server_capabilities.documentFormattingProvider then
-    --   _G.F_format_on_save(bufnr)
-    -- end
-    _G.F_buffer_load_keys(bufnr)
+    -- require("core.utils.helper").format_on_save(bufnr)
+    require("core.keymap.buf").load_keymaps(bufnr)
+    _G.CC_tab_size(4)
   end,
   root_dir = util.root_pattern("Cargo.toml", "rust-project.json"),
   ---@see https://neovim.discourse.group/t/lag-at-neovim-shutdown-lsp-rust-analyzer-suspected/1221/3

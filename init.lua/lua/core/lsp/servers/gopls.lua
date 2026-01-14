@@ -22,11 +22,9 @@ M.setup = {
     usePlaceholders = true,
   },
   on_attach = function(client, bufnr)
-    -- if client.server_capabilities.documentFormattingProvider then
-    -- end
-    _G.F_format_on_save(bufnr)
+    require("core.utils.helper").format_on_save(bufnr)
+    require("core.keymap.buf").load_keymaps(bufnr)
     _G.CC_tab_size(4)
-    _G.F_buffer_load_keys(bufnr)
   end,
   -- root_pattern "go.work" | "go.mod" | ".git"
   root_dir = function(fname)

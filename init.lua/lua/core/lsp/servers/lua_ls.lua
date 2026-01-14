@@ -23,8 +23,8 @@ M.setup = {
     },
   },
   on_attach = function(_, bufnr)
+    require("core.keymap.buf").load_keymaps(bufnr)
     _G.CC_tab_size(2)
-    _G.F_buffer_load_keys(bufnr)
   end,
   workspace = {
     library = {

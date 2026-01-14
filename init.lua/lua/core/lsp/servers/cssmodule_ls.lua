@@ -11,6 +11,10 @@ M.setup = {
     'html',
     'css',
   },
+  on_attach = function(client, bufnr)
+    require("core.keymap.buf").load_keymaps(bufnr)
+    _G.CC_tab_size(2)
+  end,
   root_dir = helper.find_package_json_ancestor,
   ---@see https://github.com/antonk52/cssmodules-language-server
   init_options = { camelCase = 'dashes' },

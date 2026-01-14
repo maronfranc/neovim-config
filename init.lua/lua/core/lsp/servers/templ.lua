@@ -1,26 +1,26 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/templ.lua
-local util = require('lspconfig.util')
+local util = require("lspconfig.util")
 
 local M = {}
-M.serverName = 'templ'
+M.serverName = "templ"
 M.setup = {
-  default_config = {
-    cmd = { 'templ', 'lsp' },
-    filetypes = { 'templ' },
-    root_dir = function(fname)
-      return util.root_pattern('go.work', 'go.mod', '.git')(fname)
-    end,
-  },
-  docs = {
-    description = [[
+	default_config = {
+		cmd = { "templ", "lsp" },
+		filetypes = { "templ" },
+		root_dir = function(fname)
+			return util.root_pattern("go.work", "go.mod", ".git")(fname)
+		end,
+	},
+	docs = {
+		description = [[
 https://templ.guide
 
 The official language server for the templ HTML templating language.
 ]],
-    default_config = {
-      root_dir = [[root_pattern('go.work', 'go.mod', '.git')]],
-    },
-  },
+		default_config = {
+			root_dir = [[root_pattern("go.work", "go.mod", ".git")]],
+		},
+	},
 }
 
 return M

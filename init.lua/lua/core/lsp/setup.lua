@@ -2,14 +2,16 @@
 -- @see https://www.tabnews.com.br/NathanFirmo/aprenda-a-configurar-o-languageserver-no-neovim
 local status_ok, nvim_lsp = pcall(require, "lspconfig")
 if (not status_ok) then return end
+-- local nvim_lsp = vim.lsp.config
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- enable autocompletion via nvim-cmp
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local default_on_attach = function(_, bufnr)
-  _G.F_buffer_load_keys(bufnr)
-  _G.CC_tab_size(2)
+  -- if client.server_capabilities.documentFormattingProvider
+  require("core.keymap.buf").load_keymaps(bufnr)
+  _G.CC_tab_size(4)
 end
 
 local server = require("core.lsp.servers-map")

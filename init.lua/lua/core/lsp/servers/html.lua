@@ -5,22 +5,20 @@ local M = {}
 M.serverName = "html"
 -- @todo M.tool_names = { }
 M.setup = {
-  -- @see https://github.com/hrsh7th/vscode-langservers-extracted
-  -- npm i -g vscode-langservers-extracted
-  cmd = { "vscode-html-language-server", "--stdio" },
-  -- root_dir = util.root_pattern('package.json', '.git'),
-  single_file_support = true,
-  filetypes = { 'html', 'rust' },
-  init_options = {
-    provideFormatter = true,
-    embeddedLanguages = { css = true, javascript = true },
-    configurationSection = { 'html', 'css', 'javascript' },
-  },
-  on_attach = function(client, bufnr)
-    if client.server_capabilities.documentFormattingProvider then
-      -- _G.F_format_on_save(bufnr)
-      _G.CC_tab_size(2)
-    end
-  end,
+	-- @see https://github.com/hrsh7th/vscode-langservers-extracted
+	-- npm i -g vscode-langservers-extracted
+	cmd = { "vscode-html-language-server", "--stdio" },
+	-- root_dir = util.root_pattern('package.json', '.git'),
+	single_file_support = true,
+	filetypes = { "html", "rust" },
+	init_options = {
+		provideFormatter = true,
+		embeddedLanguages = { css = true, javascript = true },
+		configurationSection = { "html", "css", "javascript" },
+	},
+	on_attach = function(client, bufnr)
+    require("core.keymap.buf").load_keymaps(bufnr)
+		_G.CC_tab_size(2)
+	end,
 }
 return M

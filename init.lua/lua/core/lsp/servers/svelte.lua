@@ -7,9 +7,9 @@ M.setup = {
   filetypes = { 'svelte' },
   root_dir = util.root_pattern('package.json', '.git'),
   on_attach = function(client, bufnr)
-    -- _G.F_buffer_load_keys(bufnr)
+    require("core.utils.helper").format_on_save(bufnr)
+    -- require("core.keymap.buf").load_keymaps(bufnr)
     _G.CC_tab_size(2)
-    _G.F_format_on_save(bufnr)
   end,
   docs = {
     description = [[
