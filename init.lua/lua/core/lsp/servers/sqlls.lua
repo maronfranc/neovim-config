@@ -2,7 +2,7 @@
 -- local util = require('lspconfig.util')
 
 local M = {}
-M.serverName = 'sqlls'
+M.server_name = 'sqlls'
 -- M.serverName = 'sql_language_server'
 M.setup = {
   -- cmd = { 'sqlls' },

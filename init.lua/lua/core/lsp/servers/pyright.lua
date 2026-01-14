@@ -46,7 +46,7 @@ local function set_python_path(path)
 end
 
 local M = {}
-M.serverName = 'pyright'
+M.server_name = 'pyright'
 M.setup = {
   cmd = { 'pyright-langserver', '--stdio' },
   filetypes = { 'python' },

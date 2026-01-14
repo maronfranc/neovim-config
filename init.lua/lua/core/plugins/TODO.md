@@ -19,7 +19,7 @@ return {
     'DBUIFindBuffer',
   },
   init = function()
-    vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { silent = true })
+    vim.keymap.set("n", "<LEADER>db", ":DBUIToggle<CR>", { silent = true })
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_show_database_icon = 1

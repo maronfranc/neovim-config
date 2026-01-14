@@ -2,7 +2,7 @@
 -- @see https://github.com/emmetio/emmet/blob/master/README.md
 -- npm install -g emmet-ls
 local M = {}
-M.serverName = "emmet_ls"
+M.server_name = "emmet_ls"
 M.setup = {
   filetypes = {
     "html",

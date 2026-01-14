@@ -1,7 +1,7 @@
 local util = require("lspconfig.util")
 
 local M = {}
-M.serverName = "ts_ls"
+M.server_name = "ts_ls"
 M.setup = {
 	-- TypeScript
 	-- Don't forget to install typescript language server itself:
@@ -9,7 +9,6 @@ M.setup = {
 	cmd = { "typescript-language-server", "--stdio" },
 	init_options = {
 		tsserver = {
-			-- Path found with command: `which tsserver`
 			path = vim.trim(vim.fn.system("which tsserver")),
 		},
 	},

@@ -2,7 +2,7 @@
 local util = require("lspconfig.util")
 
 local M = {}
-M.serverName = "vuels"
+M.server_name = "vuels"
 M.setup = {
 	default_config = {
 		cmd = { "vls" },

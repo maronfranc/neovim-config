@@ -1,7 +1,7 @@
 local helper = require("core.utils.helper")
 
 local M = {}
-M.serverName = "html"
+M.server_name = "html"
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/htmx.lua
 M.setup = {
   cmd = { 'htmx-lsp' },

@@ -2,7 +2,7 @@
 local helper = require("core.utils.helper")
 
 local M = {}
-M.serverName = "jsonls"
+M.server_name = "jsonls"
 M.setup = {
   cmd = { 'vscode-json-language-server', '--stdio' },
   filetypes = { 'json', 'jsonc' },

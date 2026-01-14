@@ -3,7 +3,7 @@ local util = require("lspconfig.util")
 local helper = require("core.utils.helper")
 
 local M = {}
-M.serverName = "tailwindcss"
+M.server_name = "tailwindcss"
 M.setup = {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	-- filetypes copied and adjusted from tailwindcss-intellisense

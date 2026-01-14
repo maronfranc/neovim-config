@@ -4,7 +4,7 @@ local async = require('lspconfig.async')
 local mod_cache = nil
 
 local M = {}
-M.serverName = "gopls"
+M.server_name = "gopls"
 M.setup = {
   -- go install golang.org/x/tools/gopls@latest
   cmd = { 'gopls' },

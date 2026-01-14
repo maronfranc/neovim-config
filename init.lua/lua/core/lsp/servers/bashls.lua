@@ -2,7 +2,7 @@
 local helper = require("core.utils.helper")
 
 local M = {}
-M.serverName = "bashls"
+M.server_name = "bashls"
 M.setup = {
   default_config = {
     cmd = { 'bash-language-server', 'start' },

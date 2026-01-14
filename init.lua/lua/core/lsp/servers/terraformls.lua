@@ -3,7 +3,7 @@ local util = require("lspconfig.util")
 
 local M = {}
 
-M.serverName = "terraformls"
+M.server_name = "terraformls"
 M.setup = {
 	default_config = {
 		cmd = { "terraform-ls", "serve" },

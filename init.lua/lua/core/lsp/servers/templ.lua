@@ -2,7 +2,7 @@
 local util = require("lspconfig.util")
 
 local M = {}
-M.serverName = "templ"
+M.server_name = "templ"
 M.setup = {
 	default_config = {
 		cmd = { "templ", "lsp" },

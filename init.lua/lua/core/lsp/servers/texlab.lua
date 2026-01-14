@@ -55,7 +55,7 @@ local function buf_search(bufnr)
 end
 
 local M = {}
-M.serverName = "texlab"
+M.server_name = "texlab"
 M.setup = {
 	cmd = { "texlab" },
 	filetypes = { "tex", "plaintex", "bib" },

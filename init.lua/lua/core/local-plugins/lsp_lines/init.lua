@@ -4,6 +4,7 @@
 ---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/init.lua
 ---And other links:
 ---@see https://www.reddit.com/r/neovim/comments/ve3k7s/what_are_the_plugins_that_utilizes_the_virt_lines/
+---@see https://gpanders.com/blog/whats-new-in-neovim-0-11/#virtual-lines
 local M = {}
 
 local render = require("core.local-plugins.lsp_lines.render")

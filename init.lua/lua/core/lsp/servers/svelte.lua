@@ -1,7 +1,7 @@
 local util = require('lspconfig.util')
 
 local M = {}
-M.serverName = 'svelte'
+M.server_name = 'svelte'
 M.setup = {
   cmd = { 'svelteserver', '--stdio' },
   filetypes = { 'svelte' },

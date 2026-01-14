@@ -43,7 +43,7 @@ local cmd = {
 }
 
 local M = {}
-M.serverName = "julials"
+M.server_name = "julials"
 M.setup = {
   cmd = cmd,
   filetypes = { 'julia' },

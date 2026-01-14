@@ -2,7 +2,7 @@
 local util = require("lspconfig.util")
 
 local M = {}
-M.serverName = "phpactor"
+M.server_name = "phpactor"
 M.setup = {
 	cmd = { "phpactor", "language-server" },
 	filetypes = { "php" },

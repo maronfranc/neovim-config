@@ -1,6 +1,6 @@
 -- @see https://github.com/pwntester/nvim-lsp/blob/master/lua/nvim_lsp/cssls.lua
 local M = {}
-M.serverName = "cssls"
+M.server_name = "cssls"
 M.setup = {
   cmd = { "vscode-css-language-server", "--stdio"},
   filetypes = { "css" },

@@ -90,7 +90,7 @@ local root_files = {
 }
 
 local M = {}
-M.serverName = 'jdtls'
+M.server_name = 'jdtls'
 M.setup = {
   cmd = {
     'jdtls',

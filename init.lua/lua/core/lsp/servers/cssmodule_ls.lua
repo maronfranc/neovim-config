@@ -2,7 +2,7 @@
 local helper = require("core.utils.helper")
 
 local M = {}
-M.serverName = 'cssmodules_ls'
+M.server_name = 'cssmodules_ls'
 M.setup = {
   cmd = { 'cssmodules-language-server' },
   filetypes = {

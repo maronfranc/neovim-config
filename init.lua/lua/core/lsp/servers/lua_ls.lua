@@ -1,6 +1,6 @@
 -- https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
 local M = {}
-M.serverName = "lua_ls"
+M.server_name = "lua_ls"
 M.setup = {
   cmd = { "lua-language-server" },
   telemetry = { enable = false },

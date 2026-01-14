@@ -6,7 +6,7 @@ local server_name = "intelephense"
 local bin_name = "intelephense"
 
 local M = {}
-M.serverName = server_name
+M.server_name = server_name
 M.setup = {
   default_config = {
     cmd = { bin_name, "--stdio" },

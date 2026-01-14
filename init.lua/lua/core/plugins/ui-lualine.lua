@@ -40,7 +40,7 @@ local M = {
       path = 4,
       fmt = function(path, _) -- (path, context)
         local folder_and_filename = vim.split(path, "/")
-        return " " .. folder_and_filename[1] .. "/"
+        return icons.ui.Folder .. folder_and_filename[1] .. "/"
       end,
       padding = { right = 0, left = 0 },
       symbols = { modified = "", readonly = "", unnamed = "", newfile = "" }
@@ -50,7 +50,7 @@ local M = {
       cond = function()
         return conditions.buffer_not_empty() and conditions.hide_in_width()
       end,
-      fmt = function(path, _) return " " .. path end,
+      fmt = function(path, _) return icons.ui.Folder .. path end,
       path = 3,
     }
 
@@ -86,7 +86,6 @@ local M = {
       fmt = function(ext_name, _)
         -- if ext_name then return "." .. ext_name end
         -- return ""
-        -- if not ext_name then return "" end
         return "." .. ext_name
       end,
       padding = { left = 0, right = 1 },
