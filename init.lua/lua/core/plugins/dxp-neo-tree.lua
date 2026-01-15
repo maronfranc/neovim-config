@@ -197,23 +197,47 @@ local M = {
       commands = {
         -- Override delete to use trash instead of rm
         delete = function(state)
-          local path = state.tree:get_node().path
-          local msg = "Are you sure you want to delete" .. path
-          local inputs = require "neo-tree.ui.inputs"
-          inputs.confirm(msg, function(confirmed)
-            if not confirmed then return end
-            vim.fn.system { "trash-put", vim.fn.fnameescape(path) }
-            require("neo-tree.sources.manager").refresh(state.name)
-          end)
+					local inputs = require("neo-tree.ui.inputs")
+					local sources_manager = require("neo-tree.sources.manager")
+					local path = state.tree:get_node().path
+					local msg = "Are you sure you want to delete: " .. path
+
+					if not path or path == "" then
+						vim.notify("No file selected", vim.log.levels.WARN)
+						return
+					end
+
+					inputs.confirm(msg, function(confirmed)
+						if not confirmed then return end
+						vim.fn.jobstart({ "trash-put", path }, {
+							detach = true,
+							on_exit = function(_, code, _)
+								vim.schedule(function()
+									if code ~= 0 then
+										vim.notify("Failed to delete: " .. path, vim.log.levels.ERROR)
+										return
+									end
+									sources_manager.refresh(state.name)
+								end)
+							end,
+						})
+					end)
         end,
         system_open = function(state)
           local node = state.tree:get_node()
-          local path = node:get_id()
-          -- macOs: open file in default application in the background.
-          -- Probably you need to adapt the Linux recipe for manage path with spaces. I don't have a mac to try.
-          vim.api.nvim_command("silent !open -g " .. path)
-          -- Linux: open file in default application
-          vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
+          local path = node and node:get_id()
+          if not path then
+            vim.notify("No valid path selected", vim.log.levels.WARN)
+            return
+          end
+
+          if vim.ui and vim.ui.open then
+            local ok, _ = pcall(vim.ui.open, path)
+            if ok then return end
+            vim.notify("vim.ui.open failed, falling back", vim.log.levels.WARN)
+          end
+          -- Fallback (Linux/macOS)
+          vim.fn.jobstart({ "xdg-open", path }, { detach = true })
         end,
       },
       window = { mappings = keymap.filesystem },
@@ -313,7 +337,7 @@ local M = {
       },
       window = {
         mappings = {
-          ["<cr>"] = "toggle_node",
+          ["<CR>"] = "toggle_node",
           ["e"]    = "example_command",
           ["d"]    = "show_debug_info",
         },
