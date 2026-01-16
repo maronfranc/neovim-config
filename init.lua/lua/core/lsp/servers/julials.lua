@@ -1,13 +1,13 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/julials.lua
-local util = require('lspconfig.util')
+local util = require("lspconfig.util")
 local helper = require("core.utils.helper")
 
 local cmd = {
-  'julia',
-  '--startup-file=no',
-  '--history-file=no',
-  '-e',
-  [[
+	"julia",
+	"--startup-file=no",
+	"--history-file=no",
+	"-e",
+	[[
     # Load LanguageServer.jl: attempt to load from ~/.julia/environments/nvim-lspconfig
     # with the regular load path as a fallback
     ls_install_path = joinpath(
@@ -45,14 +45,12 @@ local cmd = {
 local M = {}
 M.server_name = "julials"
 M.setup = {
-  cmd = cmd,
-  filetypes = { 'julia' },
-  root_dir = function(fname)
-    return util.root_pattern('Project.toml')(fname) or helper.find_git_ancestor(fname)
-  end,
-  single_file_support = true,
-  docs = {
-    description = [[
+	cmd = cmd,
+	filetypes = { "julia" },
+	root_dir = function(fname) return util.root_pattern("Project.toml")(fname) or helper.find_git_ancestor(fname) end,
+	single_file_support = true,
+	docs = {
+		description = [[
 https://github.com/julia-vscode/julia-vscode
 
 LanguageServer.jl can be installed with `julia` and `Pkg`:
@@ -93,7 +91,7 @@ t = Template(;dir = ".", julia = v"1.10", user="my_username",
 ### Plugins
 - SEE: https://juliaci.github.io/PkgTemplates.jl/stable/user/
     ]],
-  },
+	},
 }
 
 return M

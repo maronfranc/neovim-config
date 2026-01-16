@@ -12,7 +12,6 @@ local i = luasnip.insert_node -- Placeholder/Insert. int): Placeholder with init
 
 local M = {}
 M.load_snippets = function()
-  -- N
   -- local css_snippets = {
   --   s("prefer_light_mode", {
   --     t({ "@media (prefers-color-scheme: light) {",

@@ -10,7 +10,7 @@ local M = {
 		})
 		local navigator = require("Navigator")
 		local keymap = require("core.keymap.plugins.navigator")
-    keymap.get_navigation(navigator)
+		keymap.get_navigation(navigator)
 	end,
 }
 return M

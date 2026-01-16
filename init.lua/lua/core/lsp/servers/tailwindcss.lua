@@ -51,19 +51,15 @@ M.setup = {
 		},
 	},
 	on_new_config = function(new_config)
-		if not new_config.settings then
-			new_config.settings = {}
-		end
-		if not new_config.settings.editor then
-			new_config.settings.editor = {}
-		end
+		if not new_config.settings then new_config.settings = {} end
+		if not new_config.settings.editor then new_config.settings.editor = {} end
 		if not new_config.settings.editor.tabSize then
 			-- set tab size for hover
 			new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
 		end
 	end,
 	root_dir = function(fname)
-		return util.root_pattern(
+		local has_config = util.root_pattern(
 			"tailwind.config.js",
 			"tailwind.config.cjs",
 			"tailwind.config.mjs",
@@ -72,11 +68,14 @@ M.setup = {
 			"postcss.config.cjs",
 			"postcss.config.mjs",
 			"postcss.config.ts"
-		)(fname) or
-        helper.find_package_json_ancestor(fname) or
-        helper.find_node_modules_ancestor(fname) or
-        helper.find_git_ancestor(fname)
+		)
+
+		return has_config(fname)
+			or helper.find_package_json_ancestor(fname)
+			or helper.find_node_modules_ancestor(fname)
+			or helper.find_git_ancestor(fname)
 	end,
+
 	docs = {
 		description = [[
 https://github.com/tailwindlabs/tailwindcss-intellisense

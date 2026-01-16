@@ -4,16 +4,16 @@ local helper = require("core.utils.helper")
 local M = {}
 M.server_name = "jsonls"
 M.setup = {
-  cmd = { 'vscode-json-language-server', '--stdio' },
-  filetypes = { 'json', 'jsonc' },
-  init_options = {
-    provideFormatter = true,
-  },
-  root_dir = helper.find_git_ancestor,
-  single_file_support = true,
-  docs = {
-    -- this language server config is in VSCode built-in package.json
-    description = [[
+	cmd = { "vscode-json-language-server", "--stdio" },
+	filetypes = { "json", "jsonc" },
+	init_options = {
+		provideFormatter = true,
+	},
+	root_dir = helper.find_git_ancestor,
+	single_file_support = true,
+	docs = {
+		-- this language server config is in VSCode built-in package.json
+		description = [[
 https://github.com/hrsh7th/vscode-langservers-extracted
 
 vscode-json-language-server, a language server for JSON and JSON schema
@@ -35,9 +35,9 @@ capabilities = capabilities,
 }
 ```
 ]],
-    default_config = {
-      root_dir = [[util.find_git_ancestor]],
-    },
-  },
+		default_config = {
+			root_dir = [[util.find_git_ancestor]],
+		},
+	},
 }
 return M

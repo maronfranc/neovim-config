@@ -12,9 +12,7 @@ M.load_keymaps = function()
 	-- -- Search stuff
 	vim.keymap.set("n", "<LEADER>fg", function()
 		builtin.live_grep({
-			additional_args = function()
-				return { "--fixed-strings" }
-			end,
+			additional_args = function() return { "--fixed-strings" } end,
 		})
 	end, {
 		desc = "Cmd: `Telescope live_grep` escaping regex",

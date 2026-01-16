@@ -32,12 +32,8 @@ M.get_autocompletion_table = function(cmp, luasnip)
 		local is_fn_a_function = type(fn) ~= "function"
 		local is_times_a_positive = type(times) ~= "number" or times < 1
 
-		if is_fn_a_function then
-			vim.error("First argument must be a function")
-		end
-		if is_times_a_positive then
-			vim.error("Second argument must be a positive integer")
-		end
+		if is_fn_a_function then vim.error("First argument must be a function") end
+		if is_times_a_positive then vim.error("Second argument must be a positive integer") end
 
 		-- Call the provided function `times` times
 		for _ = 1, times do
@@ -45,12 +41,8 @@ M.get_autocompletion_table = function(cmp, luasnip)
 		end
 	end
 
-	local function move_up()
-		cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-	end
-	local function move_down()
-		cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-	end
+	local function move_up() cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select }) end
+	local function move_down() cmp.select_next_item({ behavior = cmp.SelectBehavior.Select }) end
 
 	local function scroll_up_5(fallback)
 		if cmp.visible() then

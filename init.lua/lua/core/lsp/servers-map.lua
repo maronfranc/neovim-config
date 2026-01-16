@@ -61,15 +61,11 @@ local map_and_filter_nil = function(tbl, fn)
 	local t = {}
 	for _, v in pairs(tbl) do
 		local mapped_value = fn(v)
-		if mapped_value ~= nil then
-			table.insert(t, mapped_value)
-		end
+		if mapped_value ~= nil then table.insert(t, mapped_value) end
 	end
 	return t
 end
-local ensure_installed = map_and_filter_nil(lsp_module_map, function(m)
-	return m.server_name
-end)
+local ensure_installed = map_and_filter_nil(lsp_module_map, function(m) return m.server_name end)
 -- table.insert(ensure_installed, "eslint_lsp") -- Install without file setup.
 
 -- Ensure tools (except LSPs) are installed

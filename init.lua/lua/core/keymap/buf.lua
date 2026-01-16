@@ -16,9 +16,7 @@ local M = {}
 ---                        - "remap": (boolean) Make the mapping recursive. Inverse of "noremap".
 ---                        Defaults to `false`.
 local function set_keymap(mode, lhs, rhs, opts)
-	if not rhs then
-		return
-	end
+	if not rhs then return end
 	vim.keymap.set(mode, lhs, rhs, opts)
 end
 

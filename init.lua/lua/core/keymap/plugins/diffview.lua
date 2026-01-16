@@ -33,15 +33,39 @@ M.get_mappings = function(actions)
 			{ "n", "g?", actions.help({ "view", "diff2" }), { desc = "Open the help panel" } },
 		},
 		diff3 = { -- Mappings in 3-way diff layouts
-			{ { "n", "x" }, "2do", actions.diffget("ours"), { desc = "Obtain the diff hunk from the OURS version of the file" } },
-			{ { "n", "x" }, "3do", actions.diffget("theirs"), { desc = "Obtain the diff hunk from the THEIRS version of the file" } },
+			{
+				{ "n", "x" },
+				"2do",
+				actions.diffget("ours"),
+				{ desc = "Obtain the diff hunk from the OURS version of the file" },
+			},
+			{
+				{ "n", "x" },
+				"3do",
+				actions.diffget("theirs"),
+				{ desc = "Obtain the diff hunk from the THEIRS version of the file" },
+			},
 			{ "n", "g?", actions.help({ "view", "diff3" }), { desc = "Open the help panel" } },
 		},
 		diff4 = { -- Mappings in 4-way diff layouts
 			{
-				{ "n", "x" }, "1do", actions.diffget("base"), { desc = "Obtain the diff hunk from the BASE version of the file" } },
-			{ { "n", "x" }, "2do", actions.diffget("ours"), { desc = "Obtain the diff hunk from the OURS version of the file" } },
-			{ { "n", "x" }, "3do", actions.diffget("theirs"), { desc = "Obtain the diff hunk from the THEIRS version of the file" } },
+				{ "n", "x" },
+				"1do",
+				actions.diffget("base"),
+				{ desc = "Obtain the diff hunk from the BASE version of the file" },
+			},
+			{
+				{ "n", "x" },
+				"2do",
+				actions.diffget("ours"),
+				{ desc = "Obtain the diff hunk from the OURS version of the file" },
+			},
+			{
+				{ "n", "x" },
+				"3do",
+				actions.diffget("theirs"),
+				{ desc = "Obtain the diff hunk from the THEIRS version of the file" },
+			},
 			{ "n", "g?", actions.help({ "view", "diff4" }), { desc = "Open the help panel" } },
 		},
 		file_panel = {

@@ -7,9 +7,7 @@ M.setup = {
 	default_config = {
 		cmd = { "templ", "lsp" },
 		filetypes = { "templ" },
-		root_dir = function(fname)
-			return util.root_pattern("go.work", "go.mod", ".git")(fname)
-		end,
+		root_dir = function(fname) return util.root_pattern("go.work", "go.mod", ".git")(fname) end,
 	},
 	docs = {
 		description = [[

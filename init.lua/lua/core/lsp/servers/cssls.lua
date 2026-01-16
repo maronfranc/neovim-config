@@ -2,18 +2,18 @@
 local M = {}
 M.server_name = "cssls"
 M.setup = {
-  cmd = { "vscode-css-language-server", "--stdio"},
-  filetypes = { "css" },
-  settings = {
-    css = { validate = true },
-  },
-  on_attach = function(client, bufnr)
-    require("core.utils.helper").format_on_save(bufnr)
-    require("core.keymap.buf").load_keymaps(bufnr)
-    _G.CC_tab_size(2)
-  end,
-  docs = {
-    description = [[
+	cmd = { "vscode-css-language-server", "--stdio" },
+	filetypes = { "css" },
+	settings = {
+		css = { validate = true },
+	},
+	on_attach = function(client, bufnr)
+		require("core.utils.helper").format_on_save(bufnr)
+		require("core.keymap.buf").load_keymaps(bufnr)
+		_G.CC_tab_size(2)
+	end,
+	docs = {
+		description = [[
 https://github.com/vscode-langservers/vscode-css-languageserver-bin
 
 `css-languageserver` can be installed via `:LspInstall cssls` or by yourself with `npm`:
@@ -21,6 +21,6 @@ https://github.com/vscode-langservers/vscode-css-languageserver-bin
 npm install -g vscode-css-languageserver-bin
 ```
 ]],
-  },
-};
+	},
+}
 return M
