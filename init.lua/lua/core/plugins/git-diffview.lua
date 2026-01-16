@@ -87,7 +87,7 @@ local M = {
 				DiffviewFileHistory = {},
 			},
 			hooks = {}, -- See ':h diffview-config-hooks'
-			keymaps = keymap.get_mappings(actions),
+			keymaps = keymap.get_open_window_mappings(actions),
 		})
 	end,
 }

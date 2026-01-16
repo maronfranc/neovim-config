@@ -3,7 +3,7 @@ local M = {}
 ---@diagnostic disable
 ---Keymaps for github diff
 ---@type diffview.actions
-M.get_mappings = function(actions)
+M.get_open_window_mappings = function(actions)
 	---@diagnostic enable
 	return {
 		disable_defaults = false, -- Disable the default keymaps
@@ -12,12 +12,27 @@ M.get_mappings = function(actions)
 			-- tabpage is a Diffview.
 			{ "n", "<TAB>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
 			{ "n", "<S-TAB>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
-			{ "n", "gf", actions.goto_file, { desc = "Open the file in a new split in the previous tabpage" } },
+			{
+				"n",
+				"gf",
+				actions.goto_file,
+				{ desc = "Open the file in a new split in the previous tabpage" },
+			},
 			{ "n", "<LEADER>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
 			{ "n", "<LEADER>b", actions.toggle_files, { desc = "Toggle the file panel." } },
 			{ "n", "g<C-x>", actions.cycle_layout, { desc = "Cycle through available layouts." } },
-			{ "n", "[x", actions.prev_conflict, { desc = "In the merge-tool: jump to the previous conflict" } },
-			{ "n", "]x", actions.next_conflict, { desc = "In the merge-tool: jump to the next conflict" } },
+			{
+				"n",
+				"[x",
+				actions.prev_conflict,
+				{ desc = "In the merge-tool: jump to the previous conflict" },
+			},
+			{
+				"n",
+				"]x",
+				actions.next_conflict,
+				{ desc = "In the merge-tool: jump to the next conflict" },
+			},
 			{ "n", "<LEADER>co", actions.conflict_choose("ours"), { desc = "Choose the OURS version of a conflict" } },
 			{ "n", "<LEADER>ct", actions.conflict_choose("theirs"), { desc = "Choose the THEIRS version of a conflict" } },
 			{ "n", "<LEADER>cb", actions.conflict_choose("base"), { desc = "Choose the BASE version of a conflict" } },
@@ -85,7 +100,12 @@ M.get_mappings = function(actions)
 			{ "n", "<C-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
 			{ "n", "<TAB>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
 			{ "n", "<S-TAB>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
-			{ "n", "gf", actions.goto_file, { desc = "Open the file in a new split in the previous tabpage" } },
+			{
+				"n",
+				"gf",
+				actions.goto_file,
+				{ desc = "Open the file in a new split in the previous tabpage" },
+			},
 			{ "n", "R", actions.refresh_files, { desc = "Update stats and entries in the file list." } },
 			{ "n", "<LEADER>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
 			{ "n", "<LEADER>b", actions.toggle_files, { desc = "Toggle the file panel" } },
@@ -100,15 +120,45 @@ M.get_mappings = function(actions)
 		},
 		file_history_panel = {
 			{ "n", "g!", actions.options, { desc = "Open the option panel" } },
-			{ "n", "<C-A-d>", actions.open_in_diffview, { desc = "Open the entry under the cursor in a diffview" } },
-			{ "n", "y", actions.copy_hash, { desc = "Copy the commit hash of the entry under the cursor" } },
+			{
+				"n",
+				"<C-A-d>",
+				actions.open_in_diffview,
+				{ desc = "Open the entry under the cursor in a diffview" },
+			},
+			{
+				"n",
+				"y",
+				actions.copy_hash,
+				{ desc = "Copy the commit hash of the entry under the cursor" },
+			},
 			{ "n", "L", actions.open_commit_log, { desc = "Show commit details" } },
 			{ "n", "zR", actions.open_all_folds, { desc = "Expand all folds" } },
 			{ "n", "zM", actions.close_all_folds, { desc = "Collapse all folds" } },
-			{ "n", "j", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
-			{ "n", "<DOWN>", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
-			{ "n", "k", actions.prev_entry, { desc = "Bring the cursor to the previous file entry." } },
-			{ "n", "<UP>", actions.prev_entry, { desc = "Bring the cursor to the previous file entry." } },
+			{
+				"n",
+				"j",
+				actions.next_entry,
+				{ desc = "Bring the cursor to the next file entry" },
+			},
+			{
+				"n",
+				"<DOWN>",
+				actions.next_entry,
+				{ desc = "Bring the cursor to the next file entry" },
+			},
+			{
+				"n",
+				"k",
+				actions.prev_entry,
+				{ desc = "Bring the cursor to the previous file entry." },
+			},
+			{
+				"n",
+				"<UP>",
+				actions.prev_entry,
+				{ desc = "Bring the cursor to the previous file entry." },
+			},
 			{ "n", "<CR>", actions.select_entry, { desc = "Open the diff for the selected entry." } },
 			{ "n", "o", actions.select_entry, { desc = "Open the diff for the selected entry." } },
 			{ "n", "<2-LeftMouse>", actions.select_entry, { desc = "Open the diff for the selected entry." } },
@@ -116,7 +166,12 @@ M.get_mappings = function(actions)
 			{ "n", "<C-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
 			{ "n", "<TAB>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
 			{ "n", "<S-TAB>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
-			{ "n", "gf", actions.goto_file, { desc = "Open the file in a new split in the previous tabpage" } },
+			{
+				"n",
+				"gf",
+				actions.goto_file,
+				{ desc = "Open the file in a new split in the previous tabpage" },
+			},
 			{ "n", "<LEADER>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
 			{ "n", "<LEADER>b", actions.toggle_files, { desc = "Toggle the file panel" } },
 			{ "n", "g<C-x>", actions.cycle_layout, { desc = "Cycle available layouts" } },
@@ -134,6 +189,11 @@ M.get_mappings = function(actions)
 			{ "n", "<ESC>", actions.close, { desc = "Close help menu" } },
 		},
 	}
+end
+
+M.load_keymaps = function()
+	vim.keymap.set("n", "<LEADER>gd", ":DiffviewOpen<CR>", { silent = true })
+	vim.keymap.set("n", "<LEADER>gq", ":DiffviewClose<CR>", { silent = true })
 end
 
 return M
