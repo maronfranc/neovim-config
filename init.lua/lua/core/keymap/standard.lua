@@ -3,16 +3,6 @@ local helper = require("core.utils.helper")
 vim.g.mapleader = " "
 vim.keymap.set("n", "Q", "<nop>")
 
-vim.keymap.set("n", "<LEADER>fo", vim.lsp.buf.format, {
-	desc = "LSP: Format code.",
-})
-vim.keymap.set("n", "<LEADER>ca", vim.lsp.buf.code_action, {
-	desc = "LSP: code actions.",
-})
-vim.api.nvim_set_keymap("n", "<LEADER>rr", "<cmd>lua vim.lsp.buf.rename()<CR>", {
-	desc = "LSP: rename variable and all occurences",
-})
-
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {
 	desc = "Move highlighted lines downwards.",
 })
@@ -23,7 +13,6 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {
 vim.keymap.set("n", "J", "mzJ`z", {
 	desc = 'Same as "J" but cursor keep its current position.',
 })
----@see https://www.reddit.com/r/neovim/comments/10kah18/how_to_insert_newline_without_entering_insert_mode/
 vim.keymap.set("n", "<CR>", "a<CR><ESC>", { desc = "Insert new line at the cursor." })
 vim.keymap.set("i", "<C-j>", "<ESC>o", { desc = "Insert and move to new line." })
 -- - 'm`o<Esc>``': desc = 'Insert new line at the bottom of the cursor'}
@@ -82,10 +71,7 @@ vim.keymap.set("n", "<LEADER>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 	desc = "Search and replace the same pattern.",
 })
 
-vim.keymap.set({ "i", "n" }, "<C-DEL>", "<C-o>de", {
-	desc = "Delete next word.",
-	silent = true,
-})
+vim.keymap.set({ "i", "n" }, "<C-DEL>", "<C-o>de", { desc = "Delete next word.", silent = true })
 -- <C-H>~=<C-BS>. SEE: https://vi.stackexchange.com/questions/8603/what-does-ctrl-h-do
 --  there are certain control characters that map exactly to other keys, and console vim can not tell the difference between them <C-m> == <CR>, and <C-h> == <BS> and <C-[> == <ESC> and <C-j> is a newline. This means you cannot map to one of these key combos without getting the other one - DJMcMayhem
 local ctrl_backspace = "<C-H>"

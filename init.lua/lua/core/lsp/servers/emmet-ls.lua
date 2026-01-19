@@ -16,6 +16,11 @@ M.setup = {
 		html = { options = { ["bem.enabled"] = true } },
 		css = { options = { ["bem.enabled"] = true } },
 	},
+	on_attach = function(client, bufnr)
+		require("core.utils.helper").format_on_save(bufnr)
+		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
+		_G.CC_tab_size(2)
+	end,
 	docs = {
 		description = [[
 ## Emmet — the essential toolkit for web-developers

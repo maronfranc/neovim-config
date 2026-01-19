@@ -8,7 +8,7 @@ M.setup = {
 	filetypes = { "php" },
 	on_attach = function(client, bufnr)
 		require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").buffer_load_keymaps(bufnr)
+		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 	end,
 	root_dir = function(pattern)
 		local cwd = vim.loop.cwd()

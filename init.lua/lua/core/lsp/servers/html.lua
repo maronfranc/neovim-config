@@ -17,7 +17,7 @@ M.setup = {
 		configurationSection = { "html", "css", "javascript" },
 	},
 	on_attach = function(client, bufnr)
-		require("core.keymap.buf").load_keymaps(bufnr)
+		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(2)
 	end,
 }

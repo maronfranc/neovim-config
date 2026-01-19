@@ -13,6 +13,11 @@ M.setup = {
 			tsdk = helper.find_typescript_root_dir(),
 		},
 	},
+	on_attach = function(client, bufnr)
+		-- require("core.utils.helper").format_on_save(bufnr)
+		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
+		_G.CC_tab_size(2)
+	end,
 	on_new_config = function(new_config, new_root_dir)
 		if vim.tbl_get(new_config.init_options, "typescript") and not new_config.init_options.typescript.tsdk then
 			-- Load local node_module typescript instead of global

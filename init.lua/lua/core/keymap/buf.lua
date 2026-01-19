@@ -1,5 +1,28 @@
 local M = {}
 
+M.load_keymaps = function()
+	---Run `:bnext<CR>` skipping help/unlisted buffers.
+	local function smart_cycle()
+		vim.cmd("bnext")
+		while vim.bo.buftype ~= "" do
+			vim.cmd("bnext")
+		end
+	end
+	---Run `:bprevious<CR>` skipping help/unlisted buffers.
+	local function smart_back_cycle()
+		vim.cmd("bprevious")
+		while vim.bo.buftype ~= "" do
+			vim.cmd("bprevious")
+		end
+	end
+
+	local opt = { noremap = true, silent = true }
+	-- Keymaps "<C-Tab>", "<C-S-Tab>" may conflict with terminal.
+	-- NOTE: `<C-h>` also means `<C-DELETE>` in neovim.
+	vim.keymap.set("n", "<C-h>", smart_back_cycle, opt)
+	vim.keymap.set("n", "<C-S-h>", smart_cycle, opt)
+end
+
 ---Types copied from `vim.keymap.set()`.
 ---@param mode string|table    Mode short-name, see |nvim_set_keymap()|.
 ---                            Can also be list of modes to create mapping on multiple modes.
@@ -21,7 +44,7 @@ local function set_keymap(mode, lhs, rhs, opts)
 end
 
 ---Function to be loaded in lsp server attach setup.
-M.load_keymaps = function(bufnr)
+M.load_bufnr_keymaps = function(bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	-- vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -31,9 +54,10 @@ M.load_keymaps = function(bufnr)
 	set_keymap("n", "gtd", vim.lsp.buf.type_definition, bufopts)
 	set_keymap("n", "gr", vim.lsp.buf.references, bufopts)
 	set_keymap("n", "K", vim.lsp.buf.hover, bufopts)
-	-- set_keymap('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
-	set_keymap("n", "<LEADER>rn", vim.lsp.buf.rename, bufopts)
 	set_keymap("n", "<LEADER>fd", vim.lsp.buf.formatting, bufopts)
+	set_keymap("n", "<LEADER>fo", vim.lsp.buf.format, bufopts)
+	set_keymap("n", "<LEADER>ca", vim.lsp.buf.code_action, bufopts)
+	set_keymap("n", "<LEADER>rr", vim.lsp.buf.rename, bufopts)
 end
 
 return M

@@ -7,7 +7,7 @@ M.setup = {
 	filetypes = { "rust" },
 	on_attach = function(client, bufnr)
 		-- require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").load_keymaps(bufnr)
+		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(4)
 	end,
 	root_dir = util.root_pattern("Cargo.toml", "rust-project.json"),

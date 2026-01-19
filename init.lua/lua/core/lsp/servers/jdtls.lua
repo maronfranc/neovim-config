@@ -1,4 +1,6 @@
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/jdtls.lua
+---Alternative
+---@see https://www.reddit.com/r/neovim/comments/1ptyvzp/jls_java_language_server_fork_now_with_lombok/
 local util = require("lspconfig.util")
 local handlers = require("vim.lsp.handlers")
 

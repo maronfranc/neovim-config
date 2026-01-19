@@ -1,5 +1,5 @@
-require("core.keymap.buf")
-require("core.keymap.standard")
+require("core.keymap.buf").load_keymaps()
 require("core.keymap.error-diagnostics")
+require("core.keymap.standard")
 require("core.keymap.plugins.telescope").load_keymaps()
 require("core.keymap.plugins.diffview").load_keymaps()

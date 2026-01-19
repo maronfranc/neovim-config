@@ -10,7 +10,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local default_on_attach = function(_, bufnr)
 	-- if client.server_capabilities.documentFormattingProvider
-	require("core.keymap.buf").load_keymaps(bufnr)
+	require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 	_G.CC_tab_size(4)
 end
 

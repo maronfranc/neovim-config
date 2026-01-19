@@ -38,9 +38,19 @@ end
 ---Find `nvm` system global typescript.
 ---Run `npm root -g` and concatenate with `/typescript/lib`
 function M.find_typescript_root_dir()
-	local npm_root = vim.trim(vim.fn.system("npm root -g"))
-	local typescript_lib_path = npm_root .. "/typescript/lib"
-	return typescript_lib_path
+	local function typescript_lib_from(cmd)
+		local root = vim.trim(vim.fn.system(cmd))
+		if root == "" or vim.v.shell_error ~= 0 then return nil end
+
+		local lib_path = root .. "/typescript/lib"
+		if vim.fn.isdirectory(lib_path) == 1 then return lib_path end
+		return nil
+	end
+	-- Replace command here if using other system like `yarn` or other.
+	local ts_lib = typescript_lib_from("pnpm root -g")
+	if ts_lib then return ts_lib end
+	-- Fallback to npm
+	return typescript_lib_from("npm root -g")
 end
 
 ---@param char string Char to add around cursor word.
