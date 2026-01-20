@@ -9,5 +9,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		end
 		-- If this mapping is removed any other NORMAL `<CR>` keymap should be removed.
 		vim.keymap.set("n", "<CR>", go_to_file_and_close_quickfix, opt)
+		vim.keymap.set("n", "<ESC>", function () vim.cmd("cclose") end, opt)
 	end,
 })
