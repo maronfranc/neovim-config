@@ -6,6 +6,9 @@ local M = {
 		require("colorizer").setup({
 			"css",
 			"javascript",
+			"sh",
+			"toml",
+			"dosini", -- ".ini"
 		})
 	end,
 }

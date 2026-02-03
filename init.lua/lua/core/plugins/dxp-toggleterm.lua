@@ -35,7 +35,7 @@ local M = {
 				border = "curved", -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
 				-- width = <value>,
 				-- height = <value>,
-				winblend = 3,
+				winblend = 0, -- transparency
 				highlights = { border = "Normal", background = "Normal" },
 			},
 			open_mapping = keymap.toggle_terminal,

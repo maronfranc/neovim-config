@@ -2,6 +2,8 @@ local helper = require("core.utils.helper")
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "Q", "<nop>")
+vim.keymap.set("n", "s", "<nop>")
+vim.keymap.set("n", "S", "<nop>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {
 	desc = "Move highlighted lines downwards.",
