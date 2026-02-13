@@ -5,11 +5,9 @@ local M = {}
 
 M.server_name = "terraformls"
 M.setup = {
-	default_config = {
-		cmd = { "terraform-ls", "serve" },
-		filetypes = { "terraform", "terraform-vars" },
-		root_dir = util.root_pattern(".terraform", ".git"),
-	},
+	cmd = { "terraform-ls", "serve" },
+	filetypes = { "terraform", "terraform-vars" },
+	root_dir = util.root_pattern(".terraform", ".git"),
 	docs = {
 		description = [[
 https://github.com/hashicorp/terraform-ls
@@ -44,9 +42,6 @@ Note, that the `settings` configuration option uses the `workspace/didChangeConf
 Instead you should use `init_options` which passes the settings as part of the LSP initialize call
 [as is required by terraform-ls](https://github.com/hashicorp/terraform-ls/blob/main/docs/SETTINGS.md#how-to-pass-settings).
 ]],
-		default_config = {
-			root_dir = [[root_pattern(".terraform", ".git")]],
-		},
 	},
 }
 return M

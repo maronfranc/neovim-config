@@ -4,34 +4,32 @@ local util = require("lspconfig.util")
 local M = {}
 M.server_name = "vuels"
 M.setup = {
-	default_config = {
-		cmd = { "vls" },
-		filetypes = { "vue" },
-		root_dir = util.root_pattern("package.json", "vue.config.js"),
-		init_options = {
-			config = {
-				vetur = {
-					useWorkspaceDependencies = false,
-					validation = { template = true, style = true, script = true },
-					completion = {
-						autoImport = false,
-						useScaffoldSnippets = false,
-						tagCasing = "kebab",
-					},
-					format = {
-						defaultFormatter = { js = "none", ts = "none" },
-						defaultFormatterOptions = {},
-						scriptInitialIndent = false,
-						styleInitialIndent = false,
-					},
+	cmd = { "vls" },
+	filetypes = { "vue" },
+	root_dir = util.root_pattern("package.json", "vue.config.js"),
+	init_options = {
+		config = {
+			vetur = {
+				useWorkspaceDependencies = false,
+				validation = { template = true, style = true, script = true },
+				completion = {
+					autoImport = false,
+					useScaffoldSnippets = false,
+					tagCasing = "kebab",
 				},
-				css = {},
-				html = { suggest = {} },
-				javascript = { format = {} },
-				typescript = { format = {} },
-				emmet = {},
-				stylusSupremacy = {},
+				format = {
+					defaultFormatter = { js = "none", ts = "none" },
+					defaultFormatterOptions = {},
+					scriptInitialIndent = false,
+					styleInitialIndent = false,
+				},
 			},
+			css = {},
+			html = { suggest = {} },
+			javascript = { format = {} },
+			typescript = { format = {} },
+			emmet = {},
+			stylusSupremacy = {},
 		},
 	},
 	docs = {
@@ -44,9 +42,6 @@ Vue language server(vls)
 npm install --global vls
 ```
 ]],
-		default_config = {
-			root_dir = [[root_pattern("package.json", "vue.config.js")]],
-		},
 	},
 }
 

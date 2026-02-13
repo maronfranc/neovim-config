@@ -46,9 +46,6 @@ https://github.com/golang/tools/tree/master/gopls
 
 Google's lsp server for golang.
 ]],
-		default_config = {
-			root_dir = [[root_pattern("go.work", "go.mod", ".git")]],
-		},
 	},
 }
 return M

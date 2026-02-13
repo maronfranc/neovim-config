@@ -35,9 +35,6 @@ capabilities = capabilities,
 }
 ```
 ]],
-		default_config = {
-			root_dir = [[util.find_git_ancestor]],
-		},
 	},
 }
 return M

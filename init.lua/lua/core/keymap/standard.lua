@@ -146,3 +146,13 @@ vim.keymap.set("n", "<LEADER>dq", remove_quote_around, {
 	silent = true,
 	desc = [[Remove quotes(either ", ', or `) around cursor.]],
 })
+
+vim.keymap.set("n", "<leader>tt", function()
+  local terminal = os.getenv("TERMINAL")
+  if not terminal then
+    vim.notify("TERMINAL environment variable is not set", vim.log.levels.ERROR)
+    return
+  end
+  -- vim.fn.jobstart({terminal, "--working-directory", vim.loop.cwd()}, { detach = true })
+  vim.fn.jobstart({ terminal }, { detach = true })
+end, { desc = "Open $TERMINAL" })
