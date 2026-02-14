@@ -105,6 +105,43 @@ M.format_on_save = function(bufnr)
 	})
 end
 
+--- Wrap a function so it can only run once.
+--- @param fn function
+--- @param name string|nil
+--- @return function
+function M.run_once(fn, name)
+	local has_run = false
+	local first_caller = nil
+	local label = name or "anonymous function"
+
+	return function(...)
+		local caller = debug.getinfo(2, "Sl")
+
+		if has_run then
+			local first = first_caller or { short_src = "unknown", currentline = 0 }
+
+			vim.notify(
+				string.format(
+					"%s called more than once!\n\nFirst call:  %s:%d\nSecond call: %s:%d",
+					label,
+					first.short_src or "unknown",
+					first.currentline or 0,
+					caller.short_src or "unknown",
+					caller.currentline or 0
+				),
+				vim.log.levels.ERROR,
+				{ title = "Run Once Guard" }
+			)
+			return
+		end
+
+		has_run = true
+		first_caller = caller
+
+		return fn(...)
+	end
+end
+
 --- Execute normal command and keep cursor initial position.
 -- @param normal_cmd string
 -- local function keep_pos(normal_cmd)

@@ -2,7 +2,6 @@
 -- @see https://www.tabnews.com.br/NathanFirmo/aprenda-a-configurar-o-languageserver-no-neovim
 local status_ok, nvim_lsp = pcall(require, "lspconfig")
 if not status_ok then return end
--- local nvim_lsp = vim.lsp.config
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- enable autocompletion via nvim-cmp
@@ -15,8 +14,15 @@ local default_on_attach = function(_, bufnr)
 end
 
 local server_map = require("core.lsp.servers-map")
+local servers = server_map.load_lsp_servers()
+
+if servers == nil then
+	vim.notify("load_lsp_servers() nil server", vim.log.levels.WARN)
+	return
+end
+
 -- Default configuration for all servers and load all setups.
-for _, lsp in ipairs(server_map.lsp_settings) do
+for _, lsp in ipairs(servers) do
 	if not lsp.setup.on_attach then lsp.setup.on_attach = default_on_attach end
 	if not lsp.setup.settings then lsp.setup.settings = {} end
 

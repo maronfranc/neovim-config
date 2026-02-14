@@ -10,10 +10,10 @@ local M = {
 		},
 	},
 	config = function()
-		local map_ok, map_err = pcall(require, "core.lsp.servers-map")
-		if not map_ok then print("[Error] server load error: " .. map_err) end
-		local setup_ok, setup_err = pcall(require, "core.lsp.setup")
-		if not setup_ok then print("[Error] server setup error: " .. setup_err) end
+		-- local map_ok, map_err = pcall(require, "core.lsp.servers-map")
+		-- if not map_ok then print("[Error] server load error: " .. map_err) end
+		-- local setup_ok, setup_err = pcall(require, "core.lsp.setup")
+		-- if not setup_ok then print("[Error] server setup error: " .. setup_err) end
 
 		local diagnostics_ok, lsp_lines = pcall(require, "core.lsp.lsp_lines")
 		if not diagnostics_ok then return end
