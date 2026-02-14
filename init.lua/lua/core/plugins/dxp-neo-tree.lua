@@ -195,7 +195,33 @@ local M = {
 		},
 		filesystem = {
 			commands = {
-				-- Override delete to use trash instead of rm
+				delete_permanently = function(state)
+					local inputs = require("neo-tree.ui.inputs")
+					local sources_manager = require("neo-tree.sources.manager")
+					local path = state.tree:get_node().path
+					local msg = " PERMANENT DELETE: " .. path .. " (cannot be undone) — Continue?"
+
+					if not path or path == "" then
+						vim.notify("No file selected", vim.log.levels.WARN)
+						return
+					end
+
+					inputs.confirm(msg, function(confirmed)
+						if not confirmed then return end
+						vim.fn.jobstart({ "rm", "-rf", path }, {
+							detach = true,
+							on_exit = function(_, code, _)
+								vim.schedule(function()
+									if code ~= 0 then
+										vim.notify("Failed to permanently delete: " .. path, vim.log.levels.ERROR)
+										return
+									end
+									sources_manager.refresh(state.name)
+								end)
+							end,
+						})
+					end)
+				end,
 				delete = function(state)
 					local inputs = require("neo-tree.ui.inputs")
 					local sources_manager = require("neo-tree.sources.manager")

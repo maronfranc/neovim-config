@@ -10,7 +10,6 @@ M.setup = {
 		"javascriptreact",
 		"typescriptreact",
 		"vue",
-		"templ",
 	},
 	init_options = {
 		html = { options = { ["bem.enabled"] = true } },

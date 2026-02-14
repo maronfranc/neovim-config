@@ -25,7 +25,7 @@ M.explorer = {
 		},
 	},
 	["A"] = "add_directory", -- also accepts the config.show_path option.
-	["dd"] = "delete",
+	["d"] = "delete",
 	["r"] = "rename",
 	["R"] = "rename_basename",
 	["y"] = "copy_to_clipboard",
@@ -41,16 +41,17 @@ M.explorer = {
 
 M.filesystem = {
 	["o"] = "system_open",
+	["D"] = "delete_permanently",
+	-- Override delete to use trash instead of rm.
+	["d"] = "delete",
 	["H"] = "toggle_hidden",
-	["/"] = "fuzzy_finder",
-	["D"] = "fuzzy_finder_directory",
+	["<C-f>"] = "fuzzy_finder",
+	["/"] = "fuzzy_finder_directory",
 	["f"] = "filter_on_submit",
 	["."] = "set_root",
 	["[g"] = "prev_git_modified",
 	["]g"] = "next_git_modified",
 	["<C-x>"] = "clear_filter",
-	-- ["/"] = "filter_as_you_type", -- this was the default until v1.28
-	-- ["<BS>"] = "navigate_up",
 }
 
 M.git = {
