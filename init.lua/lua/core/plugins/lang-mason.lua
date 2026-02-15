@@ -5,21 +5,24 @@
 ---external requirements needed.
 local M = {
 	"williamboman/mason.nvim",
-	dependencies = { "williamboman/mason-lspconfig.nvim" },
+	dependencies = {
+		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
+	},
 	-- install_root_dir = path.concat({ vim.fn.stdpath("data"), "mason" }),
 	config = function()
 		require("mason").setup()
-		local lsp_server = require("core.lsp.servers-map")
+		local lsp_import = require("core.lsp.import-map")
 		local registry = require("mason-registry")
 		local mason_config = require("mason-lspconfig")
 
-		for _, tool in ipairs(lsp_server.ensure_tools) do
+		for _, tool in ipairs(lsp_import.ensure_tools) do
 			local p = registry.get_package(tool)
 			if not p:is_installed() then p:install() end
 		end
 
 		-- LSPs that should be installed by Mason-lspconfig
-		mason_config.setup({ ensure_installed = lsp_server.ensure_installed })
+		mason_config.setup({ ensure_installed = lsp_import.ensure_installed })
 	end,
 }
 

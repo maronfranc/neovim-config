@@ -194,6 +194,7 @@ end
 M.load_keymaps = function()
 	vim.keymap.set("n", "<LEADER>gd", ":DiffviewOpen<CR>", { silent = true })
 	vim.keymap.set("n", "<LEADER>gq", ":DiffviewClose<CR>", { silent = true })
+	vim.keymap.set("n", "<LEADER>gh", ":DiffviewFileHistory<CR>", { silent = true })
 end
 
 return M

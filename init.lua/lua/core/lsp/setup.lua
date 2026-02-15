@@ -1,11 +1,12 @@
+local server_map = require("core.lsp.servers-map")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 -- @see https://github.com/neovim/nvim-lspconfig
 -- @see https://www.tabnews.com.br/NathanFirmo/aprenda-a-configurar-o-languageserver-no-neovim
-local status_ok, nvim_lsp = pcall(require, "lspconfig")
-if not status_ok then return end
+local lspconfig = require( "lspconfig")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- enable autocompletion via nvim-cmp
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 local default_on_attach = function(_, bufnr)
 	-- if client.server_capabilities.documentFormattingProvider
@@ -13,7 +14,6 @@ local default_on_attach = function(_, bufnr)
 	_G.CC_tab_size(4)
 end
 
-local server_map = require("core.lsp.servers-map")
 local servers = server_map.load_lsp_servers()
 
 if servers == nil then
@@ -32,5 +32,5 @@ for _, lsp in ipairs(servers) do
 	lsp.setup.telemetry = { enabled = false }
 	lsp.setup.settings.redhat = { telemetry = { enabled = false } }
 
-	nvim_lsp[lsp.server_name].setup(lsp.setup)
+	lspconfig[lsp.server_name].setup(lsp.setup)
 end

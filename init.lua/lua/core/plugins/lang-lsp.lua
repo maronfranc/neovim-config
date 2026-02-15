@@ -12,14 +12,16 @@ local M = {
 	config = function()
 		-- local map_ok, map_err = pcall(require, "core.lsp.servers-map")
 		-- if not map_ok then print("[Error] server load error: " .. map_err) end
-		-- local setup_ok, setup_err = pcall(require, "core.lsp.setup")
-		-- if not setup_ok then print("[Error] server setup error: " .. setup_err) end
+		local setup_ok, setup_err = pcall(require, "core.lsp.setup")
+		if not setup_ok then print("[Error] server setup error: " .. setup_err) end
 
-		local diagnostics_ok, lsp_lines = pcall(require, "core.lsp.lsp_lines")
-		if not diagnostics_ok then return end
-		-- Disable error message in favor of lsp_lines
-		lsp_lines.setup()
-		lsp_lines.toggle()
+		local diagnostics_ok, lsp_lines = pcall(require, "core.local-plugins.lsp_lines")
+		if diagnostics_ok then
+			-- Disable error message in favor of lsp_lines
+			lsp_lines.setup()
+			lsp_lines.toggle()
+		end
+
 		---Disable diagnostic on specific file name pattern.
 		---@see https://github.com/neovim/nvim-lspconfig/issues/2437
 		local lsp_grp = vim.api.nvim_create_augroup("lsp_disable", { clear = true })
