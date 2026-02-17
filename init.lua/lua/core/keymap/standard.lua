@@ -100,8 +100,8 @@ vim.keymap.set("n", "<LEADER>)", [[f)ha,<CR><ESC>]], {
 	desc = 'Add "," Enter before pipe "<,><enter>)".',
 })
 local enter_before_lessthan = 'Add Enter before "less than" sign "<enter>>".'
-vim.keymap.set("n", "<leader>>", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
-vim.keymap.set("n", "<leader><", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
+vim.keymap.set("n", "<LEADER>>", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
+vim.keymap.set("n", "<LEADER><", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
 
 vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
 	desc = [[Change file: all cammelCase occurrences to snake_case.
@@ -147,12 +147,4 @@ vim.keymap.set("n", "<LEADER>dq", remove_quote_around, {
 	desc = [[Remove quotes(either ", ', or `) around cursor.]],
 })
 
-vim.keymap.set("n", "<leader>tt", function()
-  local terminal = os.getenv("TERMINAL")
-  if not terminal then
-    vim.notify("TERMINAL environment variable is not set", vim.log.levels.ERROR)
-    return
-  end
-  -- vim.fn.jobstart({terminal, "--working-directory", vim.loop.cwd()}, { detach = true })
-  vim.fn.jobstart({ terminal }, { detach = true })
-end, { desc = "Open $TERMINAL" })
+vim.keymap.set("n", "<LEADER>tt", helper.open_terminal_in_pwd, { desc = "Open $TERMINAL" })

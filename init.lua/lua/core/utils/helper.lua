@@ -142,6 +142,16 @@ function M.run_once(fn, name)
 	end
 end
 
+M.open_terminal_in_pwd = function()
+	local terminal = os.getenv("TERMINAL")
+	if not terminal then
+		vim.notify("$TERMINAL environment variable is not set", vim.log.levels.ERROR)
+		return
+	end
+	-- vim.fn.jobstart({terminal, "--working-directory", vim.loop.cwd()}, { detach = true })
+	vim.fn.jobstart({ terminal }, { detach = true })
+end
+
 --- Execute normal command and keep cursor initial position.
 -- @param normal_cmd string
 -- local function keep_pos(normal_cmd)

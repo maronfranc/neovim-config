@@ -12,3 +12,14 @@ end
 vim.keymap.set("", "<LEADER>er", toggle_diagnostics, {
 	desc = "Toggle error diagnostics extension",
 })
+
+--- Toggle lsp_lines and untoggle standard error diagnostic.
+local function disable_diagnostics()
+	vim.diagnostic.config({
+		virtual_lines = false,
+		virtual_text = false,
+	})
+end
+vim.keymap.set("", "<LEADER>eq", disable_diagnostics, {
+	desc = "Disable error diagnostics extension",
+})
