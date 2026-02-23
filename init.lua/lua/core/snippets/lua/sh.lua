@@ -14,18 +14,40 @@ M.load_snippets = function()
 		}),
 		s("trycatch", { t("{ # try } || { # catch }") }),
 		s("default_variable", { i(1), t('="${'), i(2), t(':-default_value}"') }),
-		-- s('if_defined', t()),
-		-- if [ -z "$DB_HOST" ]; then
-		-- else
-		-- fi
 		s("strict_mode", {
 			t({
-				"# Strict mode: fail fast and loudly",
+				"# Strict mode: fail fast and loudly.",
 				"set -e          # Stop on first error",
 				"set -u          # Disallow unset variables",
 				"set -o pipefail # Propagate pipeline failures",
 			}),
 		}),
+		s("if_not_empty", {
+			t("if [ -n \"$"), i(1), t({"\" ]; then",
+      "\t"}), i(0), t({ "",
+      "fi"}),
+		}),
+		s("if_empty", {
+			t("if [ -z \"$"), i(1), t({"\" ]; then",
+      "\t"}), i(0), t({ "",
+      "fi"}),
+		}),
+		s("if_is_dir", {
+			t("if [ -d \"$"), i(1), t({"\" ]; then",
+      "\t"}), i(0), t({ "",
+      "fi"}),
+		}),
+    s("case", {
+      t("case \"$"), i(1), t({ "\" in",
+        "\tpattern_1)"}), i(0), t({ "",
+        "\t\techo \"case 1...\"",
+        "\t;;",
+        "\t*)",
+        "\t\techo \"Default case\"",
+        "\t;;",
+        "esac"
+      }),
+    }),
 	}
 
 	luasnip.add_snippets("sh", lua_snippets)

@@ -18,12 +18,10 @@ local M = {
 		local actions = require("telescope.actions")
 		local action_layout = require("telescope.actions.layout")
 		local themes = require("telescope.themes")
-		local builtin = require("telescope/builtin")
-		-- local fb_actions = require("telescope").extensions.file_browser.actions
 		local keymap = require("core.keymap.plugins.telescope")
 
 		local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
-		-- trim the indentation at the beginning of presented line
+		-- Trim the indentation at the beginning of presented line
 		table.insert(vimgrep_arguments, "--trim")
 
 		local fzf_opts = {

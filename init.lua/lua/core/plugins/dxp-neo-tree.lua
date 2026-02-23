@@ -96,7 +96,7 @@ local M = {
 		default_component_configs = {
 			container = { enable_character_fade = true, width = "100%", right_padding = 0 },
 			indent = {
-				indent_size = 2,
+				indent_size = 1,
 				padding = 1,
 				-- indent guides
 				with_markers = true,
@@ -188,8 +188,6 @@ local M = {
 				-- you can also specify border here, if you want a different setting from
 				-- the global popup_border_style.
 			},
-			-- Mappings for tree window. See `:h neo-tree-mappings` for a list of built-in commands.
-			-- You can also create your own commands by providing a function instead of a string.
 			mapping_options = { noremap = true, nowait = true },
 			mappings = keymap.explorer,
 		},
@@ -199,13 +197,13 @@ local M = {
 					local inputs = require("neo-tree.ui.inputs")
 					local sources_manager = require("neo-tree.sources.manager")
 					local path = state.tree:get_node().path
-					local msg = " PERMANENT DELETE: " .. path .. " (cannot be undone) — Continue?"
 
 					if not path or path == "" then
 						vim.notify("No file selected", vim.log.levels.WARN)
 						return
 					end
 
+					local msg = " PERMANENT DELETE: " .. path .. " (cannot be undone) — Continue?"
 					inputs.confirm(msg, function(confirmed)
 						if not confirmed then return end
 						vim.fn.jobstart({ "rm", "-rf", path }, {
@@ -228,7 +226,7 @@ local M = {
 					local path = state.tree:get_node().path
 					local msg = "Are you sure you want to delete: " .. path
 
-					if not path or path == "" then
+					if not path or path == "/" or path == "" then
 						vim.notify("No file selected", vim.log.levels.WARN)
 						return
 					end
@@ -344,8 +342,8 @@ local M = {
 			-- "disabled", netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
 			-- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
 			hijack_netrw_behavior = "open_default", -- "open_current",
-			use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
-			-- instead of relying on nvim autocmd events.
+			use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+			--                                instead of relying on nvim autocmd events.
 		},
 		buffers = {
 			bind_to_cwd = true,

@@ -1,4 +1,6 @@
 ---NeoTree mappings.
+---Mappings for tree window. See `:h neo-tree-mappings` for a list of built-in commands.
+---You can also create your own commands by providing a function instead of a string.
 local M = {}
 
 M.explorer = {
@@ -26,8 +28,8 @@ M.explorer = {
 	},
 	["A"] = "add_directory", -- also accepts the config.show_path option.
 	["d"] = "delete",
-	["r"] = "rename",
-	["R"] = "rename_basename",
+	["R"] = "rename",
+	["r"] = "rename_basename",
 	["y"] = "copy_to_clipboard",
 	["x"] = "cut_to_clipboard",
 	["p"] = "paste_from_clipboard",

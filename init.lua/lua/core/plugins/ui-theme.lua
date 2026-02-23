@@ -13,8 +13,6 @@ local M = {
 		-- SEE: run command `:hi` for help list.
 		vim.opt.bg = "dark" -- vim.cmd([[silent! :set bg=dark]])
 		vim.opt.background = "dark"
-		vim.api.nvim_set_hl(0, "Visual", { fg = "#333333", bg = "Gold" })
-		vim.api.nvim_set_hl(0, "Search", { fg = "#333333", bg = "Orange" })
 	end,
 }
 
