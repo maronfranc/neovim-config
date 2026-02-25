@@ -75,6 +75,7 @@ M.load_snippets = function()
   }
 
   luasnip.add_snippets("markdown", lua_snippets)
+  luasnip.add_snippets("codecompanion", lua_snippets)
 end
 
 return M
