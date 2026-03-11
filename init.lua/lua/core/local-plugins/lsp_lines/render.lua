@@ -91,9 +91,9 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 		table.insert(virt_lines, vline)
 	end
 
-	-- This loop reads line by line, and puts them into stacks with some
-	-- extra data, since rendering each line will require understanding what
-	-- is beneath it.
+	-- This loop processes lines sequentially, organizing them into stacks
+	-- that contain additional metadata needed for proper rendering.
+	-- Each line's rendering depends on the context of diagnostics beneath it.
 	local line_stacks = {}
 	local prev_lnum = -1
 	local prev_col = 0
@@ -129,9 +129,9 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 	for lnum, lelements in pairs(line_stacks) do
 		local virt_lines = {}
 
-		-- We read in the order opposite to insertion because the last
-		-- diagnostic for a real line, is rendered upstairs from the
-		-- second-to-last, and so forth from the rest.
+		-- We read diagnostics in reverse order to ensure proper stacking:
+		-- the last diagnostic for a line appears visually above earlier diagnostics
+		-- in the stack, creating the correct visual hierarchy.
 		for i = #lelements, 1, -1 do -- last element goes on top
 			if lelements[i][1] == DIAGNOSTIC then
 				local diagnostic = lelements[i][2]
@@ -182,16 +182,10 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 				else
 					center_symbol = "└"
 				end
-				-- local center_text =
-				local center = {
+				local center_text = {
 					{ string.format("%s%s", center_symbol, "──── "), highlight_groups[diagnostic.severity] },
 				}
 
-				-- TODO: We can draw on the left side if and only if:
-				-- a. Is the last one stacked this line.
-				-- b. Has enough space on the left.
-				-- c. Is just one line.
-				-- d. Is not an overlap.
 				local msg
 				if diagnostic.code then
 					msg = string.format("%s: %s", diagnostic.code, diagnostic.message)
@@ -203,20 +197,20 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 					local available_col = MAX_COL - (diagnostic.col or 0)
 					local is_line_too_long = available_col < string.len(msg_line)
 					if not is_line_too_long then
-						insert_line(virt_lines, msg_line, left, center, diagnostic)
+						insert_line(virt_lines, msg_line, left, center_text, diagnostic)
 					else
 						local lines = wrap_msg_by_col(msg_line, available_col)
 						for _, l in ipairs(lines) do
 							---@FIXME: add "│" overlap if not last iteration.
-							insert_line(virt_lines, l, left, center, diagnostic)
+							insert_line(virt_lines, l, left, center_text, diagnostic)
 						end
 					end
 
 					-- Special-case for continuation lines:
 					if overlap then
-						center = { { "│", highlight_groups[diagnostic.severity] }, { "     ", empty_space_hi } }
+						center_text = { { "│", highlight_groups[diagnostic.severity] }, { "     ", empty_space_hi } }
 					else
-						center = { { "      ", empty_space_hi } }
+						center_text = { { "      ", empty_space_hi } }
 					end
 				end
 			end

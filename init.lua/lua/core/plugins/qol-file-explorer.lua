@@ -206,6 +206,7 @@ local M = {
 					local msg = " PERMANENT DELETE: " .. path .. " (cannot be undone) — Continue?"
 					inputs.confirm(msg, function(confirmed)
 						if not confirmed then return end
+            vim.notify("File PERMANENTLY deleted" .. path, vim.log.levels.INFO)
 						vim.fn.jobstart({ "rm", "-rf", path }, {
 							detach = true,
 							on_exit = function(_, code, _)
@@ -233,6 +234,7 @@ local M = {
 
 					inputs.confirm(msg, function(confirmed)
 						if not confirmed then return end
+            vim.notify("File sent to thrash" .. path, vim.log.levels.INFO)
 						vim.fn.jobstart({ "trash-put", path }, {
 							detach = true,
 							on_exit = function(_, code, _)
@@ -295,7 +297,7 @@ local M = {
 					"*.out",
 					"*.synctex.gz",
 					"*.dvi", -- LaTeX files
-					"*.log",
+					-- "*.log",
 				},
 				always_show = { -- remains visible even if other settings would normally hide it
 					".gitignored",

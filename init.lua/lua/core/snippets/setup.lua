@@ -2,6 +2,7 @@ local M = {}
 
 function M.load_snippets()
 	require("core.snippets.lua.lua").load_snippets()
+	require("core.snippets.lua.codecompanion").load_snippets()
 	require("core.snippets.lua.css").load_snippets()
 	require("core.snippets.lua.js_and_ts").load_snippets()
 	require("core.snippets.lua.go").load_snippets()
