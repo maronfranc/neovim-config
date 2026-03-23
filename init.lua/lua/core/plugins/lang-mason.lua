@@ -11,18 +11,21 @@ local M = {
 	},
 	-- install_root_dir = path.concat({ vim.fn.stdpath("data"), "mason" }),
 	config = function()
-		require("mason").setup()
+		local mason =  require("mason")
 		local lsp_import = require("core.lsp.import-map")
-		local registry = require("mason-registry")
 		local mason_config = require("mason-lspconfig")
 
+		local install_all_tools = {}
 		for _, tool in ipairs(lsp_import.ensure_tools) do
-			local p = registry.get_package(tool)
-			if not p:is_installed() then p:install() end
+			table.insert(install_all_tools, tool)
+		end
+		for _, server in ipairs(lsp_import.server_import_list) do
+			table.insert(install_all_tools, server)
 		end
 
+    mason.setup()
 		-- LSPs that should be installed by Mason-lspconfig
-		mason_config.setup({ ensure_installed = lsp_import.ensure_installed })
+		mason_config.setup({ ensure_installed = install_all_tools })
 	end,
 }
 

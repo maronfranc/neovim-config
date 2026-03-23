@@ -1,4 +1,4 @@
----Copied from: https://git.sr.ht/~whynothugo/
+---Partially copied from: https://git.sr.ht/~whynothugo/
 ---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim
 ---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/render.lua
 ---@see https://git.sr.ht/~whynothugo/lsp_lines.nvim/tree/main/item/lua/lsp_lines/init.lua

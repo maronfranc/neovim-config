@@ -10,7 +10,7 @@ M.load_lsp_servers = helper.run_once(function()
 	local successful_modules = {}
 	local failed_files = {}
 
-	for _, file_name in ipairs(lsp_import.module_import_list) do
+	for _, file_name in ipairs(lsp_import.server_import_list) do
 		local path = dir_name .. file_name
 		local ok, result = pcall(require, path)
 

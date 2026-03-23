@@ -1,9 +1,10 @@
 local M = {}
 
 ---List of file names inside `./servers/` dir.
----NOTE: expect all file names to be correct server names.
+---NOTE: expect all file names to be correct server names, 
+---   otherwise they will not be installed by `mason` plugin.
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-M.module_import_list = {
+M.server_import_list = {
 	"astro",
 	"bashls",
 	-- "clangd",
@@ -29,7 +30,7 @@ M.module_import_list = {
 	"ts_ls",
 	-- "vuels",
 }
--- Ensure tools (except LSPs) are installed
+---Tools to be installed by mason that aren't servers.
 M.ensure_tools = {
 	-- Formatter
 	"stylua",
