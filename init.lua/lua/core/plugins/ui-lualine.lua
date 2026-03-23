@@ -147,6 +147,15 @@ local M = {
 			},
 		}
 
+		local section_line_number = {
+			function()
+				local current_line = vim.api.nvim_win_get_cursor(0)[1]
+				local total_lines = vim.api.nvim_buf_line_count(0)
+				return string.format("%s/%s", current_line, total_lines)
+			end,
+			color = { fg = colors.fg, gui = "bold" },
+		}
+
 		lualine.setup({
 			disabled_buftypes = { "quickfix", "prompt" }, -- Hide a window if its buffer's type is disabled
 			options = {
@@ -172,10 +181,7 @@ local M = {
 					section_lsp_server,
 				},
 				lualine_x = { section_diagnostics, section_rectangle },
-				lualine_y = {
-					{ "progress", color = { fg = colors.fg, gui = "bold" } },
-					{ "location" },
-				},
+				lualine_y = { section_line_number },
 				lualine_z = {},
 			},
 			inactive_sections = {
