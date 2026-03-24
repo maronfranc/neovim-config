@@ -1,6 +1,6 @@
 vim.opt.title = true
 -- Find flags(%) with `:help statusline`
-vim.opt.titlestring = " %{fnamemodify(getcwd(), ':~:.')} [%t%m] %l/%L"
+vim.opt.titlestring = " %{fnamemodify(getcwd(), ':~:.')} [%t%m]"
 
 vim.opt.encoding = "utf-8"
 

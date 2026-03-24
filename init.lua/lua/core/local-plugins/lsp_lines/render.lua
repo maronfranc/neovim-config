@@ -1,6 +1,6 @@
 local M = {}
 
-local MAX_COL = 80
+local MAX_COL_WIDTH = 80
 local HIGHLIGHTS = {
 	native = {
 		[vim.diagnostic.severity.ERROR] = "DiagnosticVirtualTextError",
@@ -76,7 +76,7 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 		local msgs = {}
 		for i = 1, #msg_line, max_col do
 			if i == 1 then
-				msgs[#msgs + 1] = msg_line:sub(i, i + max_col - 1) .. " "
+				msgs[#msgs + 1] = msg_line:sub(i, i + max_col - 1)
 			else
 				msgs[#msgs + 1] = "  " .. msg_line:sub(i, i + max_col - 1)
 			end
@@ -186,38 +186,54 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 					{ string.format("%s%s", center_symbol, "──── "), highlight_groups[diagnostic.severity] },
 				}
 
-				local msg
-				if diagnostic.code then
-					msg = string.format("%s: %s", diagnostic.code, diagnostic.message)
+				local icon = ""
+				if diagnostic.severity == vim.diagnostic.severity.ERROR then
+					icon = " "
+				elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+					icon = " "
+				end
+				local msg = ""
+				if diagnostic.code and diagnostic.code ~= "" then
+					-- Message format: `E001: {diagnostic.message}`.
+					msg = string.format("%s%s: %s", icon, diagnostic.code, diagnostic.message)
 				else
-					msg = diagnostic.message
+					msg = string.format("%s%s", icon, diagnostic.message)
 				end
 
 				for msg_line in msg:gmatch("([^\n]+)") do
-					local available_col = MAX_COL - (diagnostic.col or 0)
+					local available_col = MAX_COL_WIDTH - (diagnostic.col or 0)
 					local is_line_too_long = available_col < string.len(msg_line)
+
 					if not is_line_too_long then
 						insert_line(virt_lines, msg_line, left, center_text, diagnostic)
 					else
 						local lines = wrap_msg_by_col(msg_line, available_col)
-						for _, l in ipairs(lines) do
-							---@FIXME: add "│" overlap if not last iteration.
-							insert_line(virt_lines, l, left, center_text, diagnostic)
+						for ii, l in ipairs(lines) do
+							local is_not_last_line = ii < #lines
+							if is_not_last_line then
+								local continuation_center = {
+									{ "│", highlight_groups[diagnostic.severity] },
+									{ "     ", empty_space_hi },
+								}
+								insert_line(virt_lines, l, left, continuation_center, diagnostic)
+							else
+								-- For the last line, keep original behavior.
+								insert_line(virt_lines, l, left, center_text, diagnostic)
+							end
 						end
-					end
-
-					-- Special-case for continuation lines:
-					if overlap then
-						center_text = { { "│", highlight_groups[diagnostic.severity] }, { "     ", empty_space_hi } }
-					else
-						center_text = { { "      ", empty_space_hi } }
 					end
 				end
 			end
 		end
 
+		local IGNORE_INVALID_LINE_OUT_OF_RANGE = false
+		---@fixme There a strange bug that when a error have several lines nvim crashes.
+    ---   To test it change `MAX_COL_WIDTH` to a small number like 20.
 		---@see https://github.com/neovim/neovim/issues/20365
-		vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum, 0, { virt_lines = virt_lines })
+		vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum, 0, {
+			virt_lines = virt_lines,
+			strict = IGNORE_INVALID_LINE_OUT_OF_RANGE,
+		})
 	end
 end
 
