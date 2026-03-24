@@ -1,19 +1,19 @@
--- require("core.local-plugins.lsp_lines")
-local error_lines_ok, lsp_lines = pcall(require, "core.local-plugins.lsp_lines")
---- Toggle lsp_lines and untoggle standard error diagnostic.
+-- require("core.plugins-local.virtual-lines")
+local error_lines_ok, virtual_lines = pcall(require, "core.plugins-local.virtual-lines")
+--- Toggle virtual_lines and untoggle standard error diagnostic.
 local function toggle_diagnostics()
 	if not error_lines_ok then
-		print("[Error]: require() 'lsp_lines' load error")
+		print("[Error]: require() 'virtual-lines' load error")
 		return
 	end
-	local lsp_lines_state = lsp_lines.toggle()
-	vim.diagnostic.config({ virtual_text = not lsp_lines_state })
+	local virtual_lines_state = virtual_lines.toggle()
+	vim.diagnostic.config({ virtual_text = not virtual_lines_state })
 end
 vim.keymap.set("", "<LEADER>er", toggle_diagnostics, {
 	desc = "Toggle error diagnostics extension",
 })
 
---- Toggle lsp_lines and untoggle standard error diagnostic.
+--- Toggle virtual_lines and untoggle standard error diagnostic.
 local function disable_diagnostics()
 	vim.diagnostic.config({
 		virtual_lines = false,

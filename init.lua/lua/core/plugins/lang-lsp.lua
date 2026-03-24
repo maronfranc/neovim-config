@@ -15,11 +15,11 @@ local M = {
 		local setup_ok, setup_err = pcall(require, "core.lsp.setup")
 		if not setup_ok then print("[Error] server setup error: " .. setup_err) end
 
-		local diagnostics_ok, lsp_lines = pcall(require, "core.local-plugins.lsp_lines")
+		local diagnostics_ok, virtual_lines = pcall(require, "core.plugins-local.virtual-lines")
 		if diagnostics_ok then
-			-- Disable error message in favor of lsp_lines
-			lsp_lines.setup()
-			lsp_lines.toggle()
+			-- Disable error message in favor of virtual_lines
+			virtual_lines.setup()
+			virtual_lines.toggle()
 		end
 
 		---Disable diagnostic on specific file name pattern.

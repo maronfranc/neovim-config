@@ -7,7 +7,7 @@
 ---@see https://gpanders.com/blog/whats-new-in-neovim-0-11/#virtual-lines
 local M = {}
 
-local render = require("core.local-plugins.lsp_lines.render")
+local render = require("core.plugins-local.virtual-lines.render")
 
 local function render_current_line(diagnostics, ns, bufnr, opts)
 	local current_line_diag = {}
@@ -23,7 +23,7 @@ local function render_current_line(diagnostics, ns, bufnr, opts)
 end
 
 ---@class Opts
----@field virtual_lines OptsVirtualLines Options for lsp_lines plugin
+---@field virtual_lines OptsVirtualLines Options for virtual_lines plugin
 
 ---@class OptsVirtualLines
 ---@field only_current_line boolean Only render for current line

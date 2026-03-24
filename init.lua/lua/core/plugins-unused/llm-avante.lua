@@ -19,11 +19,11 @@ local M = {
 		providers = {
 			ollama = {
 				endpoint = "http://localhost:11434", -- "http://localhost:11434/v1",
-        ---@see https://ollama.com/search?c=tools&q=
+				---@see https://ollama.com/search?c=tools&q=
 				model = "qwen3:8b", -- qwen3-coder:30b", -- "qwen2.5-coder:7b",
 				timeout = 30000, -- Timeout in milliseconds.
-        -- important to set this to true if you are using a local server
-        disable_tools = true,
+				-- important to set this to true if you are using a local server
+				disable_tools = true,
 				extra_request_body = {
 					options = {
 						temperature = 0.75,
