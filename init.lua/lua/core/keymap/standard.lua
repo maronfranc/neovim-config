@@ -53,11 +53,12 @@ local undo = "Undo."
 vim.keymap.set({ "n", "v" }, "<C-z>", "u", { desc = undo, silent = true })
 vim.keymap.set("i", "<C-z>", "<ESC>ui", { desc = undo, silent = true })
 local save_file = "Save file"
-vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = save_file, silent = true })
-vim.keymap.set("n", "<A-s>", ":w<CR>", { desc = save_file, silent = true })
+-- `silent write` is the same as `:w`.
+vim.keymap.set("n", "<C-s>", "<CMD>silent write<CR>", { desc = save_file, silent = true })
+vim.keymap.set("n", "<A-s>", "<CMD>silent write<CR>", { desc = save_file, silent = true })
 local save_file_normal_mode = "Save file and change to normal mode"
-vim.keymap.set("i", "<C-s>", "<ESC>:w<CR>", { desc = save_file_normal_mode, silent = true })
-vim.keymap.set("i", "<A-s>", "<ESC>:w<CR>", { desc = save_file_normal_mode, silent = true })
+vim.keymap.set("i", "<C-s>", "<ESC><CMD>silent write<CR>", { desc = save_file_normal_mode, silent = true })
+vim.keymap.set("i", "<A-s>", "<ESC><CMD>silent write<CR>", { desc = save_file_normal_mode, silent = true })
 local quit_without_saving = "Quit without saving."
 vim.keymap.set("n", "<C-q>", ":q!", { desc = quit_without_saving })
 vim.keymap.set("i", "<C-q>", "<ESC>:q!", { desc = quit_without_saving })
@@ -69,8 +70,20 @@ vim.keymap.set("n", "<C-w>", ":wq", { desc = "Quit and save." })
 vim.keymap.set("n", "<LEADER>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<LEADER>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "<LEADER>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
-	desc = "Search and replace the same pattern.",
+local function search_and_replace()
+	local current_word = vim.fn.expand("<cword>")
+	local input_opts = {
+		prompt = "Replace '" .. current_word .. "' with: ",
+		default = current_word,
+	}
+	vim.ui.input(input_opts, function(input)
+		if input ~= nil then -- Add `and input ~= ""` to prevent empty replace.
+			vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input))
+		end
+	end)
+end
+vim.keymap.set("n", "<LEADER>s", search_and_replace, {
+	desc = "Search and replace the same pattern with popup.",
 })
 
 vim.keymap.set({ "i", "n" }, "<C-DEL>", "<C-o>de", { desc = "Delete next word.", silent = true })
