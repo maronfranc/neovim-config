@@ -1,11 +1,12 @@
 local luasnip = require("luasnip")
 local s = luasnip.snippet
-local t = luasnip.text_node   -- Simple static text.
+local t = luasnip.text_node -- Simple static text.
 local i = luasnip.insert_node -- Placeholder/Insert. int): Placeholder with initial text.
 
 local M = {}
 
 M.load_snippets = function()
+  -- stylua: ignore
   local svelte_snippets = {
     s("svelte_each", {
       t("{#each "), i(1), t(" as "), i(2), t({ "}",
@@ -20,7 +21,9 @@ M.load_snippets = function()
       "{/if}" })
     }),
   }
-  luasnip.add_snippets("svelte", svelte_snippets)
+	-- stylua: enable
+
+	luasnip.add_snippets("svelte", svelte_snippets)
 end
 
 return M

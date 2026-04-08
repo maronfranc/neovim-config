@@ -6,13 +6,24 @@ local i = luasnip.insert_node -- Placeholder/Insert. int): Placeholder with init
 
 local M = {}
 M.load_snippets = function()
-	local lua_snippets = {
-		s("foreach", {
-			t("foreach ("), i(1), t(" as "), i(2), t({ ") {",
+  -- stylua: ignore
+  local lua_snippets = {
+    s("foreach", {
+      t("foreach ("), i(1), t(" as "), i(2), t({ ") {",
       "\t" }), i(0), t({ "",
       "}" }),
-		}),
-	}
+    }),
+    s("trycatch", {
+      t({
+        "try {",
+        "\t$this->info('TRY');",
+        "} catch (\\Exception $e) {",
+        "\t$this->error('Error: ' . $e->getMessage());",
+        "}"
+      })
+    })
+  }
+	-- stylua: enable
 
 	luasnip.add_snippets("lua", lua_snippets)
 end

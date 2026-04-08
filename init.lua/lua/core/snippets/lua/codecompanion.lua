@@ -7,53 +7,100 @@ local i = luasnip.insert_node
 local M = {}
 
 M.load_snippets = function()
+  -- stylua: ignore
   local lua_snippets = {
     s("prompt_requirement", {
       t({
-        "",
-        "Based on the provided code, please make targeted modifications by:",
+        "### Based on the provided code, please make targeted modifications by:",
         "- Identifying the exact location where changes should be made",
         "- Explaining how the new code integrates with existing code",
         "- Preserving all current functionality",
         "- DON'T rewrite the entire file, only show code snippets.",
-        -- "- NEVER write code with number preffix, for example `1 |`", -- "- Provide clean code without line numbers or prefixes.", -- "- DON'T include numbers in code snippets.",
-        -- "- Do NOT remove existing code unless absolutely necessary.",
+        "- Do NOT remove existing code unless absolutely necessary.",
         -- "- Optimize for readability and maintainability.",
         -- "- Follows best practices.",
         -- "- Consider edge cases and input validation.",
-        -- "-Provide code that integrates seamlessly with existing structure.",
         "",
-        "Existing code:",
+        "### Existing code:",
         "" }), i(1), t({ "",
-      "",
-      "Specific requirement: ",
-      "" }), i(2), t({ "",
-      "",
-      "Please show exactly where to add code and what to add.",
+        "",
+        "### Specific requirement: ",
+        "" }), i(2), t({ "",
+        "",
+        "Please show exactly where to add code and what to add.",
+      }),
     }),
-    }),
-    s("prompt_file", {
+    s("prompt_architecture", {
       t({
-        "You are helping me modify an existing file. Instead of rewriting the entire file, please:",
-        "1. Analyze the existing code provided",
-        "2. Make only the specific changes needed",
-        "3. Clearly indicate where changes should be made",
-        "4. Show exactly what to add or modify",
-        "5. Preserve all existing functionality",
+        "### As an advanced Software Architect following best practices.",
+        "Help me design scalable architecture.",
         "",
-        "Here's the existing code:",
+        "What is the best practices for:",
         "" }), i(1), t({ "",
-      "",
-      "I need you to:",
-      "" }), i(2), t({ "",
-      "",
-      "Please provide your response showing:",
-      "- Where to make the change (location)",
-      "- What to add/modify",
-      "- How it integrates with existing code",
+        "",
+        "",
+        "**Don't write any code**",
+      })
     }),
+    -- s("prompt_architecture", {
+    --   t({
+    --     "### As an advanced Software Architect following best practices.",
+    --     "Design a scalable architecture for:",
+    --     "[problem domain]. "}), i(1), t({ "",
+    --     "",
+    --     "### Consider the following constraints:",
+    --     }), i(1), t({ "",
+    --     "- [specific tech stack requirements]",
+    --     "- [performance requirements]",
+    --     "- [security requirements]",
+    --     "- [scalability needs]",
+    --     "",
+    --     "### Please provide:",
+    --     "1. High-level architecture diagram explanation",
+    --     "2. Component design with responsibilities",
+    --     "3. Data flow patterns",
+    --     "4. Communication mechanisms (APIs, message queues, etc.)",
+    --     "5. Database design considerations",
+    --     "6. Security and authentication strategy",
+    --     "7. Scalability and deployment considerations",
+    --     "8. Error handling and resilience patterns",
+    --     "9. Justify key architectural decisions with trade-offs",
+    --   })
+    -- }),
+    s("focus_on_architecture", {
+      t({
+        "### Architecture Focus:",
+        "Please explain:",
+        "- Scalability considerations",
+        "- Performance optimization strategies",
+        -- "- Technology stack recommendations",
+      })
+    }),
+    s("focus_on_security", {
+      t({
+        "### Security Focus:",
+        "Please ensure the response addresses:",
+        "- Authentication and authorization mechanisms",
+        "- Common security vulnerabilities to avoid",
+        "- Data encryption strategies",
+        "- Input validation and sanitization",
+        "- Access control patterns",
+        -- "- Compliance requirements (GDPR, HIPAA, etc.)",
+      })
+    }),
+    s("focus_on_database", {
+      t({
+        "### Database Focus:",
+        "Please pay special attention to:",
+        "- Indexing strategy",
+        "- Query optimization considerations",
+        "- Data integrity constraints",
+        "- Backup and recovery planning",
+        -- "- Normalization level (1NF, 2NF, 3NF, BCNF)",
+      })
     }),
   }
+	-- stylua: enable
 
 	luasnip.add_snippets("codecompanion", lua_snippets)
 end

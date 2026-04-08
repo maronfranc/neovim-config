@@ -1,13 +1,13 @@
 -- @see https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua
 local luasnip = require("luasnip")
 local s = luasnip.snippet
-local t = luasnip.text_node                  -- Simple static text.
-local i = luasnip.insert_node                -- Placeholder/Insert. int): Placeholder with initial text.
-local f = luasnip.function_node              -- Function, first parameter is the function, second the Placeholders
+local t = luasnip.text_node -- Simple static text.
+local i = luasnip.insert_node -- Placeholder/Insert. int): Placeholder with initial text.
+local f = luasnip.function_node -- Function, first parameter is the function, second the Placeholders
 local function copy(args) return args[1] end -- Whose text it gets as input.
 
 local M = {}
--- luasnip.add_snippets("all", {
+-- stylua: ignore
 M.load_snippets = function()
   local function js_console_log()
     return s("qqpppdqjwpjdojpasdpjoqjwdjqpjaposjdposjp", {
@@ -185,6 +185,7 @@ M.load_snippets = function()
     both_for_let_i_loop(),
     js_typedef_interface(),
   }
+  -- stylua: enable
 
   luasnip.add_snippets("javascript", js_snippets)
   luasnip.add_snippets("typescript", ts_snippets)
