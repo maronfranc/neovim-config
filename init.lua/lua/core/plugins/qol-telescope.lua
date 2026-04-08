@@ -21,7 +21,7 @@ local M = {
 		local keymap = require("core.keymap.plugins.telescope")
 
 		local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
-		-- Trim the indentation at the beginning of presented line
+		-- Trim the indentation at the beginning of presented line.
 		table.insert(vimgrep_arguments, "--trim")
 
 		local fzf_opts = {
@@ -41,7 +41,7 @@ local M = {
 				buffers = { ignore_current_buffer = true, sort_lastused = true },
 				live_grep = {
 					sorter = telescope.extensions.fzf.native_fzf_sorter(fzf_opts),
-					only_sort_text = true, -- grep for content and not file name/path
+					only_sort_text = true, -- Grep for content and not file name/path.
 				},
 			},
 			defaults = {

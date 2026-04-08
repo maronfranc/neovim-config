@@ -16,13 +16,13 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false -- disable search highlight
+vim.opt.hlsearch = false -- Disable search highlight.
 vim.opt.incsearch = true
 
-vim.opt.termguicolors = true -- set termguicolors to enable highlight groups
-vim.opt.cursorline = true -- Highlight current cursorline
+vim.opt.termguicolors = true -- Set termguicolors to enable highlight groups.
+vim.opt.cursorline = true -- Highlight current cursorline.
 
-vim.opt.scrolloff = 8 -- minimal distance to bottom/top
+vim.opt.scrolloff = 8 -- Minimal distance to bottom/top.
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 

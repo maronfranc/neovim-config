@@ -25,7 +25,7 @@ M.get_autocompletion_table = function(cmp, luasnip)
 		end
 	end
 
-	---Define a function that takes another function and a number as parameters
+	---Accept a function that takes another function and a number as parameters.
 	---@param fn function: The function to be called repeatedly.
 	---@param times integer: The number of times to call the function. Must be a positive integer.
 	local function repeat_function(fn, times)
@@ -35,7 +35,7 @@ M.get_autocompletion_table = function(cmp, luasnip)
 		if is_fn_a_function then vim.error("First argument must be a function") end
 		if is_times_a_positive then vim.error("Second argument must be a positive integer") end
 
-		-- Call the provided function `times` times
+		-- Call the provided function `times` times.
 		for _ = 1, times do
 			fn()
 		end

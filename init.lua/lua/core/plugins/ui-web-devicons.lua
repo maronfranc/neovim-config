@@ -12,12 +12,10 @@ local M = {
 		local color = require("core.utils.colors")
 		local icon_config = { icon = "", color = color.yellow, name = "Config_file" }
 		require("nvim-web-devicons").setup({
-			-- globally enable different highlight colors per icon (default to true)
-			-- if set to false all icons will have the default icon's color
-			color_icons = true,
-			-- globally enable default icons (default to false)
-			-- will get overriden by `get_icons` option
-			default = true,
+			color_icons = true, -- Globally enable different highlight colors per icon (default to true) 
+      --                      if set to false all icons will have the default icon's color.
+			default = true, -- Globally enable default icons (default to false)
+			--                  will get overriden by `get_icons` option.
 			override_by_filename = {
 				["go.mod"] = { icon = "", color = color.red, name = "GoMod" },
 				["go.sum"] = { icon = "", color = color.red, name = "GoSum" },
@@ -27,8 +25,8 @@ local M = {
 				[".env.production"] = icon_config,
 				[".env.production_example"] = icon_config,
 			},
-			-- same as `override` but specifically for overrides by extension
-			-- takes effect when `strict` is true
+			-- Same as `override` but specifically for overrides by extension
+			-- takes effect when `strict` is true.
 			override_by_extension = {
 				-- ["env"] = { icon = "", color = color.yellow, name = "Environment" },
 				["conf"] = { icon = "󰒓", color = color.darkblue, name = "Configuration" },

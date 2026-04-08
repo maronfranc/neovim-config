@@ -1,6 +1,6 @@
 local colors = require("core.utils.colors")
 
----auto change color according to neovims mode
+---Auto change color according to neovims mode.
 local function color_by_mode()
 	-- @see `:help mode()`
 	local mode_color = {

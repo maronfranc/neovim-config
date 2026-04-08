@@ -20,9 +20,9 @@ local M = {
 			ollama = {
 				endpoint = "http://localhost:11434", -- "http://localhost:11434/v1",
 				---@see https://ollama.com/search?c=tools&q=
-				model = "qwen3:8b", -- qwen3-coder:30b", -- "qwen2.5-coder:7b",
+				model = "qwen3:8b",
 				timeout = 30000, -- Timeout in milliseconds.
-				-- important to set this to true if you are using a local server
+				-- Important to set this to true if you are using a local server.
 				disable_tools = true,
 				extra_request_body = {
 					options = {
@@ -69,11 +69,11 @@ local M = {
 		hints = { enabled = true },
 		windows = {
 			---@type "right" | "left" | "top" | "bottom"
-			position = "right", -- the position of the sidebar
-			wrap = true, -- similar to vim.o.wrap
-			width = 70, -- default % based on available width
+			position = "right", -- The position of the sidebar.
+			wrap = true, -- Similar to vim.o.wrap.
+			width = 70, -- Default % based on available width.
 			sidebar_header = {
-				align = "center", -- left, center, right for title
+				align = "center", -- "left", "center", "right" for title.
 				rounded = true,
 			},
 		},

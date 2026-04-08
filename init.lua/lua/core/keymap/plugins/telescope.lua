@@ -8,8 +8,8 @@ M.load_keymaps = function()
 	vim.keymap.set("n", "<LEADER>fe", "<CMD>Neotree reveal toggle<CR>", {
 		desc = "Toggle neo-tree explorer",
 	})
-	vim.keymap.set("n", "<LEADER>pi", "<CMD>Telescope symbols<CR>") -- pick icons
-	-- -- Search stuff
+	vim.keymap.set("n", "<LEADER>pi", "<CMD>Telescope symbols<CR>") -- Pick icons.
+	-- ===== ===== ===== Search stuff ===== ===== ===== --
 	vim.keymap.set("n", "<LEADER>fg", function()
 		builtin.live_grep({
 			additional_args = function() return { "--fixed-strings" } end,
@@ -23,7 +23,7 @@ M.load_keymaps = function()
 	vim.keymap.set("n", "<LEADER>fb", "<CMD>Telescope keymaps<CR>", {
 		desc = "Show keymaps list",
 	})
-	-- -- Git
+	-- ===== ===== ===== Git ===== ===== ===== --
 	vim.keymap.set("n", "<LEADER>gb", "<CMD>Telescope git_branches<CR>", {
 		desc = "Git Branches",
 	})
@@ -31,7 +31,7 @@ M.load_keymaps = function()
 		desc = "Git commit",
 	})
 	-- { "<LEADER>gt", "<CMD>Telescope git_status<CR>", desc = "Git Status" },
-	-- -- Files
+	-- ===== ===== ===== Files ===== ===== ===== --
 	vim.keymap.set("n", "<LEADER>fb", builtin.buffers)
 	vim.keymap.set("n", "<LEADER>ff", builtin.find_files)
 end

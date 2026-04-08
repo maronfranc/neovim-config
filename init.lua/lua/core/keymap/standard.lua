@@ -4,22 +4,11 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "s", "<nop>")
 vim.keymap.set("n", "S", "<nop>")
+vim.keymap.set("n", "c", "<nop>")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {
-	desc = "Move highlighted lines downwards.",
-})
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {
-	desc = "Move highlighted lines upwards.",
-})
-
-vim.keymap.set("n", "J", "mzJ`z", {
-	desc = 'Same as "J" but cursor keep its current position.',
-})
-vim.keymap.set("n", "<CR>", "a<CR><ESC>", { desc = "Insert new line at the cursor." })
-vim.keymap.set("i", "<C-j>", "<ESC>o", { desc = "Insert and move to new line." })
--- - 'm`o<Esc>``': desc = 'Insert new line at the bottom of the cursor'}
--- - 'm`O<Esc>``': desc = 'Insert new line at the top of the cursor'}
-
+-- ===== ===== ===== ===== Motions ===== ===== ===== ===== --
+-- - Move between panels: "./plugins/navigator.lua".
+-- ===== ===== ===== ===== ====== ===== ===== ===== ===== --
 vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
 vim.keymap.set("i", "<C-k>", "<ESC>5k", {
 	desc = 'Change to "n" and move up faster. [may conflict with cmp completion]',
@@ -31,44 +20,101 @@ vim.keymap.set({ "n", "v" }, "<A-j>", "10jzz", { desc = "Move 10 down" })
 vim.keymap.set({ "n", "v" }, "<A-u>", "30k", { desc = "Move 30 up" })
 vim.keymap.set({ "n", "v" }, "<A-d>", "30jzz", { desc = "Move 30 down" })
 
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- <C-H>~=<C-BS>. SEE: https://vi.stackexchange.com/questions/8603/what-does-ctrl-h-do
+-- Comment: there are certain control characters that map exactly to other keys, and console vim can not tell the difference between them <C-m> == <CR>, and <C-h> == <BS> and <C-[> == <ESC> and <C-j> is a newline. This means you cannot map to one of these key combos without getting the other one - DJMcMayhem.
+local ctrl_backspace = "<C-H>"
+vim.keymap.set("i", ctrl_backspace, "<ESC>dvbi", { desc = "Delete previous word." })
+vim.keymap.set("i", "<C-l>", "<ESC>A", { desc = "Move to the end of the line." })
+vim.keymap.set("n", "<C-l>", "$", { desc = "Move to the end of the line." })
+
+-- ===== ===== ===== ===== Code edit ===== ===== ===== ===== --
+-- - Comment helper: "./plugins/comment.lua".
+-- - Autocompletion: "./plugins/cmp.lua".
+-- ===== ===== ===== ===== ====== ===== ===== ===== ===== --
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", {
+	desc = "Move highlighted lines downwards.",
+})
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", {
+	desc = "Move highlighted lines upwards.",
+})
+vim.keymap.set("n", "J", "mzJ`z", {
+	desc = 'Same as "J" but cursor keep its current position.',
+})
+vim.keymap.set("n", "<CR>", "a<CR><ESC>", { desc = "Insert new line at the cursor." })
+vim.keymap.set("i", "<C-j>", "<ESC>o", { desc = "Insert and move to new line." })
+-- - 'm`o<Esc>``': desc = 'Insert new line at the bottom of the cursor'}
+-- - 'm`O<Esc>``': desc = 'Insert new line at the top of the cursor'}
+local undo_opts = { desc = "Undo.", silent = true }
+vim.keymap.set({ "n", "v" }, "<C-z>", "u", undo_opts)
+vim.keymap.set("i", "<C-z>", "<ESC>ui", undo_opts)
+
+-- ===== ===== ===== ===== Window ===== ===== ===== ===== --
+-- - Open terminal: "./plugins/toggleterm.lua".
+-- - Open side file explorer: "./plugins/neo-tree.lua".
+-- ===== ===== ===== ===== ====== ===== ===== ===== ===== --
+vim.keymap.set("n", "<A-h>", "<CMD>:vertical resize +10<CR>", { silent = true })
+vim.keymap.set("n", "<A-l>", "<CMD>:vertical resize -10<CR>", { silent = true })
+
+local quit_without_saving = "Quit without saving."
+vim.keymap.set("n", "<C-q>", ":q!", { desc = quit_without_saving })
+vim.keymap.set("i", "<C-q>", "<ESC>:q!", { desc = quit_without_saving })
+vim.keymap.set("n", "<C-w>", ":wq", { desc = "Quit and save." })
+
+local save_file_opts = { desc = "Save file", silent = true }
+-- `silent write` is the same as `:w`.
+vim.keymap.set("n", "<C-s>", "<CMD>silent write<CR>", save_file_opts)
+vim.keymap.set("n", "<A-s>", "<CMD>silent write<CR>", save_file_opts)
+local save_file_normal_mode_opts = {
+	desc = "Save file and change to normal mode",
+	silent = true,
+}
+vim.keymap.set("i", "<C-s>", "<ESC><CMD>silent write<CR>", save_file_normal_mode_opts)
+vim.keymap.set("i", "<A-s>", "<ESC><CMD>silent write<CR>", save_file_normal_mode_opts)
+
+vim.keymap.set("n", "<LEADER>tt", helper.open_terminal_in_pwd, { desc = "Open $TERMINAL" })
+
+-- ===== ===== ===== ===== Yank, Paste ===== ===== ===== ===== --
+local copy_to_clipboard_opts = { desc = "Copy to clipboard. `xclip` or similar required" }
+vim.keymap.set({ "n", "v" }, "<C-c>", [["+y]], copy_to_clipboard_opts)
+vim.keymap.set({ "n", "v" }, "<C-C>", [["+y]], copy_to_clipboard_opts)
+vim.keymap.set({ "n", "v" }, "<LEADER>y", [["+y]], copy_to_clipboard_opts)
+vim.keymap.set({ "n", "v" }, "<LEADER>Y", [["+Y]], copy_to_clipboard_opts)
+-- vim.keymap.set({ 'n', "v" }, "<C-v>", [["+p]], { desc = "Paste from clipboard" })
+vim.keymap.set("i", "<C-v>", [[<ESC>"+pa]], { desc = "Paste from clipboard" })
 vim.keymap.set({ "n", "v" }, "x", [["_x]], {
 	desc = 'Same as "x" but skip yank. Use dl and dh if you want to yank.',
 })
 vim.keymap.set({ "n", "v" }, "<LEADER>d", [["_d]], {
 	desc = 'Same as "d" but skip yank.',
 })
+vim.keymap.set({ "i", "n" }, "<C-DEL>", "<C-o>de", {
+	desc = "Delete next word.",
+	silent = true,
+})
+vim.keymap.set("x", "<LEADER>p", [["_dP]], {
+	desc = "Delete word and paste keeping word in the buffer",
+})
+vim.keymap.set("n", "<LEADER>rp", [["_dawP]], {
+	desc = "Replace word with yanked value.",
+})
+vim.keymap.set("n", "<LEADER>,", [[f,a<CR><ESC>]], {
+	desc = 'Add Enter after comma ",<enter>".',
+})
+vim.keymap.set("n", "<LEADER>|", [[f|ha<CR><ESC>]], {
+	desc = 'Add Enter before pipe "<enter>|".',
+})
+vim.keymap.set("n", "<LEADER>)", [[f)ha,<CR><ESC>]], {
+	desc = 'Add "," Enter before pipe "<,><enter>)".',
+})
+local enter_before_lessthan = 'Add Enter before "less than" sign "<ENTER>>".'
+vim.keymap.set("n", "<LEADER>>", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
+vim.keymap.set("n", "<LEADER><", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
 
-local copy_to_clipboard = "Copy to clipboard. `xclip` or similar required"
-vim.keymap.set({ "n", "v" }, "<C-c>", [["+y]], { desc = copy_to_clipboard })
-vim.keymap.set({ "n", "v" }, "<C-C>", [["+y]], { desc = copy_to_clipboard })
-vim.keymap.set({ "n", "v" }, "<LEADER>y", [["+y]], { desc = copy_to_clipboard })
-vim.keymap.set({ "n", "v" }, "<LEADER>Y", [["+Y]], { desc = copy_to_clipboard })
-local paste_from_clipboard = "Paste from clipboard"
--- vim.keymap.set({ 'n', "v" }, "<C-v>", [["+p]], { desc = paste_from_clipboard })
-vim.keymap.set("i", "<C-v>", [[<ESC>"+pa]], { desc = paste_from_clipboard })
-
-local undo = "Undo."
-vim.keymap.set({ "n", "v" }, "<C-z>", "u", { desc = undo, silent = true })
-vim.keymap.set("i", "<C-z>", "<ESC>ui", { desc = undo, silent = true })
-local save_file = "Save file"
--- `silent write` is the same as `:w`.
-vim.keymap.set("n", "<C-s>", "<CMD>silent write<CR>", { desc = save_file, silent = true })
-vim.keymap.set("n", "<A-s>", "<CMD>silent write<CR>", { desc = save_file, silent = true })
-local save_file_normal_mode = "Save file and change to normal mode"
-vim.keymap.set("i", "<C-s>", "<ESC><CMD>silent write<CR>", { desc = save_file_normal_mode, silent = true })
-vim.keymap.set("i", "<A-s>", "<ESC><CMD>silent write<CR>", { desc = save_file_normal_mode, silent = true })
-local quit_without_saving = "Quit without saving."
-vim.keymap.set("n", "<C-q>", ":q!", { desc = quit_without_saving })
-vim.keymap.set("i", "<C-q>", "<ESC>:q!", { desc = quit_without_saving })
-vim.keymap.set("n", "<C-w>", ":wq", { desc = "Quit and save." })
-
--- quickfix
--- vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
--- vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<LEADER>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<LEADER>j", "<cmd>lprev<CR>zz")
+-- ===== ===== ===== ===== Replace ===== ===== ===== ===== --
+vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
+	desc = [[Change file: all cammelCase occurrences to snake_case.
+---@see https://www.reddit.com/r/vim/comments/lwr56a/search_and_replace_camelcase_to_snake_case/]],
+})
 
 local function search_and_replace()
 	local current_word = vim.fn.expand("<cword>")
@@ -86,55 +132,8 @@ vim.keymap.set("n", "<LEADER>s", search_and_replace, {
 	desc = "Search and replace the same pattern with popup.",
 })
 
-vim.keymap.set({ "i", "n" }, "<C-DEL>", "<C-o>de", { desc = "Delete next word.", silent = true })
--- <C-H>~=<C-BS>. SEE: https://vi.stackexchange.com/questions/8603/what-does-ctrl-h-do
---  there are certain control characters that map exactly to other keys, and console vim can not tell the difference between them <C-m> == <CR>, and <C-h> == <BS> and <C-[> == <ESC> and <C-j> is a newline. This means you cannot map to one of these key combos without getting the other one - DJMcMayhem
-local ctrl_backspace = "<C-H>"
-vim.keymap.set("i", ctrl_backspace, "<ESC>dvbi", { desc = "Delete previous word." })
-vim.keymap.set("i", "<C-l>", "<ESC>A", { desc = "Move to the end of the line." })
-vim.keymap.set("n", "<C-l>", "$", { desc = "Move to the end of the line." })
-
-vim.keymap.set("n", "<A-h>", "<CMD>:vertical resize +10<CR>", { silent = true })
-vim.keymap.set("n", "<A-l>", "<CMD>:vertical resize -10<CR>", { silent = true })
-
-vim.keymap.set("x", "<LEADER>p", [["_dP]], {
-	desc = "Delete word and paste keeping word in the buffer",
-})
-vim.keymap.set("n", "<LEADER>rp", [["_dawP]], {
-	desc = "Replace word with yanked value.",
-})
-vim.keymap.set("n", "<LEADER>,", [[f,a<CR><ESC>]], {
-	desc = 'Add Enter after comma ",<enter>".',
-})
-vim.keymap.set("n", "<LEADER>|", [[f|ha<CR><ESC>]], {
-	desc = 'Add Enter before pipe "<enter>|".',
-})
-vim.keymap.set("n", "<LEADER>)", [[f)ha,<CR><ESC>]], {
-	desc = 'Add "," Enter before pipe "<,><enter>)".',
-})
-local enter_before_lessthan = 'Add Enter before "less than" sign "<enter>>".'
-vim.keymap.set("n", "<LEADER>>", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
-vim.keymap.set("n", "<LEADER><", [[f<ha<CR><ESC>]], { desc = enter_before_lessthan })
-
-vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
-	desc = [[Change file: all cammelCase occurrences to snake_case.
----@see https://www.reddit.com/r/vim/comments/lwr56a/search_and_replace_camelcase_to_snake_case/]],
-})
-
+-- ===== ===== ===== ===== Quotes ===== ===== ===== ===== --
 ---@see https://stackoverflow.com/a/2148055
--- vim.keymap.set("n", "<LEADER>dpsd", [[di'h2"_xi""<ESC>P]]) -- change single quote to double.
--- vim.keymap.set("n", "<LEADER>dpds", [[di"h2"_xi''<ESC>P]]) -- change double quote to single.
-
-vim.keymap.set("n", "<LEADER>qd", helper.add_char_around([["]]), {
-	desc = "Add double quotes around the word under the cursor.",
-})
-vim.keymap.set("n", "<LEADER>qs", helper.add_char_around([[']]), {
-	desc = "Add single quotes around the word under the cursor.",
-})
-vim.keymap.set("n", "<LEADER>qb", helper.add_char_around([[`]]), {
-	desc = "Add backtick around the word under the cursor.",
-})
-
 local function remove_quote_around()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 	local row, col = cursor_pos[1], cursor_pos[2]
@@ -159,5 +158,18 @@ vim.keymap.set("n", "<LEADER>dq", remove_quote_around, {
 	silent = true,
 	desc = [[Remove quotes(either ", ', or `) around cursor.]],
 })
+vim.keymap.set("n", "<LEADER>qd", helper.add_char_around([["]]), {
+	desc = "Add double quotes around the word under the cursor.",
+})
+vim.keymap.set("n", "<LEADER>qs", helper.add_char_around([[']]), {
+	desc = "Add single quotes around the word under the cursor.",
+})
+vim.keymap.set("n", "<LEADER>qb", helper.add_char_around([[`]]), {
+	desc = "Add backtick around the word under the cursor.",
+})
 
-vim.keymap.set("n", "<LEADER>tt", helper.open_terminal_in_pwd, { desc = "Open $TERMINAL" })
+-- ===== ===== ===== ===== Search ===== ===== ===== ===== --
+-- - Search pattern inside git workspace: "./plugins/telescope.lua".
+-- ===== ===== ===== ===== ====== ===== ===== ===== ===== --
+vim.keymap.set("n", "n", "nzzzv") -- Search: goes to the next search match.
+vim.keymap.set("n", "N", "Nzzzv") -- Search: goes to the previous search match.

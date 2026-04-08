@@ -206,7 +206,7 @@ local M = {
 					local msg = " PERMANENT DELETE: " .. path .. " (cannot be undone) — Continue?"
 					inputs.confirm(msg, function(confirmed)
 						if not confirmed then return end
-            vim.notify("File PERMANENTLY deleted" .. path, vim.log.levels.INFO)
+						vim.notify("File PERMANENTLY deleted" .. path, vim.log.levels.INFO)
 						vim.fn.jobstart({ "rm", "-rf", path }, {
 							detach = true,
 							on_exit = function(_, code, _)
@@ -221,6 +221,7 @@ local M = {
 						})
 					end)
 				end,
+				---Override delete to use trash instead of rm.
 				delete = function(state)
 					local inputs = require("neo-tree.ui.inputs")
 					local sources_manager = require("neo-tree.sources.manager")
@@ -234,7 +235,7 @@ local M = {
 
 					inputs.confirm(msg, function(confirmed)
 						if not confirmed then return end
-            vim.notify("File sent to thrash" .. path, vim.log.levels.INFO)
+						vim.notify("File sent to thrash" .. path, vim.log.levels.INFO)
 						vim.fn.jobstart({ "trash-put", path }, {
 							detach = true,
 							on_exit = function(_, code, _)

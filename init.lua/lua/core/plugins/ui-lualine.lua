@@ -26,17 +26,17 @@ local M = {
 		local section_rectangle = {
 			function() return "▊" end,
 			color = color_by_mode,
-			padding = { left = 0, right = 0 }, -- We don't need left space before this
+			padding = { left = 0, right = 0 },
 		}
 		local section_foldername = {
 			"filename",
 			cond = conditions.buffer_not_empty,
 			color = { fg = "#999999" },
-			-- 0: Just the filename
-			-- 1: Relative path
-			-- 2: Absolute path
-			-- 3: Absolute path, with tilde as the home directory
-			-- 4: Filename and parent dir, with tilde as the home directory
+			-- 0: Just the filename.
+			-- 1: Relative path.
+			-- 2: Absolute path.
+			-- 3: Absolute path, with tilde as the home directory.
+			-- 4: Filename and parent dir, with tilde as the home directory.
 			path = 4,
 			fmt = function(path, _) -- (path, context)
 				local folder_and_filename = vim.split(path, "/")
@@ -77,12 +77,8 @@ local M = {
 			cond = conditions.buffer_not_empty,
 			colored = true,
 			icon_only = false,
-			icon = { align = "right" }, -- Display filetype icon on the right hand side
-			fmt = function(ext_name, _)
-				-- if ext_name then return "." .. ext_name end
-				-- return ""
-				return "." .. ext_name
-			end,
+			icon = { align = "right" }, -- Display filetype icon on the right hand side.
+			fmt = function(ext_name, _) return "." .. ext_name end,
 			padding = { left = 0, right = 1 },
 		}
 
@@ -103,7 +99,7 @@ local M = {
 		}
 
 		---Insert mid section. You can make any number of sections in neovim :)
-		---for lualine it's any number greater then 2
+		---for lualine it's any number greater then 2.
 		local section_empty_space = { function() return "%=" end }
 
 		local section_lsp_server = {
@@ -157,9 +153,9 @@ local M = {
 		}
 
 		lualine.setup({
-			disabled_buftypes = { "quickfix", "prompt" }, -- Hide a window if its buffer's type is disabled
+			disabled_buftypes = { "quickfix", "prompt" }, -- Hide a window if its buffer's type is disabled.
 			options = {
-				-- Disable sections and component separators
+				-- Disable sections and component separators.
 				component_separators = "",
 				section_separators = "",
 				theme = {
@@ -185,7 +181,7 @@ local M = {
 				lualine_z = {},
 			},
 			inactive_sections = {
-				-- Empty values to remove defaults
+				-- Empty values to remove defaults.
 				lualine_a = {},
 				lualine_b = {},
 				lualine_c = {

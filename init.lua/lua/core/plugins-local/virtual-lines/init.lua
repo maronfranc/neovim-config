@@ -50,7 +50,7 @@ M.setup = function()
 					callback = function() render_current_line(diagnostics, ns.user_data.virt_lines_ns, bufnr, opts) end,
 					group = "LspLines",
 				})
-				-- Also show diagnostics for the current line before the first CursorMoved event
+				-- Also show diagnostics for the current line before the first CursorMoved event.
 				render_current_line(diagnostics, ns.user_data.virt_lines_ns, bufnr, opts)
 			else
 				render.show(ns.user_data.virt_lines_ns, bufnr, diagnostics, opts)

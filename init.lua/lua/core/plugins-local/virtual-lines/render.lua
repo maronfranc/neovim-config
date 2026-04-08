@@ -16,7 +16,6 @@ local HIGHLIGHTS = {
 	},
 }
 
--- These don't get copied, do they? We only pass around and compare pointers, right?
 local SPACE = "space"
 local DIAGNOSTIC = "diagnostic"
 local OVERLAP = "overlap"
@@ -69,7 +68,7 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 	if #diagnostics == 0 then return end
 
 	local highlight_groups = HIGHLIGHTS[source or "native"]
-	---If a msg line is above max column value
+	---If a msg line is above max column value.
 	---@param msg_line string
 	---@param max_col integer
 	local function wrap_msg_by_col(msg_line, max_col)
@@ -132,7 +131,7 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 		-- We read diagnostics in reverse order to ensure proper stacking:
 		-- the last diagnostic for a line appears visually above earlier diagnostics
 		-- in the stack, creating the correct visual hierarchy.
-		for i = #lelements, 1, -1 do -- last element goes on top
+		for i = #lelements, 1, -1 do -- Last element goes on top.
 			if lelements[i][1] == DIAGNOSTIC then
 				local diagnostic = lelements[i][2]
 				local empty_space_hi
@@ -228,7 +227,7 @@ function M.show(namespace, bufnr, diagnostics, opts, source)
 
 		local IGNORE_INVALID_LINE_OUT_OF_RANGE = false
 		---@fixme There a strange bug that when a error have several lines nvim crashes.
-    ---   To test it change `MAX_COL_WIDTH` to a small number like 20.
+		---   To test it change `MAX_COL_WIDTH` to a small number like 20.
 		---@see https://github.com/neovim/neovim/issues/20365
 		vim.api.nvim_buf_set_extmark(bufnr, namespace, lnum, 0, {
 			virt_lines = virt_lines,

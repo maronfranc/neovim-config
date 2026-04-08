@@ -1,19 +1,19 @@
+---A completion engine plugin for neovim written in Lua.
+---Completion sources are installed from external repositories and "sourced".
+---For custom plugin creation @see https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
 ---@see https://github.com/hrsh7th/nvim-cmp
 ---@see https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
 ---@see https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-codicons-to-the-menu
 ---@see https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua
----A completion engine plugin for neovim written in Lua.
----Completion sources are installed from external repositories and "sourced"
----For custom plugin creation @see https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
 local M = {
 	"hrsh7th/nvim-cmp",
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
-		"hrsh7th/cmp-buffer", -- To enable other completions
+		"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp.
+		"hrsh7th/cmp-buffer", -- To enable other completions.
 		"hrsh7th/cmp-cmdline", -- For ":", "/", "?" and possibly other buffers.
 		"hrsh7th/cmp-path", -- For file path.
-		"neovim/nvim-lspconfig", -- Collection of configurations for built-in LSP client
-		"hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures with the current parameter emphasized
+		"neovim/nvim-lspconfig", -- Collection of configurations for built-in LSP client.
+		"hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures with the current parameter emphasized.
 		"L3MON4D3/LuaSnip", -- Snippets plugin.
 		"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp.
 	},

@@ -1,6 +1,6 @@
 ---@see https://github.com/lukas-reineke/indent-blankline.nvim
 ---This plugin adds indentation guides to all lines (including empty lines).
----It uses Neovim's virtual text feature and no conceal
+---It uses Neovim's virtual text feature and no conceal.
 local M = {
 	"lukas-reineke/indent-blankline.nvim",
 	main = "ibl",
@@ -16,8 +16,8 @@ local M = {
 		}
 		local ibl = require("ibl")
 		local hooks = require("ibl.hooks")
-		-- create the highlight groups in the highlight setup hook, so they are reset
-		-- every time the colorscheme changes
+		-- Create the highlight groups in the highlight setup hook,
+		-- so they are reset every time the colorscheme changes.
 		hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
 			vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
 			vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })

@@ -6,7 +6,7 @@ local M = {}
 M.explorer = {
 	["C"] = {
 		"toggle_node", -- "close_node",
-		nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
+		nowait = false,
 	},
 	["<2-LeftMouse>"] = "open",
 	["<CR>"] = "open",
@@ -21,11 +21,13 @@ M.explorer = {
 	["<C-r>"] = "refresh",
 	["a"] = {
 		"add",
-		-- some commands may take optional config options, see `:h neo-tree-mappings` for details
+		-- Some commands may take optional config options, see `:h neo-tree-mappings` for details.
 		config = {
 			show_path = "none", -- "none", "relative", "absolute"
 		},
 	},
+	["c"] = "copy", -- Takes text input for destination, also accepts the config.show_path option.
+	["m"] = "move", -- Takes text input for destination, also accepts the config.show_path option.
 	["A"] = "add_directory", -- also accepts the config.show_path option.
 	["d"] = "delete",
 	["R"] = "rename",
@@ -33,8 +35,6 @@ M.explorer = {
 	["y"] = "copy_to_clipboard",
 	["x"] = "cut_to_clipboard",
 	["p"] = "paste_from_clipboard",
-	["c"] = "copy", -- takes text input for destination, also accepts the config.show_path option
-	["m"] = "move", -- takes text input for destination, also accepts the config.show_path option
 	["q"] = "close_window",
 	["?"] = "show_help",
 	["<"] = "prev_source",
@@ -44,7 +44,6 @@ M.explorer = {
 M.filesystem = {
 	["o"] = "system_open",
 	["D"] = "delete_permanently",
-	-- Override delete to use trash instead of rm.
 	["d"] = "delete",
 	["H"] = "toggle_hidden",
 	["<C-f>"] = "fuzzy_finder",

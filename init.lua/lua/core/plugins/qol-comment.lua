@@ -5,11 +5,11 @@ local M = {
 	lazy = false,
 	config = function()
 		require("Comment").setup({
-			padding = true, ---Add a space b/w comment and the line
-			sticky = true, -- Whether the cursor should stay at its position
-			---LHS of toggle mappings in NORMAL mode
+			padding = true, ---Add a space b/w comment and the line.
+			sticky = true, -- Whether the cursor should stay at its position.
+			---LHS of toggle mappings in NORMAL mode.
 			toggler = keymap.comment,
-			-- LHS of operator-pending mappings in NORMAL and VISUAL mode
+			-- LHS of operator-pending mappings in NORMAL and VISUAL mode.
 			opleader = keymap.comment,
 			-- pre_hook = function(ctx)
 			--   local start_range = {

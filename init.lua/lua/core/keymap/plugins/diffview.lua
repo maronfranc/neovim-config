@@ -1,15 +1,15 @@
 local M = {}
 
 ---@diagnostic disable
----Keymaps for github diff
+---Keymaps for github diff.
 ---@type diffview.actions
 M.get_open_window_mappings = function(actions)
 	---@diagnostic enable
 	return {
-		disable_defaults = false, -- Disable the default keymaps
+		disable_defaults = false,
 		view = {
-			-- The `view` bindings are active in the diff buffers, only when the current
-			-- tabpage is a Diffview.
+			-- The `view` bindings are active in the diff buffers,
+			-- only when the current tabpage is a Diffview.
 			{ "n", "<TAB>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
 			{ "n", "<S-TAB>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
 			{
@@ -41,13 +41,13 @@ M.get_open_window_mappings = function(actions)
 			-- { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
 			-- { "n", "<C-w>gf", actions.goto_file_tab, { desc = "Open the file in a new tabpage" } },
 		},
-		diff1 = { -- Mappings in single window diff layouts
+		diff1 = { -- Mappings in single window diff layouts.
 			{ "n", "g?", actions.help({ "view", "diff1" }), { desc = "Open the help panel" } },
 		},
-		diff2 = { -- Mappings in 2-way diff layouts
+		diff2 = { -- Mappings in 2-way diff layouts.
 			{ "n", "g?", actions.help({ "view", "diff2" }), { desc = "Open the help panel" } },
 		},
-		diff3 = { -- Mappings in 3-way diff layouts
+		diff3 = { -- Mappings in 3-way diff layouts.
 			{
 				{ "n", "x" },
 				"2do",

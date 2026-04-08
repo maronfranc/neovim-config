@@ -1,4 +1,4 @@
--- Color table for highlights
+-- Color table for highlights.
 local colors = {
 	bg = "#202328",
 	fg = "#bbc2cf",
