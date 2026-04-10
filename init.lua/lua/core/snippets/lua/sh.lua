@@ -18,9 +18,9 @@ M.load_snippets = function()
     s("strict_mode", {
       t({
         "# Strict mode: fail fast and loudly.",
-        "set -e          # Stop on first error",
-        "set -u          # Disallow unset variables",
-        "set -o pipefail # Propagate pipeline failures",
+        "set -e          # Stop on first error.",
+        "set -u          # Disallow unset variables.",
+        "set -o pipefail # Propagate pipeline failures.",
       }),
     }),
     s("if_not_empty", {
