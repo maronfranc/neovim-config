@@ -47,6 +47,9 @@ vim.keymap.set("i", "<C-j>", "<ESC>o", { desc = "Insert and move to new line." }
 local undo_opts = { desc = "Undo.", silent = true }
 vim.keymap.set({ "n", "v" }, "<C-z>", "u", undo_opts)
 vim.keymap.set("i", "<C-z>", "<ESC>ui", undo_opts)
+---@see https://neovim.io/doc/user/various/#_3.-commenting
+vim.keymap.set("n", "cs", "gcc", { remap = true, desc = "Comment line" })
+vim.keymap.set("v", "cs", "gc", { remap = true, desc = "Comment selection" })
 
 -- ===== ===== ===== ===== Window ===== ===== ===== ===== --
 -- - Open terminal: "./plugins/toggleterm.lua".

@@ -1,7 +1,7 @@
 local M = {}
 
 ---List of file names inside `./servers/` dir.
----NOTE: expect all file names to be correct server names, 
+---NOTE: expect all file names to be correct server names,
 ---   otherwise they will not be installed by `mason` plugin.
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 M.server_import_list = {
@@ -14,7 +14,7 @@ M.server_import_list = {
 	-- "gopls",
 	"html",
 	-- "htmx",
-	-- "jdtls",
+	"jdtls",
 	-- "julials",
 	"jsonls",
 	"lua_ls",
@@ -34,9 +34,9 @@ M.server_import_list = {
 M.ensure_tools = {
 	-- Formatter
 	"stylua",
-	"shfmt",
+	-- "shfmt",
 	-- Linter
-	"yamllint",
+	-- "yamllint",
 	"ruff",
 }
 
