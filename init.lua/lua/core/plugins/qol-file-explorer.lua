@@ -1,16 +1,17 @@
----@see https://github.com/nvim-neo-tree/neo-tree.nvim
+local keymap = require("core.keymap.plugins.neo-tree")
+local helper = require("core.utils.helper")
+
 ---Neo-tree is a Neovim plugin to browse the file system and other tree like structures
 ---in whatever style suits you, including sidebars, floating windows, netrw split style,
 ---or all of them at once.
-local keymap = require("core.keymap.plugins.neo-tree")
-
+---@see https://github.com/nvim-neo-tree/neo-tree.nvim
 local M = {
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
 	cmd = "Neotree",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+		"nvim-tree/nvim-web-devicons", -- Optional, but recommended.
 		"MunifTanjim/nui.nvim",
 	},
 	opts = {
@@ -53,13 +54,13 @@ local M = {
 			winbar = true, -- toggle to show selector on winbar
 			statusline = false, -- toggle to show selector on statusline
 			show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
-			-- of the top visible node when scrolled down.
+			--  of the top visible node when scrolled down.
 			tab_labels = {
-				-- falls back to source_name if nil
+				-- Falls back to source_name if nil.
 				filesystem = " Files ",
 				buffers = " Buffers ",
-				git_status = " Git ",
-				diagnostics = " diagnostics ",
+				-- git_status = " Git ", -- Omitted git in favor of other plugins.
+				diagnostics = " Diagnostics ",
 			},
 			content_layout = "start", -- only with `tabs_layout` = "equal", "focus"
 			--                start  : |/ bufname     \/...
@@ -74,8 +75,7 @@ local M = {
 			truncation_character = "…", -- character to use when truncating the tab label
 			tabs_min_width = nil, -- nil | int: if int padding is added based on `content_layout`
 			tabs_max_width = nil, -- this will truncate text even if `text_trunc_to_fit = false`
-			padding = 0, -- can be int or table
-			-- padding = { left = 2, right = 0 },
+			padding = 0, -- can be int or table `{ left = 2, right = 0 }`
 			-- separator = "▕", -- can be string or table, see below
 			separator = { left = "▏", right = "▕" },
 			-- separator = { left = "/", right = "\\", override = nil },     -- |/  a  \/  b  \/  c  \...
@@ -339,20 +339,21 @@ local M = {
 			--  end
 			--  return args
 			--end,
-			group_empty_dirs = false, -- when true, empty folders will be grouped together
-			search_limit = 50, -- max number of search results when using filters
+			search_limit = 50, -- Max number of search results when using filters.
 			follow_current_file = { enabled = false }, -- This will find and focus the file in the active buffer every time
 			-- "disabled", netrw disabled, opening a directory opens neo-tree in whatever position is specified in window.position
 			-- netrw disabled, opening a directory opens within the window like netrw would, regardless of window.position
 			hijack_netrw_behavior = "open_default", -- "open_current",
 			use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
 			--                                instead of relying on nvim autocmd events.
+			group_empty_dirs = helper.is_java_project(), -- when true, empty directories(Files) will be grouped together.
+			scan_mode = helper.is_java_project() and "deep" or nil, -- Enable when `group_empty_dirs = true`.
 		},
 		buffers = {
 			bind_to_cwd = true,
-			follow_current_file = { enabled = true }, -- This will find and focus the file in the active buffer every time
-			-- the current file is changed while the tree is open.
-			group_empty_dirs = true, -- when true, empty directories will be grouped together
+			follow_current_file = { enabled = true }, -- This will find and focus the file in the
+      -- active buffer every time the current file is changed while the tree is open.
+			group_empty_dirs = true, -- When true, empty directories(Git) will be grouped together.
 			window = { mappings = keymap.buffer },
 		},
 		git_status = {

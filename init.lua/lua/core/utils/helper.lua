@@ -152,6 +152,16 @@ M.open_terminal_in_pwd = function()
 	vim.fn.jobstart({ terminal }, { detach = true })
 end
 
+-- Function to detect if current project is a Java project
+M.is_java_project = function()
+	local cwd = vim.fn.getcwd()
+	local pom_exists = vim.fn.glob(cwd .. "/pom.xml")
+	local gradle_exists = vim.fn.glob(cwd .. "/build.gradle")
+	local gradle_kts_exists = vim.fn.glob(cwd .. "/build.gradle.kts")
+
+	return pom_exists ~= "" or gradle_exists ~= "" or gradle_kts_exists ~= ""
+end
+
 --- Execute normal command and keep cursor initial position.
 -- @param normal_cmd string
 -- M.keep_pos(normal_cmd)

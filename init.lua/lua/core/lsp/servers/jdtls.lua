@@ -10,14 +10,18 @@ local env = {
 	JDTLS_JVM_ARGS = os.getenv("JDTLS_JVM_ARGS"),
 }
 
-local function get_cache_dir() return env.XDG_CACHE_HOME and env.XDG_CACHE_HOME or table.concat({ env.HOME, ".cache" }) end
+local function get_cache_dir()
+	if env.XDG_CACHE_HOME and env.XDG_CACHE_HOME ~= "" then
+		-- Ensure XDG_CACHE_HOME ends with a slash
+		return env.XDG_CACHE_HOME:sub(-1) == "/" and env.XDG_CACHE_HOME or env.XDG_CACHE_HOME .. "/"
+	end
 
+	-- Default to ~/.cache/
+	return table.concat({ env.HOME, "/.cache/" })
+end
 local function get_jdtls_cache_dir() return table.concat({ get_cache_dir(), "jdtls" }) end
-
 local function get_jdtls_config_dir() return table.concat({ get_jdtls_cache_dir(), "config" }) end
-
 local function get_jdtls_workspace_dir() return table.concat({ get_jdtls_cache_dir(), "workspace" }) end
-
 local function get_jdtls_jvm_args()
 	local args = {}
 	for a in string.gmatch((env.JDTLS_JVM_ARGS or ""), "%S+") do
@@ -93,7 +97,8 @@ M.setup = {
 		get_jdtls_jvm_args(),
 	},
 	on_attach = function(client, bufnr)
-		require("core.keymap.buf").buffer_load_keymaps(bufnr)
+		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
+
 		_G.CC_tab_size(4)
 	end,
 	settings = {
