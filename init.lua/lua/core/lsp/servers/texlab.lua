@@ -122,6 +122,7 @@ local function buf_change_env(client, bufnr)
 	end)
 end
 
+local executable = "latexmk"
 local M = {}
 M.server_name = "texlab"
 ---@type vim.lsp.Config
@@ -133,7 +134,7 @@ M.setup = {
 		texlab = {
 			rootDirectory = nil,
 			build = {
-				executable = "latexmk",
+				executable = executable,
 				args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
 				onSave = true,
 				forwardSearchAfter = false,
@@ -157,7 +158,16 @@ M.setup = {
 		},
 	},
 	on_attach = function(client, bufnr)
-		for _, cmd in ipairs({
+		local latexmk_installed = vim.fn.executable(executable) == 1
+		if not latexmk_installed then
+			local msg = "The command `" .. executable .. "` is not installed or not in PATH.\n"
+			msg = msg .. "Due to this `texlab` server:\n"
+			msg = msg .. "🟥 will not autogenerate pdf file on save;\n"
+			msg = msg .. "✅ will work as a language server as expected."
+			vim.notify(msg, vim.log.levels.INFO)
+		end
+
+		local cmds = {
 			{ name = "TexlabBuild", fn = buf_build, desc = "Build the current buffer" },
 			{
 				name = "TexlabForward",
@@ -178,7 +188,9 @@ M.setup = {
 				fn = buf_change_env,
 				desc = "Change the environment at current position",
 			},
-		}) do
+		}
+
+		for _, cmd in ipairs(cmds) do
 			vim.api.nvim_buf_create_user_command(
 				bufnr,
 				"Lsp" .. cmd.name,

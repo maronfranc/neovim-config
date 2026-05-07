@@ -12,9 +12,9 @@ M.load_snippets = function()
     s("prompt_requirement", {
       t({
         "### Based on the provided code, please make targeted modifications by:",
-        "- Identifying the exact location where changes should be made",
-        "- Explaining how the new code integrates with existing code",
-        "- Preserving all current functionality",
+        "- Identifying the exact location where changes should be made.",
+        "- Explaining how the new code integrates with existing code.",
+        "- Preserving all current functionality.",
         "- DON'T rewrite the entire file, only show code snippets.",
         "- Do NOT remove existing code unless absolutely necessary.",
         -- "- Optimize for readability and maintainability.",

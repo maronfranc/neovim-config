@@ -9,10 +9,36 @@ local M = {}
 M.load_snippets = function()
   -- stylua: ignore
   local snippets = {
+    s("sout", { t("System.out.println("), i(1), t(");"), i(0) }),
+    s("qqffqqff", { t("System.out.println("), i(1), t(");"), i(0) }),
     s("record", {
       t("public record "), i(1), t("(String id"), i(2), t({ ") {",
       "\t" }), i(0), t({ "",
       "}" }),
+    }),
+    s("record_dto", {
+      t({
+        "public record ResponseDTO(",
+        "\t\tObject data,",
+        "\t\tLocalDateTime timestamp) {",
+        "\tpublic ResponseDTO(Object data) {",
+        "\t\tthis(data, LocalDateTime.now());",
+        "\t}",
+        "}",
+      })
+    }),
+    s("disable_format", {
+      t({
+        "// @formatter:off",
+        "// @formatter:on",
+      })
+    }),
+    s("for_loop", {
+      t({
+        "for (String id : ids) {",
+        "\t",
+        "}",
+      })
     }),
   }
 	-- stylua: enable

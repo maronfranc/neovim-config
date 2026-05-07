@@ -352,7 +352,7 @@ local M = {
 		buffers = {
 			bind_to_cwd = true,
 			follow_current_file = { enabled = true }, -- This will find and focus the file in the
-      -- active buffer every time the current file is changed while the tree is open.
+			--  active buffer every time the current file is changed while the tree is open.
 			group_empty_dirs = true, -- When true, empty directories(Git) will be grouped together.
 			window = { mappings = keymap.buffer },
 		},

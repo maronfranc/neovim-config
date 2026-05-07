@@ -54,6 +54,9 @@ M.load_snippets = function()
       "esac"
     }),
     }),
+    s("comment_separator", {
+      t("# ===== ====="), i(1), t("===== ===== #"),
+    })
   }
 	-- stylua: enable
 

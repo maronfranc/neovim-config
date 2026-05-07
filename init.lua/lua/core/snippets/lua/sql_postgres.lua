@@ -64,11 +64,11 @@ M.load_snippets = function()
       "();" })
     }),
     s("select_system_catalog_table", t("SELECT * FROM pg_catalog.pg_tables;")),
+    s("print_tables", t("SELECT * FROM pg_catalog.pg_tables;")),
   }
 	-- stylua: enable
 
 	luasnip.add_snippets("sql", lua_snippets)
-	luasnip.add_snippets("sqlls", lua_snippets)
 end
 
 return M

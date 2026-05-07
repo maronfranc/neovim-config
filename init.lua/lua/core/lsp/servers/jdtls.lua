@@ -1,4 +1,4 @@
----@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/jdtls.lua
+---@see https://github.com/neovim/nvim-lspconfig/blob/master/lsp/jdtls.lua
 ---Alternative
 ---@see https://www.reddit.com/r/neovim/comments/1ptyvzp/jls_java_language_server_fork_now_with_lombok/
 local util = require("lspconfig.util")
@@ -47,9 +47,11 @@ end
 local function on_textdocument_codeaction(err, actions, ctx)
 	for _, action in ipairs(actions) do
 		-- TODO: (steelsojka) Handle more than one edit?
-		if action.command == "java.apply.workspaceEdit" then -- 'action' is Command in java format
+		if action.command == "java.apply.workspaceEdit" then
+			-- 'action' is Command in java format.
 			action.edit = fix_zero_version(action.edit or action.arguments[1])
-		elseif type(action.command) == "table" and action.command.command == "java.apply.workspaceEdit" then -- 'action' is CodeAction in java format
+		elseif type(action.command) == "table" and action.command.command == "java.apply.workspaceEdit" then
+			-- 'action' is CodeAction in java format.
 			action.edit = fix_zero_version(action.edit or action.command.arguments[1])
 		end
 	end
@@ -85,6 +87,8 @@ local root_files = {
 	},
 }
 
+local AUTO_BUILD = false
+
 local M = {}
 M.server_name = "jdtls"
 M.setup = {
@@ -98,7 +102,6 @@ M.setup = {
 	},
 	on_attach = function(client, bufnr)
 		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
-
 		_G.CC_tab_size(4)
 	end,
 	settings = {
@@ -106,6 +109,7 @@ M.setup = {
 			signatureHelp = { enabled = true },
 			import = { enabled = true },
 			rename = { enabled = true },
+			build = { autoBuild = AUTO_BUILD },
 		},
 	},
 	filetypes = { "java" },
@@ -120,6 +124,7 @@ M.setup = {
 		workspace = get_jdtls_workspace_dir(),
 		jvm_args = {},
 		os_config = nil,
+		build = { autoBuild = AUTO_BUILD },
 	},
 	handlers = {
 		-- Due to an invalid protocol implementation in the jdtls we have to conform these to be spec compliant.
