@@ -4,6 +4,7 @@ local util = require("lspconfig.util")
 
 local M = {}
 M.server_name = "intelephense"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "intelephense", "--stdio" },
 	filetypes = { "php" },

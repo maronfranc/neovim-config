@@ -4,6 +4,7 @@
 local M = {}
 M.server_name = "html"
 -- @todo M.tool_names = { }
+---@type vim.lsp.Config
 M.setup = {
 	-- @see https://github.com/hrsh7th/vscode-langservers-extracted
 	-- npm i -g vscode-langservers-extracted
@@ -17,7 +18,6 @@ M.setup = {
 		configurationSection = { "html", "css", "javascript" },
 	},
 	on_attach = function(client, bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(2)
 	end,
 }

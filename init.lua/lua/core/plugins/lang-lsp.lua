@@ -10,8 +10,7 @@ local M = {
 		},
 	},
 	config = function()
-		-- local map_ok, map_err = pcall(require, "core.lsp.servers-map")
-		-- if not map_ok then print("[Error] server load error: " .. map_err) end
+		local keymap_buf = require("core.keymap.buf")
 		local setup_ok, setup_err = pcall(require, "core.lsp.setup")
 		if not setup_ok then print("[Error] server setup error: " .. setup_err) end
 
@@ -31,12 +30,14 @@ local M = {
 			callback = function() vim.diagnostic.enable(false) end,
 		})
 
-		---Fix loading two different colors twice.
-		---@see https://github.com/neovim/nvim-lspconfig/issues/2552
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)
-				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				if client then client.server_capabilities.semanticTokensProvider = nil end
+				if args.buf then keymap_buf.load_bufnr_keymaps(args.buf) end
+
+				---Fix loading two different colors twice.
+				---@see https://github.com/neovim/nvim-lspconfig/issues/2552
+				-- local client = vim.lsp.get_client_by_id(args.data.client_id)
+				-- if client then client.server_capabilities.semanticTokensProvider = nil end
 			end,
 		})
 	end,

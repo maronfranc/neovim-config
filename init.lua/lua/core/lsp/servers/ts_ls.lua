@@ -2,6 +2,7 @@ local util = require("lspconfig.util")
 
 local M = {}
 M.server_name = "ts_ls"
+---@type vim.lsp.Config
 M.setup = {
 	-- TypeScript
 	-- Don't forget to install typescript language server itself:
@@ -21,7 +22,6 @@ M.setup = {
 	root_dir = util.root_pattern("package.json"),
 	on_attach = function(client, bufnr)
 		require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(2)
 	end,
 }

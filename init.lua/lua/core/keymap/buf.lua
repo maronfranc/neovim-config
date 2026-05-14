@@ -2,14 +2,14 @@ local M = {}
 
 M.load_keymaps = function()
 	---Run `:bnext<CR>` skipping help/unlisted buffers.
-	local function smart_cycle()
+	local function smart_buf_cycle()
 		vim.cmd("bnext")
 		while vim.bo.buftype ~= "" do
 			vim.cmd("bnext")
 		end
 	end
 	---Run `:bprevious<CR>` skipping help/unlisted buffers.
-	local function smart_back_cycle()
+	local function smart_buf_back_cycle()
 		vim.cmd("bprevious")
 		while vim.bo.buftype ~= "" do
 			vim.cmd("bprevious")
@@ -19,8 +19,8 @@ M.load_keymaps = function()
 	local opt = { noremap = true, silent = true }
 	-- Keymaps "<C-Tab>", "<C-S-Tab>" may conflict with terminal.
 	-- NOTE: `<C-h>` also means `<C-DELETE>` in neovim.
-	vim.keymap.set("n", "<C-h>", smart_back_cycle, opt)
-	vim.keymap.set("n", "<C-S-h>", smart_cycle, opt)
+	vim.keymap.set("n", "<C-h>", smart_buf_back_cycle, opt)
+	vim.keymap.set("n", "<C-S-h>", smart_buf_cycle, opt)
 end
 
 ---Types copied from `vim.keymap.set()`.
@@ -45,19 +45,19 @@ end
 
 ---Function to be loaded in lsp server attach setup.
 M.load_bufnr_keymaps = function(bufnr)
-	-- Enable completion triggered by <c-x><c-o>
-	-- vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-	-- See `:help vim.lsp.*` for documentation on any of the below functions.
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	set_keymap("n", "gD", vim.lsp.buf.declaration, bufopts)
-	set_keymap("n", "gd", vim.lsp.buf.definition, bufopts)
-	set_keymap("n", "gtd", vim.lsp.buf.type_definition, bufopts)
-	set_keymap("n", "gr", vim.lsp.buf.references, bufopts)
-	set_keymap("n", "K", vim.lsp.buf.hover, bufopts)
-	set_keymap("n", "<LEADER>fd", vim.lsp.buf.formatting, bufopts)
-	set_keymap("n", "<LEADER>fo", vim.lsp.buf.format, bufopts)
-	set_keymap("n", "<LEADER>ca", vim.lsp.buf.code_action, bufopts)
-	set_keymap("n", "<LEADER>rr", vim.lsp.buf.rename, bufopts)
+    -- Enable completion triggered by <c-x><c-o>
+    -- vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    -- See `:help vim.lsp.*` for documentation on any of the below functions.
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    set_keymap("n", "gD", vim.lsp.buf.declaration, bufopts)
+    set_keymap("n", "gd", vim.lsp.buf.definition, bufopts)
+    set_keymap("n", "gtd", vim.lsp.buf.type_definition, bufopts)
+    set_keymap("n", "gr", vim.lsp.buf.references, bufopts)
+    set_keymap("n", "K", vim.lsp.buf.hover, bufopts)
+    set_keymap("n", "<LEADER>fd", vim.lsp.buf.formatting, bufopts)
+    set_keymap("n", "<LEADER>fo", vim.lsp.buf.format , bufopts)
+    set_keymap("n", "<LEADER>ca", vim.lsp.buf.code_action, bufopts)
+    set_keymap("n", "<LEADER>rr", vim.lsp.buf.rename, bufopts)
 end
 
 return M

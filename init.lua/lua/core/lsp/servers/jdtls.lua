@@ -91,6 +91,7 @@ local AUTO_BUILD = false
 
 local M = {}
 M.server_name = "jdtls"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = {
 		"jdtls",
@@ -101,7 +102,6 @@ M.setup = {
 		get_jdtls_jvm_args(),
 	},
 	on_attach = function(client, bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(4)
 	end,
 	settings = {

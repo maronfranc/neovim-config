@@ -2,17 +2,11 @@ local server_map = require("core.lsp.servers-map")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 -- @see https://github.com/neovim/nvim-lspconfig
 -- @see https://www.tabnews.com.br/NathanFirmo/aprenda-a-configurar-o-languageserver-no-neovim
-local lspconfig = require( "lspconfig")
+local lspconfig = require("lspconfig")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- enable autocompletion via nvim-cmp
 capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-
-local default_on_attach = function(_, bufnr)
-	-- if client.server_capabilities.documentFormattingProvider
-	require("core.keymap.buf").load_bufnr_keymaps(bufnr)
-	_G.CC_tab_size(4)
-end
 
 local servers = server_map.load_lsp_servers()
 
@@ -23,12 +17,11 @@ end
 
 -- Default configuration for all servers and load all setups.
 for _, lsp in ipairs(servers) do
-	if not lsp.setup.on_attach then lsp.setup.on_attach = default_on_attach end
 	if not lsp.setup.settings then lsp.setup.settings = {} end
 
 	lsp.setup.capabilities = capabilities
 	lsp.setup.flags = { debounce_text_changes = 150 }
-	-- @see https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
+	---@see https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
 	lsp.setup.telemetry = { enabled = false }
 	lsp.setup.settings.redhat = { telemetry = { enabled = false } }
 

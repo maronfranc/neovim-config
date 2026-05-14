@@ -4,6 +4,7 @@ local util = require("lspconfig.util")
 local M = {}
 
 M.server_name = "terraformls"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "terraform-ls", "serve" },
 	filetypes = { "terraform" },

@@ -3,6 +3,7 @@ local helper = require("core.utils.helper")
 local M = {}
 M.server_name = "html"
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/htmx.lua
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "htmx-lsp" },
 	filetypes = { -- filetypes copied and adjusted from tailwindcss-intellisense
@@ -54,7 +55,7 @@ M.setup = {
 		"templ",
 	},
 	single_file_support = true,
-	root_dir = function(fname) return helper.find_git_ancestor(fname) end,
+	-- root_dir = function(fname) return helper.find_git_ancestor(fname) end,
 	docs = {
 		description = [[
 https://github.com/ThePrimeagen/htmx-lsp

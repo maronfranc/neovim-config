@@ -3,6 +3,7 @@
 -- npm install -g emmet-ls
 local M = {}
 M.server_name = "emmet_ls"
+---@type vim.lsp.Config
 M.setup = {
 	filetypes = {
 		"html",
@@ -17,7 +18,6 @@ M.setup = {
 	},
 	on_attach = function(client, bufnr)
 		require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(2)
 	end,
 	docs = {

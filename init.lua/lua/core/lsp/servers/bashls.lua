@@ -1,8 +1,7 @@
--- @see: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/bashls.lua
-local helper = require("core.utils.helper")
-
+---@see: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/bashls.lua
 local M = {}
 M.server_name = "bashls"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "bash-language-server", "start" },
 	settings = {
@@ -16,7 +15,7 @@ M.setup = {
 		},
 	},
 	filetypes = { "sh" },
-	root_dir = helper.find_git_ancestor,
+	-- root_dir = require("core.utils.helper").find_git_ancestor,
 	single_file_support = true,
 	docs = {
 		description = [[

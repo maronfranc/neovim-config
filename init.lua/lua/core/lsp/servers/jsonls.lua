@@ -1,15 +1,15 @@
 -- @see https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/jsonls.lua
-local helper = require("core.utils.helper")
 
 local M = {}
 M.server_name = "jsonls"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "vscode-json-language-server", "--stdio" },
 	filetypes = { "json", "jsonc" },
 	init_options = {
 		provideFormatter = true,
 	},
-	root_dir = helper.find_git_ancestor,
+	-- root_dir = require("core.utils.helper").find_git_ancestor,
 	single_file_support = true,
 	docs = {
 		-- this language server config is in VSCode built-in package.json

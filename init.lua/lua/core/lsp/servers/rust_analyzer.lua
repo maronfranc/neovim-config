@@ -2,12 +2,12 @@
 local util = require("lspconfig.util")
 local M = {}
 M.server_name = "rust_analyzer"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "rust-analyzer" },
 	filetypes = { "rust" },
 	on_attach = function(client, bufnr)
 		-- require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(4)
 	end,
 	root_dir = util.root_pattern("Cargo.toml", "rust-project.json"),

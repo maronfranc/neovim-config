@@ -3,6 +3,7 @@ local util = require("lspconfig.util")
 
 local M = {}
 M.server_name = "vuels"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "vls" },
 	filetypes = { "vue" },

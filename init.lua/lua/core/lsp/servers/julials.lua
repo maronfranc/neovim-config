@@ -44,10 +44,14 @@ local cmd = {
 
 local M = {}
 M.server_name = "julials"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = cmd,
 	filetypes = { "julia" },
-	root_dir = function(fname) return util.root_pattern("Project.toml")(fname) or helper.find_git_ancestor(fname) end,
+	root_dir = function(fname)
+		return util.root_pattern("Project.toml")(fname)
+		-- or helper.find_git_ancestor(fname)
+	end,
 	single_file_support = true,
 	docs = {
 		description = [[
@@ -78,7 +82,7 @@ julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 - SEE: https://youtu.be/lZskxdMpYfE?si=acdRjl2aD5dHNZqo&t=8798
 ```sh
 using PkgTemplates
-t = Template(;dir = ".", julia = v"1.10", user="my_username", 
+t = Template(;dir = ".", julia = v"1.10", user="my_username",
     plugins = [
         Git(; manifest=true, branch = "main"),
         Codecov(),

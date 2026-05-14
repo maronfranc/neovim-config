@@ -4,6 +4,7 @@ local helper = require("core.utils.helper")
 
 local M = {}
 M.server_name = "tailwindcss"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	-- filetypes copied and adjusted from tailwindcss-intellisense
@@ -73,7 +74,7 @@ M.setup = {
 		return has_config(fname)
 			or helper.find_package_json_ancestor(fname)
 			or helper.find_node_modules_ancestor(fname)
-			or helper.find_git_ancestor(fname)
+			-- or helper.find_git_ancestor(fname)
 	end,
 
 	docs = {

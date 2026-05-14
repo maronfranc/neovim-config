@@ -1,20 +1,26 @@
 local util = require("lspconfig.util")
 local M = {}
 
----Try to find git root or else use dirname.
----Replacement for deprecated `require("lspconfig.util").find_git_ancestor`
-function M.find_git_ancestor(fname)
-	local git_dir = vim.fs.dirname(vim.fs.find(".git", { upward = true, path = fname })[1])
-	local dirname = vim.fs.dirname(fname)
-	return git_dir or dirname
-end
+-- ---Try to find git root or else use dirname.
+-- ---Replacement for deprecated `require("lspconfig.util").find_git_ancestor`
+-- function M.find_git_ancestor(bufN)
+-- 	local fname = vim.api.nvim_buf_get_name(bufN)
+-- 	if fname == "" then return vim.fn.getcwd() end
+--
+-- 	local found = vim.fs.find(".git", { upward = true, path = fname })
+-- 	if not found or #found == 0 then return vim.fs.dirname(fname) end
+--
+-- 	local git_dir = vim.fs.dirname(found[1])
+-- 	return git_dir or vim.fs.dirname(fname)
+-- end
 
 ---Try to find git root or else use dirname.
 ---Replacement for deprecated `require("lspconfig.util").find_package_json_ancestor`
-function M.find_package_json_ancestor(fname)
-	local git_dir = vim.fs.dirname(vim.fs.find("package.json", { upward = true, path = fname })[1])
-	local dirname = vim.fs.dirname(fname)
-	return git_dir or dirname
+function M.find_package_json_ancestor(bufN)
+	local fname = vim.api.nvim_buf_get_name(bufN)
+  local found = vim.fs.find("package.json", { upward = true, path = fname })[1]
+	local git_dir = vim.fs.dirname(found)
+	return git_dir or vim.fs.dirname(fname)
 end
 
 ---Find project-local TypeScript node_modules.
@@ -102,6 +108,23 @@ M.format_on_save = function(bufnr)
 		group = vim.api.nvim_create_augroup("Format", { clear = true }),
 		buffer = bufnr,
 		callback = function() vim.lsp.buf.format({ async = false }) end,
+	})
+end
+
+M.format_on_save_and_organize_imports = function(bufnr)
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = vim.api.nvim_create_augroup("Format", { clear = true }),
+		buffer = bufnr,
+		callback = function()
+			vim.wait(1) -- Added this line because was saving in between organizeImports.
+			vim.lsp.buf.code_action({
+				apply = true,
+				async = false,
+				context = { only = { "source.organizeImports" } },
+			})
+			vim.lsp.buf.format({ async = false })
+			vim.wait(1) -- Added this line because was saving in between organizeImports.
+		end,
 	})
 end
 

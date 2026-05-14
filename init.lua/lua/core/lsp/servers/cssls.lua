@@ -1,6 +1,7 @@
 -- @see https://github.com/pwntester/nvim-lsp/blob/master/lua/nvim_lsp/cssls.lua
 local M = {}
 M.server_name = "cssls"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "vscode-css-language-server", "--stdio" },
 	filetypes = { "css" },
@@ -9,7 +10,6 @@ M.setup = {
 	},
 	on_attach = function(client, bufnr)
 		require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(2)
 	end,
 	docs = {

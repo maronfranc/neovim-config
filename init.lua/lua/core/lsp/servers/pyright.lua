@@ -44,12 +44,12 @@ end
 
 local M = {}
 M.server_name = "pyright"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
 	root_dir = function(fname) return util.root_pattern(unpack(root_files))(fname) end,
 	on_attach = function(client, bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(4)
 	end,
 	single_file_support = true,

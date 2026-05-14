@@ -5,6 +5,7 @@ local mod_cache = nil
 
 local M = {}
 M.server_name = "gopls"
+---@type vim.lsp.Config
 M.setup = {
 	-- go install golang.org/x/tools/gopls@latest
 	cmd = { "gopls" },
@@ -22,9 +23,8 @@ M.setup = {
 		usePlaceholders = true,
 	},
 	on_attach = function(client, bufnr)
-		require("core.utils.helper").format_on_save(bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
 		_G.CC_tab_size(4)
+		require("core.utils.helper").format_on_save(bufnr)
 	end,
 	-- root_pattern "go.work" | "go.mod" | ".git"
 	root_dir = function(fname)

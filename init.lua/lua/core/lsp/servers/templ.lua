@@ -3,6 +3,7 @@ local util = require("lspconfig.util")
 
 local M = {}
 M.server_name = "templ"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "templ", "lsp" },
 	filetypes = { "templ" },

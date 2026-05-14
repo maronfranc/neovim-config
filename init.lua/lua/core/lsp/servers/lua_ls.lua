@@ -1,6 +1,7 @@
 -- https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
 local M = {}
 M.server_name = "lua_ls"
+---@type vim.lsp.Config
 M.setup = {
 	cmd = { "lua-language-server" },
 	telemetry = { enable = false },
@@ -22,10 +23,7 @@ M.setup = {
 			"use",
 		},
 	},
-	on_attach = function(_, bufnr)
-		require("core.keymap.buf").load_bufnr_keymaps(bufnr)
-		_G.CC_tab_size(2)
-	end,
+	on_attach = function(_, bufnr) _G.CC_tab_size(2) end,
 	workspace = {
 		library = {
 			vim.api.nvim_get_runtime_file("", true),

@@ -4,6 +4,7 @@
 local M = {}
 M.server_name = "sqlls"
 -- M.serverName = 'sql_language_server'
+---@type vim.lsp.Config
 M.setup = {
 	-- cmd = { 'sqlls' },
 	cmd = { "sql-language-server", "up", "--method", "stdio" },
