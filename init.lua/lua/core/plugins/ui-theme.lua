@@ -7,10 +7,10 @@ local M = {
 	lazy = false, -- Make sure we load this during startup if it is your main colorscheme.
 	priority = 1000, -- Make sure to load this before all the other start plugins.
 	config = function()
-		-- vim.cmd.colorscheme("midnight") -- vim.cmd([[colorscheme midnight]])
-		-- vim.cmd.colorscheme("oxocarbon")
 		vim.cmd.colorscheme("github_dark_default")
-		-- SEE: run command `:hi` for help list.
+		-- SEE: run `:colorscheme {name}` to test available themes.
+		vim.cmd.colorscheme("github_dark_default")
+		-- SEE: run `:highlight` for help list.
 		vim.opt.bg = "dark" -- vim.cmd([[silent! :set bg=dark]])
 		vim.opt.background = "dark"
 	end,

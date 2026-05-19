@@ -45,19 +45,33 @@ end
 
 ---Function to be loaded in lsp server attach setup.
 M.load_bufnr_keymaps = function(bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    -- vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-    -- See `:help vim.lsp.*` for documentation on any of the below functions.
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    set_keymap("n", "gD", vim.lsp.buf.declaration, bufopts)
-    set_keymap("n", "gd", vim.lsp.buf.definition, bufopts)
-    set_keymap("n", "gtd", vim.lsp.buf.type_definition, bufopts)
-    set_keymap("n", "gr", vim.lsp.buf.references, bufopts)
-    set_keymap("n", "K", vim.lsp.buf.hover, bufopts)
-    set_keymap("n", "<LEADER>fd", vim.lsp.buf.formatting, bufopts)
-    set_keymap("n", "<LEADER>fo", vim.lsp.buf.format , bufopts)
-    set_keymap("n", "<LEADER>ca", vim.lsp.buf.code_action, bufopts)
-    set_keymap("n", "<LEADER>rr", vim.lsp.buf.rename, bufopts)
+	-- Enable completion triggered by <c-x><c-o>
+	-- vim.bo[bufnr.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+	-- See `:help vim.lsp.*` for documentation on any of the below functions.
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	set_keymap("n", "gD", vim.lsp.buf.declaration, bufopts)
+	set_keymap("n", "gd", vim.lsp.buf.definition, bufopts)
+	set_keymap("n", "gtd", vim.lsp.buf.type_definition, bufopts)
+	set_keymap("n", "gr", vim.lsp.buf.references, bufopts)
+	set_keymap("n", "K", vim.lsp.buf.hover, bufopts)
+	set_keymap("n", "<LEADER>fd", vim.lsp.buf.formatting, bufopts)
+	set_keymap("n", "<LEADER>fo", vim.lsp.buf.format, bufopts)
+	set_keymap("n", "<LEADER>ca", vim.lsp.buf.code_action, bufopts)
+	set_keymap("n", "<LEADER>rr", vim.lsp.buf.rename, bufopts)
+	set_keymap(
+		"n",
+		"<leader>oi",
+		function()
+			vim.lsp.buf.code_action({
+				apply = true,
+				context = {
+					only = { "source.organizeImports" },
+					diagnostics = {},
+				},
+			})
+		end,
+		{ desc = "Organize Imports" }
+	)
 end
 
 return M

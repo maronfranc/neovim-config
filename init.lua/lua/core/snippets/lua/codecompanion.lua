@@ -11,6 +11,12 @@ M.load_snippets = function()
   local lua_snippets = {
     s("prompt_requirement", {
       t({
+        "### Existing code:",
+        "" }), i(1), t({ "",
+        "",
+        "### Specific requirement: ",
+        "" }), i(2), t({ "",
+        "",
         "### Based on the provided code, please make targeted modifications by:",
         "- Identifying the exact location where changes should be made.",
         "- Explaining how the new code integrates with existing code.",
@@ -20,12 +26,6 @@ M.load_snippets = function()
         -- "- Optimize for readability and maintainability.",
         -- "- Follows best practices.",
         -- "- Consider edge cases and input validation.",
-        "",
-        "### Existing code:",
-        "" }), i(1), t({ "",
-        "",
-        "### Specific requirement: ",
-        "" }), i(2), t({ "",
         "",
         "Please show exactly where to add code and what to add.",
       }),

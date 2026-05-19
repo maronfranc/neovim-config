@@ -1,6 +1,8 @@
 local util = require("lspconfig.util")
 local M = {}
 
+
+---@fixme commented because it is failing `root_dir` LSP setup.
 -- ---Try to find git root or else use dirname.
 -- ---Replacement for deprecated `require("lspconfig.util").find_git_ancestor`
 -- function M.find_git_ancestor(bufN)
