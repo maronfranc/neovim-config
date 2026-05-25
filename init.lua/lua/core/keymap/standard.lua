@@ -2,8 +2,8 @@ local helper = require("core.utils.helper")
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "s", "<nop>")
-vim.keymap.set("n", "S", "<nop>")
+vim.keymap.set({ "n", "v" }, "s", "<nop>")
+vim.keymap.set({ "n", "v" }, "S", "<nop>")
 vim.keymap.set("n", "c", "<nop>")
 
 -- ===== ===== ===== ===== Motions ===== ===== ===== ===== --
@@ -119,6 +119,12 @@ vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
 ---@see https://www.reddit.com/r/vim/comments/lwr56a/search_and_replace_camelcase_to_snake_case/]],
 })
 
+local function perform_replace(current_word, input)
+	if input ~= nil and input ~= "" then
+		vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input))
+	end
+end
+
 local function search_and_replace()
 	local current_word = vim.fn.expand("<cword>")
 	local input_opts = {
@@ -126,13 +132,31 @@ local function search_and_replace()
 		default = current_word,
 	}
 	vim.ui.input(input_opts, function(input)
-		if input ~= nil then -- Add `and input ~= ""` to prevent empty replace.
-			vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input))
-		end
+		perform_replace(current_word, input)
 	end)
 end
 vim.keymap.set("n", "<LEADER>s", search_and_replace, {
 	desc = "Search and replace the same pattern with popup.",
+})
+
+---@todo fix: replace is not working with multiple lines selection.
+local function search_and_replace_visual()
+  local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+	vim.cmd('normal! "vy')
+	local selected_text = vim.fn.getreg("v")
+
+	vim.ui.input({
+		prompt = "Replace '" .. selected_text .. "' with: ",
+		default = selected_text,
+	}, function(input)
+		perform_replace(selected_text, input)
+	end)
+
+  vim.api.nvim_win_set_cursor(0, cursor_pos) -- keep starting position.
+end
+vim.keymap.set("v", "<LEADER>s", search_and_replace_visual, {
+	desc = "Search and replace visual selection with popup.",
 })
 
 -- ===== ===== ===== ===== Quotes ===== ===== ===== ===== --
