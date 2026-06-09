@@ -120,20 +120,19 @@ vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
 })
 
 local function perform_replace(current_word, input)
-	if input ~= nil and input ~= "" then
-		vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input))
-	end
+	if input ~= nil and input ~= "" then vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input)) end
 end
 
 local function search_and_replace()
+	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 	local current_word = vim.fn.expand("<cword>")
 	local input_opts = {
 		prompt = "Replace '" .. current_word .. "' with: ",
 		default = current_word,
 	}
-	vim.ui.input(input_opts, function(input)
-		perform_replace(current_word, input)
-	end)
+	vim.ui.input(input_opts, function(input) perform_replace(current_word, input) end)
+
+	vim.api.nvim_win_set_cursor(0, cursor_pos) -- keep starting position.
 end
 vim.keymap.set("n", "<LEADER>s", search_and_replace, {
 	desc = "Search and replace the same pattern with popup.",
@@ -141,7 +140,7 @@ vim.keymap.set("n", "<LEADER>s", search_and_replace, {
 
 ---@todo fix: replace is not working with multiple lines selection.
 local function search_and_replace_visual()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
+	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
 	vim.cmd('normal! "vy')
 	local selected_text = vim.fn.getreg("v")
@@ -150,10 +149,14 @@ local function search_and_replace_visual()
 		prompt = "Replace '" .. selected_text .. "' with: ",
 		default = selected_text,
 	}, function(input)
-		perform_replace(selected_text, input)
+		-- Escape forward slashes in both search and replace text
+		local escaped_search = vim.fn.escape(selected_text, "/")
+		local escaped_replace = vim.fn.escape(input, "/")
+
+		perform_replace(escaped_search, escaped_replace)
 	end)
 
-  vim.api.nvim_win_set_cursor(0, cursor_pos) -- keep starting position.
+	vim.api.nvim_win_set_cursor(0, cursor_pos) -- keep starting position.
 end
 vim.keymap.set("v", "<LEADER>s", search_and_replace_visual, {
 	desc = "Search and replace visual selection with popup.",

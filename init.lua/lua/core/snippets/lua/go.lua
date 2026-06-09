@@ -4,13 +4,24 @@ local s = luasnip.snippet
 local t = luasnip.text_node -- Simple static text.
 local i = luasnip.insert_node -- Placeholder/Insert. int): Placeholder with initial text.
 local f = luasnip.function_node -- function, first parameter is the function, second the Placeholders
-local function copy(args) return args[1] end -- whose text it gets as input.
+local function copy(args) return args[1] end
+local function uppercase_first(args)
+	local input = args[1][1] or ""
+	if input == "" then return "" end
+	return string.upper(string.sub(input, 1, 1)) .. string.sub(input, 2)
+end
 
 local M = {}
--- luasnip.add_snippets("all", {
 M.load_snippets = function()
   -- stylua: ignore
   local go_snippets = {
+    s("new_struct", {
+      t("type "), i(1), t(" struct{}"), t({ "",
+      "",
+      "func New" }), f(uppercase_first, 1), t("("), t(") "), t(" *"), f(copy, 1), t({ " {",
+      "\treturn &" }), f(copy, 1), t("{}"), t({ "", "" }),
+      t("}")
+    }),
     s("iferr!=nil", {
       t({
         "if err != nil {",
@@ -28,7 +39,7 @@ M.load_snippets = function()
       "\t " }), i(0), t({ "",
       "}" })
     }),
-    s("method_func_def", {
+    s("method_func_ddef", {
       t("func (self *"), i(1), t(") "), i(2), t("("), i(3), t(")"), i(4), t({ " {",
       "\t " }), i(0), t({ "",
       "}" })
@@ -42,7 +53,7 @@ M.load_snippets = function()
     s("string_concat", { t("fmt.Sprintf(\"%s"), i(1), t("\")"), i(0), }),
     s("date_time_now_ISO", { i(1), t(" := time.Now().Format(time.RFC3339)") }),
     ---Dto @todo struct_dto_field dynamic that set first field to uppercase
-    s("struct_dto_field", { t('Id string `form:"id" json:"id" db:"id"`') }),
+    s("struct_dto_field", { t('Id string `form:"id" json:"id"`') }),
     ---Array
     s("for_range", {
       t("for _, "), i(1), t(" := range "), i(2), t({ " {",

@@ -1,31 +1,33 @@
----@see https://github.com/lukas-reineke/indent-blankline.nvim
 ---This plugin adds indentation guides to all lines (including empty lines).
 ---It uses Neovim's virtual text feature and no conceal.
+---@see https://github.com/parkers0405/hlchunk.nvim Competitor
+---@see https://github.com/lukas-reineke/indent-blankline.nvim
 local M = {
+
 	"lukas-reineke/indent-blankline.nvim",
 	main = "ibl",
 	init = function()
 		local highlight = {
-			"RainbowRed",
+			-- "RainbowRed",
 			"RainbowYellow",
-			"RainbowBlue",
+			-- "RainbowBlue",
 			"RainbowOrange",
 			"RainbowGreen",
 			"RainbowViolet",
-			"RainbowCyan",
+			-- "RainbowCyan",
 		}
 		local ibl = require("ibl")
 		local hooks = require("ibl.hooks")
 		-- Create the highlight groups in the highlight setup hook,
 		-- so they are reset every time the colorscheme changes.
 		hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-			vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+			-- vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
 			vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-			vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+			-- vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
 			vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
 			vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
 			vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-			vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+			-- vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 		end)
 
 		vim.g.rainbow_delimiters = { highlight = highlight }

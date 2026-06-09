@@ -55,8 +55,8 @@ local M = {
 				end,
 			},
 			sources = {
-				{ priority = 10, name = "luasnip" },
-				{ priority = 20, name = "nvim_lsp" },
+				{ priority = 10, name = "nvim_lsp" },
+				{ priority = 20, name = "luasnip" },
 				{ priority = 30, name = "cmp_css" },
 				{ priority = 50, name = "path" },
 				{ priority = 90, name = "nvim_lsp_signature_help" },
