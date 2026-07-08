@@ -21,5 +21,5 @@ for _, lsp in ipairs(servers) do
 
 	-- vim.lsp.config(lsp.server_name, lsp.setup)
 	-- vim.lsp.enable(lsp.server_name)
-	lspconfig.setup(lsp.setup)
+	lspconfig[lsp.server_name].setup(lsp.setup)
 end

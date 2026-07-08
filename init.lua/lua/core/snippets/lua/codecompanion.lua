@@ -22,7 +22,7 @@ M.load_snippets = function()
         "- Explaining how the new code integrates with existing code.",
         "- Preserving all current functionality.",
         "- DON'T rewrite the entire file, only show code snippets.",
-        "- Do NOT remove existing code unless absolutely necessary.",
+        "- DON'T remove existing code unless absolutely necessary.",
         -- "- Optimize for readability and maintainability.",
         -- "- Follows best practices.",
         -- "- Consider edge cases and input validation.",

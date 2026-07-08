@@ -43,6 +43,12 @@ M.load_snippets = function()
       "\t" }), i(0), t({ "",
       "fi" }),
     }),
+    s("if_file_not_exists", {
+      t("if [[ ! -f \"${"), i(1), t({ "}\" ]]; then",
+      "\t" }), i(0), t({ "",
+      "\texit 1",
+      "fi" }),
+    }),
     s("case", {
       t("case \"$"), i(1), t({ "\" in",
       "\tpattern_1)" }), i(0), t({ "",

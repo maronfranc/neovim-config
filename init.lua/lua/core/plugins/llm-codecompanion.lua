@@ -15,11 +15,13 @@ local M = {
 	config = function()
 		local codecompanion = require("codecompanion")
 
-		---Accept an ENV_VAR and create ollama adapter with configurable it.
+		---Accept an ENV_VAR and create openai adapter.
 		---Example:
-		---1. Set `export ENV_VAR_CHAT="ollama_example:30b"` in bashrc.
-		---2. Run with: `create_ollama_adapter("ENV_VAR_CHAT")`.
-		local create_ollama_adapter = function(ENV_VAR)
+		---1. Set in bashrc:
+    ---   1. `export ENV_VAR_LLAMA_CPP="llama-2-7b.Q2_K.gguf"` 
+    ---   2. `export ENV_VAR_OLLAMA="ollama_example:30b"` 
+		---2. Run with: `create_ollama_adapter("ENV_VAR_LLAMA_CPP")`.
+		local create_openai_adapter = function(ENV_VAR)
 			local llm_agent = os.getenv(ENV_VAR)
 			local schema = nil
 			if llm_agent ~= nil then schema = { model = { default = llm_agent } } end
@@ -33,14 +35,14 @@ local M = {
 		codecompanion.setup({
 			strategies = {
 				-- NOTE: these are the names created in the adapter functions.
-				chat = { adapter = "ollama_code" },
-				inline = { adapter = "ollama_code" },
-				agent = { adapter = "ollama_code" },
+				chat = { adapter = "my_code_llm" },
+				inline = { adapter = "my_code_llm" },
+				agent = { adapter = "my_code_llm" },
 			},
 			adapters = {
 				http = {
-					ollama_code = create_ollama_adapter("OLLAMA_CODE_AGENT"),
-					-- ollama_default = create_ollama_adapter("OLLAMA_CHAT_AGENT"),
+					my_code_llm = create_openai_adapter("LLM_CODE_AGENT"),
+					-- my_default_llm = create_ollama_adapter("LLM_CHAT_AGENT"),
 				},
 			},
 			-- The log_level is in `opts.opts`.
