@@ -20,6 +20,17 @@ M.load_snippets = function()
         "| col 3 is | right-aligned |    $1 |",
       }),
     }),
+    s("file_tree", {
+      t({
+        "├── src",
+        "│   ├── components",
+        "│   │   ├── Header.astro",
+        "│   │   └── Footer.astro",
+        "│   └── pages",
+        "│       └── index.astro",
+        "└── package.json",
+      })
+    }),
     s("code_block", {
       t("```"), i(1), t({ "",
       "" }), i(0), t({ "",

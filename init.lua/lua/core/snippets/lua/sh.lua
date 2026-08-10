@@ -49,6 +49,9 @@ M.load_snippets = function()
       "\texit 1",
       "fi" }),
     }),
+    s("current_script_dirname", {
+      t('SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"')
+    }),
     s("case", {
       t("case \"$"), i(1), t({ "\" in",
       "\tpattern_1)" }), i(0), t({ "",
