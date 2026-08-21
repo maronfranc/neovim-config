@@ -123,6 +123,7 @@ local function perform_replace(current_word, input)
 	if input ~= nil and input ~= "" then vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input)) end
 end
 
+---@fix function fails when a input have unenscaped `/` in it.
 local function search_and_replace()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 	local current_word = vim.fn.expand("<cword>")
@@ -138,7 +139,7 @@ vim.keymap.set("n", "<LEADER>s", search_and_replace, {
 	desc = "Search and replace the same pattern with popup.",
 })
 
----@todo fix: replace is not working with multiple lines selection.
+---@fix replace is not working with multiple lines selection.
 local function search_and_replace_visual()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
@@ -189,13 +190,22 @@ vim.keymap.set("n", "<LEADER>dq", remove_quote_around, {
 	desc = [[Remove quotes(either ", ', or `) around cursor.]],
 })
 vim.keymap.set("n", "<LEADER>qd", helper.add_char_around([["]]), {
-	desc = "Add double quotes around the word under the cursor.",
+	desc = "Add `double quotes` around the word under the cursor.",
 })
 vim.keymap.set("n", "<LEADER>qs", helper.add_char_around([[']]), {
-	desc = "Add single quotes around the word under the cursor.",
+	desc = "Add `single quotes` around the word under the cursor.",
 })
 vim.keymap.set("n", "<LEADER>qb", helper.add_char_around([[`]]), {
-	desc = "Add backtick around the word under the cursor.",
+	desc = "Add `backtick` around the word under the cursor.",
+})
+vim.keymap.set("n", "<LEADER>q[", helper.add_char_around("[", "]"), {
+	desc = "Add `square brackets` around the word under the cursor.",
+})
+vim.keymap.set("n", "<LEADER>q9", helper.add_char_around("(", ")"), {
+	desc = "Add `parethesis` around the word under the cursor.",
+})
+vim.keymap.set("n", "<LEADER>qc", helper.add_char_around("{", "}"), {
+	desc = "Add `curly braces` around the word under the cursor.",
 })
 
 -- ===== ===== ===== ===== Search ===== ===== ===== ===== --

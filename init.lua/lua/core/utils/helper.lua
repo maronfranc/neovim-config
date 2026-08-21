@@ -61,13 +61,18 @@ function M.find_typescript_root_dir()
   return typescript_lib_from("npm root -g")
 end
 
+--- Inserts a character (and optionally a closing character) around the word under the cursor.
+--- For example, if the cursor is on 'foo' and char='(', closing_char=')', it transforms 'foo' to '(foo)'.
+--- The cursor position is preserved after the operation.
 ---@param char string Char to add around cursor word.
-function M.add_char_around(char)
+---@param closing_char string|nil Optional string to add after the word.
+function M.add_char_around(char, closing_char)
+  local second_char = closing_char or char
   return function()
     local cursor_pos = vim.api.nvim_win_get_cursor(0)
     local current_word = vim.fn.expand("<cword>")
     if current_word == "" then return end
-    local quoted_word = char .. current_word .. char
+    local quoted_word = char .. current_word .. second_char
     vim.cmd('normal! "_ciw' .. quoted_word)
     vim.api.nvim_win_set_cursor(0, cursor_pos)
   end
