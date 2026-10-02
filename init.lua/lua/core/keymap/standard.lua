@@ -82,6 +82,15 @@ vim.keymap.set({ "n", "v" }, "<C-c>", [["+y]], copy_to_clipboard_opts)
 vim.keymap.set({ "n", "v" }, "<C-C>", [["+y]], copy_to_clipboard_opts)
 vim.keymap.set({ "n", "v" }, "<LEADER>y", [["+y]], copy_to_clipboard_opts)
 vim.keymap.set({ "n", "v" }, "<LEADER>Y", [["+Y]], copy_to_clipboard_opts)
+
+local function copy_messages_to_clipboard()
+	local messages = vim.fn.execute("messages")
+	vim.fn.setreg("+", vim.trim(messages))
+	vim.print("Copied `:messages` to clipboard")
+end
+vim.keymap.set("n", "<LEADER>m", copy_messages_to_clipboard, {
+	desc = "Copy `:messages` text to clipboard.",
+})
 -- vim.keymap.set({ 'n', "v" }, "<C-v>", [["+p]], { desc = "Paste from clipboard" })
 vim.keymap.set("i", "<C-v>", [[<ESC>"+pa]], { desc = "Paste from clipboard" })
 vim.keymap.set({ "n", "v" }, "x", [["_x]], {

@@ -5,7 +5,7 @@ local M = {}
 ---   otherwise they will not be installed by `mason` plugin.
 ---@see https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 M.server_import_list = {
-	"astro",
+	-- "astro",
 	"bashls",
 	-- "clangd",
 	"cssls",
@@ -38,7 +38,7 @@ M.ensure_tools = {
 	-- "shfmt",
 	-- Linter
 	-- "yamllint",
-	"ruff",
+	-- "ruff",
 }
 
 return M

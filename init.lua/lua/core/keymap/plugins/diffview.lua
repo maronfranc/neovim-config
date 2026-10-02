@@ -192,9 +192,22 @@ M.get_open_window_mappings = function(actions)
 end
 
 M.load_keymaps = function()
-	vim.keymap.set("n", "<LEADER>gd", ":DiffviewOpen<CR>", { silent = true })
-	vim.keymap.set("n", "<LEADER>gq", ":DiffviewClose<CR>", { silent = true })
-	vim.keymap.set("n", "<LEADER>gh", ":DiffviewFileHistory<CR>", { silent = true })
+	vim.keymap.set("n", "<LEADER>gd", ":DiffviewOpen<CR>", {
+    silent = true,
+    desc = "Open git diff view",
+  })
+	vim.keymap.set("n", "<LEADER>gq", ":DiffviewClose<CR>", {
+    silent = true,
+    desc = "Close Diffview tab",
+  })
+	vim.keymap.set("n", "<LEADER>gh", ":DiffviewFileHistory<CR>", {
+    silent = true,
+    desc = "Open all files history view",
+  })
+  vim.keymap.set("n", "<LEADER>gf", ":DiffviewFileHistory %<CR>", {
+    silent = true,
+    desc = "Open git file history",
+  })
 end
 
 return M
