@@ -128,11 +128,46 @@ vim.keymap.set("n", "<LEADER>cts", [[:%s/[a-z]\@<=[A-Z]/_\l\0/g]], {
 ---@see https://www.reddit.com/r/vim/comments/lwr56a/search_and_replace_camelcase_to_snake_case/]],
 })
 
-local function perform_replace(current_word, input)
-	if input ~= nil and input ~= "" then vim.api.nvim_command(string.format("%%s/%s/%s/gI", current_word, input)) end
+---Escaping `nil` with `vim.fn.escape()` returns the literal string "v:null",
+---so a cancelled prompt (`<ESC>`) must be filtered out before any escaping.
+local function is_cancelled(input)
+	return input == nil or input == vim.NIL or input == ""
 end
 
----@fix function fails when a input have unenscaped `/` in it.
+---`\V` (very nomagic) makes every character of the pattern literal, so regex
+---metacharacters like `. * [ ]` in the searched text need no escaping.
+---@param text string literal text to match, may span multiple lines.
+---@return string
+local function to_literal_pattern(text)
+	-- `\V` still honours backslash escapes: `\\` is a literal backslash, `\/`
+	-- protects the delimiter and `\n` matches a line break.
+	local escaped = text:gsub([[\]], [[\\]]):gsub("/", [[\/]]):gsub("\n", [[\n]])
+	return [[\V]] .. escaped
+end
+
+---@param text string literal text to insert, may span multiple lines.
+---@return string
+local function to_literal_replacement(text)
+	-- `&` is the whole match and `\` starts an escape, a line break is
+	-- inserted with `\r` (`\n` would insert a NUL).
+	return (text:gsub([[\]], [[\\]]):gsub("&", [[\&]]):gsub("/", [[\/]]):gsub("\n", [[\r]]))
+end
+
+---@param search string literal text to find, may span multiple lines.
+---@param input string literal text to replace it with, may span multiple lines.
+local function perform_replace(search, input)
+	if is_cancelled(input) then return end
+	vim.cmd(string.format("%%s/%s/%s/g", to_literal_pattern(search), to_literal_replacement(input)))
+end
+
+---Restores the cursor, clamped to the buffer because the substitution may have
+---added or removed lines.
+---@param cursor_pos integer[] { row, col } from `vim.api.nvim_win_get_cursor`.
+local function restore_cursor(cursor_pos)
+	local row = math.min(cursor_pos[1], vim.api.nvim_buf_line_count(0))
+	pcall(vim.api.nvim_win_set_cursor, 0, { row, cursor_pos[2] })
+end
+
 local function search_and_replace()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 	local current_word = vim.fn.expand("<cword>")
@@ -142,31 +177,24 @@ local function search_and_replace()
 	}
 	vim.ui.input(input_opts, function(input) perform_replace(current_word, input) end)
 
-	vim.api.nvim_win_set_cursor(0, cursor_pos) -- keep starting position.
+	restore_cursor(cursor_pos) -- keep starting position.
 end
 vim.keymap.set("n", "<LEADER>s", search_and_replace, {
 	desc = "Search and replace the same pattern with popup.",
 })
 
----@fix replace is not working with multiple lines selection.
 local function search_and_replace_visual()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-	vim.cmd('normal! "vy')
+	vim.cmd('silent! normal! "vy')
 	local selected_text = vim.fn.getreg("v")
 
 	vim.ui.input({
 		prompt = "Replace '" .. selected_text .. "' with: ",
 		default = selected_text,
-	}, function(input)
-		-- Escape forward slashes in both search and replace text
-		local escaped_search = vim.fn.escape(selected_text, "/")
-		local escaped_replace = vim.fn.escape(input, "/")
+	}, function(input) perform_replace(selected_text, input) end)
 
-		perform_replace(escaped_search, escaped_replace)
-	end)
-
-	vim.api.nvim_win_set_cursor(0, cursor_pos) -- keep starting position.
+	restore_cursor(cursor_pos) -- keep starting position.
 end
 vim.keymap.set("v", "<LEADER>s", search_and_replace_visual, {
 	desc = "Search and replace visual selection with popup.",
