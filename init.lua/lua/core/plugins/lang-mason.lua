@@ -37,7 +37,14 @@ local M = {
 			},
 		})
 		-- LSPs that should be installed by Mason-lspconfig
-		mason_config.setup({ ensure_installed = install_all_tools })
+		mason_config.setup({
+			ensure_installed = install_all_tools,
+			-- Servers are configured explicitly in `core.lsp.setup`.
+			-- When `true` (default), mason-lspconfig calls `vim.lsp.enable()` for every
+			-- installed package, which would start servers missing from
+			-- `core.lsp.import-map.server_import_list`.
+			automatic_enable = false,
+		})
 	end,
 }
 

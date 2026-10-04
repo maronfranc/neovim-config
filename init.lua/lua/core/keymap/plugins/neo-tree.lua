@@ -3,6 +3,22 @@
 ---You can also create your own commands by providing a function instead of a string.
 local M = {}
 
+---Runs `action` and then puts the input popup in NORMAL mode.
+---Neo-tree always opens its input popups in INSERT mode (`neo-tree.ui.inputs` runs `:startinsert`),
+---but the rename prompt is already pre-filled with the current name, so NORMAL mode is handier:
+---edit the name with motions/operators, submit with <CR>, cancel with <Esc> or q.
+---@param action string Neo-tree command, e.g. "rename_basename".
+---@return fun(state: table)
+local function input_in_normal_mode(action)
+	return function(state)
+		local commands = state.commands or require("neo-tree.sources.filesystem.commands")
+		commands[action](state)
+		vim.schedule(function()
+			if vim.bo.filetype == "neo-tree-popup" then vim.cmd("stopinsert") end
+		end)
+	end
+end
+
 M.explorer = {
 	["C"] = {
 		"toggle_node", -- "close_node",
@@ -30,8 +46,8 @@ M.explorer = {
 	["m"] = "move", -- Takes text input for destination, also accepts the config.show_path option.
 	["A"] = "add_directory", -- also accepts the config.show_path option.
 	["d"] = "delete",
-	["R"] = "rename",
-	["r"] = "rename_basename",
+	["R"] = input_in_normal_mode("rename"),
+	["r"] = input_in_normal_mode("rename_basename"),
 	["y"] = "copy_to_clipboard",
 	["x"] = "cut_to_clipboard",
 	["p"] = "paste_from_clipboard",

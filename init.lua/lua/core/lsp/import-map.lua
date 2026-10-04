@@ -27,7 +27,7 @@ M.server_import_list = {
 	-- "texlab",
 	-- "tailwindcss",
 	-- "templ",
-	-- "terraformls",
+	"terraformls",
 	"ts_ls",
 	-- "vuels",
 }
@@ -38,7 +38,7 @@ M.ensure_tools = {
 	-- "shfmt",
 	-- Linter
 	-- "yamllint",
-	-- "ruff",
+	"ruff",
 }
 
 return M
