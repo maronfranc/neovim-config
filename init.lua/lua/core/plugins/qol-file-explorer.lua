@@ -1,6 +1,182 @@
 local keymap = require("core.keymap.plugins.neo-tree")
 local helper = require("core.utils.helper")
 
+---How many paths are handed to one delete invocation.
+---`rm` and `trash-put` accept many paths, but very large selections would blow up the argument list.
+local DELETE_CHUNK_SIZE = 100
+
+---How many file names are listed in the confirmation prompt before it falls back to a count.
+local DELETE_PROMPT_NAMES = 5
+
+---Collects the paths a delete command should act on.
+---Neo-tree hands the multi-selection (visual selection plus nodes tagged with `<Tab>`) to the
+---`_visual` variant of a command, so `selected_nodes` is only set when more than the node under
+---the cursor is targeted. Duplicates and paths already covered by a selected parent directory are
+---dropped, and the tree root is never returned.
+---@param state table neotree state
+---@param selected_nodes table[]|nil nodes passed by neo-tree to the `_visual` variant
+---@return string[] paths
+local function collect_paths(state, selected_nodes)
+	local nodes = {}
+	for _, node in ipairs(selected_nodes or {}) do
+		nodes[#nodes + 1] = node
+	end
+	if #nodes == 0 then
+		local node = state.tree:get_node()
+		if node then
+			nodes[1] = node
+		end
+	end
+
+	local roots = state.tree:get_nodes()
+	local root_path = roots[1] and roots[1].path
+
+	local paths, seen = {}, {}
+	for _, node in ipairs(nodes) do
+		local path = node.path
+		if (node.type == "file" or node.type == "directory") and type(path) == "string" then
+			local has_depth, depth = pcall(node.get_depth, node)
+			if has_depth
+				and depth
+				and depth > 1
+				and path ~= ""
+				and path ~= "/"
+				and path ~= root_path
+				and not seen[path]
+			then
+				seen[path] = true
+				paths[#paths + 1] = path
+			end
+		end
+	end
+
+	-- A parent always sorts before its children, so one pass removes nested selections.
+	table.sort(paths)
+	local filtered = {}
+	for _, path in ipairs(paths) do
+		local covered = false
+		for _, kept in ipairs(filtered) do
+			if vim.startswith(path, kept .. "/") then
+				covered = true
+				break
+			end
+		end
+		if not covered then
+			filtered[#filtered + 1] = path
+		end
+	end
+
+	return filtered
+end
+
+---Builds the confirmation prompt for deleting `paths`.
+---@param header string
+---@param paths string[]
+---@return string
+local function confirm_message(header, paths)
+	if #paths == 1 then
+		return string.format("%s %s — Continue?", header, vim.fs.basename(paths[1]))
+	end
+
+	local names = vim.tbl_map(vim.fs.basename, paths)
+	local listed = vim.list_slice(names, 1, DELETE_PROMPT_NAMES)
+	local msg = string.format("%s %d items: %s", header, #paths, table.concat(listed, ", "))
+	if #names > #listed then
+		msg = msg .. string.format(" … +%d more", #names - #listed)
+	end
+	return msg .. " — Continue?"
+end
+
+---Confirms, then deletes the targeted nodes with `cmd`, chunked over `DELETE_CHUNK_SIZE` paths,
+---and refreshes the source when the last chunk is done.
+---@param state table neotree state
+---@param selected_nodes table[]|nil nodes passed by neo-tree to the `_visual` variant
+---@param cmd string[] delete program and its flags
+---@param header string first part of the confirmation prompt
+---@param done string notification prefix used when everything succeeded
+local function delete_nodes(state, selected_nodes, cmd, header, done)
+	local inputs = require("neo-tree.ui.inputs")
+	local sources_manager = require("neo-tree.sources.manager")
+	local uv = vim.uv or vim.loop
+
+	local paths = collect_paths(state, selected_nodes)
+	if #paths == 0 then
+		vim.notify("No file selected", vim.log.levels.WARN)
+		return
+	end
+	if vim.fn.executable(cmd[1]) == 0 then
+		vim.notify(string.format("`%s` is not installed, cannot delete", cmd[1]), vim.log.levels.ERROR)
+		return
+	end
+
+	local failed = 0
+	local index = 0
+
+	local function finish()
+		-- Deleted nodes are still tagged, drop them so the selection stays usable.
+		for id in pairs(state.selected or {}) do
+			if not uv.fs_lstat(id) then
+				state.selected[id] = nil
+			end
+		end
+		sources_manager.refresh(state.name)
+		if failed == 0 then
+			vim.notify(string.format("%s %d item(s)", done, #paths), vim.log.levels.INFO)
+		end
+	end
+
+	local function run_chunk()
+		local chunk = {}
+		for i = index + 1, math.min(index + DELETE_CHUNK_SIZE, #paths) do
+			chunk[#chunk + 1] = paths[i]
+		end
+		index = index + #chunk
+
+		local args = vim.list_extend({}, cmd)
+		vim.list_extend(args, chunk)
+
+		local function advance()
+			if index >= #paths then
+				finish()
+			else
+				run_chunk()
+			end
+		end
+
+		local ok, job = pcall(vim.fn.jobstart, args, {
+			detach = true,
+			on_exit = function(_, code, _)
+				vim.schedule(function()
+					if code ~= 0 then
+						failed = failed + 1
+						vim.notify(
+							string.format("Failed to delete %d path(s) with `%s` (exit %d)", #chunk, cmd[1], code),
+							vim.log.levels.ERROR
+						)
+					end
+					advance()
+				end)
+			end,
+		})
+
+		if not ok or job <= 0 then
+			-- Program missing or could not be spawned, on_exit will never run.
+			failed = failed + 1
+			vim.schedule(function()
+				vim.notify(string.format("Could not run `%s`", cmd[1]), vim.log.levels.ERROR)
+				finish()
+			end)
+		end
+	end
+
+	inputs.confirm(confirm_message(header, paths), function(confirmed)
+		if not confirmed then
+			return
+		end
+		run_chunk()
+	end)
+end
+
 ---Neo-tree is a Neovim plugin to browse the file system and other tree like structures
 ---in whatever style suits you, including sidebars, floating windows, netrw split style,
 ---or all of them at once.
@@ -193,62 +369,33 @@ local M = {
 		},
 		filesystem = {
 			commands = {
+				---Neo-tree calls these `_visual` variants with the multi-selection
+				---(visual selection plus nodes tagged with `<Tab>`), so `d` and `D` also
+				---work on many nodes at once, see `:h neo-tree-custom-mappings-visual`.
 				delete_permanently = function(state)
-					local inputs = require("neo-tree.ui.inputs")
-					local sources_manager = require("neo-tree.sources.manager")
-					local path = state.tree:get_node().path
-
-					if not path or path == "" then
-						vim.notify("No file selected", vim.log.levels.WARN)
-						return
-					end
-
-					local msg = " PERMANENT DELETE: " .. path .. " (cannot be undone) — Continue?"
-					inputs.confirm(msg, function(confirmed)
-						if not confirmed then return end
-						vim.notify("File PERMANENTLY deleted" .. path, vim.log.levels.INFO)
-						vim.fn.jobstart({ "rm", "-rf", path }, {
-							detach = true,
-							on_exit = function(_, code, _)
-								vim.schedule(function()
-									if code ~= 0 then
-										vim.notify("Failed to permanently delete: " .. path, vim.log.levels.ERROR)
-										return
-									end
-									sources_manager.refresh(state.name)
-								end)
-							end,
-						})
-					end)
+					delete_nodes(
+						state,
+						nil,
+						{ "rm", "-rf" },
+						" PERMANENT DELETE (cannot be undone):",
+						"Permanently deleted"
+					)
+				end,
+				delete_permanently_visual = function(state, selected_nodes)
+					delete_nodes(
+						state,
+						selected_nodes,
+						{ "rm", "-rf" },
+						" PERMANENT DELETE (cannot be undone):",
+						"Permanently deleted"
+					)
 				end,
 				---Override delete to use trash instead of rm.
 				delete = function(state)
-					local inputs = require("neo-tree.ui.inputs")
-					local sources_manager = require("neo-tree.sources.manager")
-					local path = state.tree:get_node().path
-					local msg = "Are you sure you want to delete: " .. path
-
-					if not path or path == "/" or path == "" then
-						vim.notify("No file selected", vim.log.levels.WARN)
-						return
-					end
-
-					inputs.confirm(msg, function(confirmed)
-						if not confirmed then return end
-						vim.notify("File sent to thrash" .. path, vim.log.levels.INFO)
-						vim.fn.jobstart({ "trash-put", path }, {
-							detach = true,
-							on_exit = function(_, code, _)
-								vim.schedule(function()
-									if code ~= 0 then
-										vim.notify("Failed to delete: " .. path, vim.log.levels.ERROR)
-										return
-									end
-									sources_manager.refresh(state.name)
-								end)
-							end,
-						})
-					end)
+					delete_nodes(state, nil, { "trash-put" }, "Move to trash:", "Moved to trash")
+				end,
+				delete_visual = function(state, selected_nodes)
+					delete_nodes(state, selected_nodes, { "trash-put" }, "Move to trash:", "Moved to trash")
 				end,
 				system_open = function(state)
 					local node = state.tree:get_node()
